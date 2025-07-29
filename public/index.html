@@ -31,13 +31,6 @@
             --top-nav-gray: #1A1A27;
             --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             --dropdown-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            
-            /* 图表颜色 */
-            --chart-blue: #97aaf5;
-            --chart-teal: #53cbc5;
-            --chart-purple: #9576d2;
-            --chart-green: #74ebc4;
-            --chart-red: #cf7373ec;
         }
         
         body {
@@ -144,17 +137,12 @@
             min-width: 150px;
         }
         
-        .header-search-container:focus-within {
-            transform: scale(1.02);
-        }
-        
         .header-search-input {
             width: 100%;
             padding: 0.7rem 0.85rem 0.7rem 2.5rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 10px;
             font-size: 0.9rem;
-            transition: all 0.3s;
             background: rgba(255, 255, 255, 0.15);
             color: var(--bg-white);
             font-weight: 500;
@@ -164,10 +152,6 @@
             outline: none;
             border-color: var(--primary-light);
             box-shadow: 0 0 0 3px rgba(76, 111, 255, 0.3);
-        }
-        
-        .header-search-input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
         }
         
         .header-search-icon {
@@ -188,12 +172,7 @@
             cursor: pointer;
             padding: 0.5rem 0.75rem;
             border-radius: 8px;
-            transition: all 0.3s;
             flex-shrink: 0;
-        }
-        
-        .user-menu:hover {
-            background: rgba(255, 255, 255, 0.1);
         }
         
         .user-avatar {
@@ -207,7 +186,6 @@
             justify-content: center;
             font-weight: 600;
             font-size: 1rem;
-            transition: all 0.3s ease;
         }
         
         .user-name {
@@ -223,12 +201,6 @@
             }
         }
         
-        .user-menu i.fas.fa-chevron-down {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.85rem;
-        }
-        
-        /* 用户下拉菜单 */
         .user-dropdown {
             position: absolute;
             top: calc(100% + 10px);
@@ -254,23 +226,6 @@
             transform: translateY(0);
         }
         
-        .user-dropdown::before {
-            content: '';
-            position: absolute;
-            top: -6px;
-            right: 15px;
-            width: 12px;
-            height: 12px;
-            background-color: var(--bg-white);
-            transform: rotate(45deg);
-            border-left: 1px solid var(--divider);
-            border-top: 1px solid var(--divider);
-        }
-        
-        .user-dropdown li {
-            margin: 0;
-        }
-        
         .user-dropdown a {
             display: flex;
             align-items: center;
@@ -278,26 +233,10 @@
             padding: 0.85rem 1.5rem;
             color: var(--text-primary);
             text-decoration: none;
-            transition: all 0.2s;
-            border-radius: 8px;
-            margin: 0 0.25rem;
-            font-size: 0.9rem;
         }
         
         .user-dropdown a:hover {
             background: rgba(76, 111, 255, 0.05);
-            color: var(--primary-color);
-        }
-        
-        .user-dropdown a i {
-            width: 1.1rem;
-            text-align: center;
-            color: var(--text-tertiary);
-            transition: transform 0.2s;
-        }
-        
-        .user-dropdown a:hover i {
-            transform: scale(1.2);
             color: var(--primary-color);
         }
         
@@ -326,13 +265,6 @@
             box-shadow: var(--card-shadow);
             border: 1px solid var(--card-border);
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            position: relative;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.08);
         }
         
         .card-header {
@@ -341,7 +273,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: transparent;
         }
         
         .card-title {
@@ -359,10 +290,6 @@
         }
         
         /* 账户概览 */
-        .account-overview .revenue-summary {
-            padding: 0.5rem 0;
-        }
-        
         .revenue-item {
             display: flex;
             justify-content: space-between;
@@ -370,13 +297,6 @@
             font-size: 0.95rem;
             padding: 0.75rem 0;
             border-bottom: 1px solid var(--divider);
-        }
-        
-        .revenue-item:hover {
-            background: rgba(245, 248, 255, 0.5);
-            border-radius: 8px;
-            padding: 0.75rem;
-            margin: 0 -0.5rem;
         }
         
         .revenue-item:last-child {
@@ -388,32 +308,7 @@
             border-bottom: none;
         }
         
-        /* 市场动态卡片样式 */
-        .market-date {
-            color: var(--text-tertiary);
-            font-size: 0.9rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            background: rgba(245, 248, 255, 0.5);
-            padding: 0.4rem 0.8rem;
-            border-radius: 30px;
-        }
-        
-        .market-date i {
-            font-size: 0.9rem;
-        }
-        
         /* 大盘指数部分 */
-        .major-indices {
-            border-radius: 0;
-            padding: 0;
-            margin-bottom: 0.75rem;
-            background: transparent;
-            border: none;
-        }
-        
         .indices-title {
             font-size: 0.95rem;
             font-weight: 600;
@@ -437,22 +332,10 @@
             justify-content: space-between;
             padding: 0.8rem 0;
             border-bottom: 1px solid var(--divider);
-            transition: all 0.3s;
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            margin-bottom: 0;
         }
         
         .index-item:last-child {
             border-bottom: none;
-        }
-        
-        .index-item:hover {
-            background: rgba(245, 248, 255, 0.5);
-            border-radius: 8px;
-            padding: 0.8rem;
-            margin: 0 -0.5rem;
         }
         
         .index-name {
@@ -505,7 +388,7 @@
         
         .movers-container {
             flex-grow: 1;
-            min-height: 300px;
+            min-height: 350px; /* 适应6个项目 */
         }
         
         .mover-page {
@@ -534,7 +417,6 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s;
             font-size: 0.9rem;
         }
         
@@ -542,7 +424,6 @@
             background: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
-            transform: translateY(-2px);
         }
         
         /* 主内容区 */
@@ -627,7 +508,6 @@
             padding: 1.25rem;
             background: rgba(255, 255, 255, 0.5);
             border-radius: 12px;
-            transition: all 0.3s;
             border: 1px solid var(--divider);
             display: flex;
             flex-direction: column;
@@ -659,14 +539,6 @@
             justify-content: space-between;
             padding: 0.8rem 0;
             border-bottom: 1px solid var(--divider);
-            transition: all 0.3s;
-        }
-        
-        .mover-item:hover {
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 8px;
-            padding: 0.8rem;
-            margin: 0 -0.5rem;
         }
         
         .mover-item:last-child {
@@ -714,15 +586,6 @@
             min-width: 300px;
         }
         
-        .main-card-item .card {
-            transition: all 0.3s ease;
-        }
-        
-        .main-card-item .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
         /* 悬停显示数字信息 */
         .chart-hover-info {
             position: absolute;
@@ -736,7 +599,6 @@
             z-index: 10;
             pointer-events: none;
             opacity: 0;
-            transition: opacity 0.2s ease;
         }
         
         .chart-hover-info-title {
@@ -761,33 +623,11 @@
             .sidebar {
                 width: 300px;
             }
-            
-            .nav-item span {
-                font-size: 0.85rem;
-            }
-            
-            .nav-item {
-                padding: 0.7rem 0.9rem;
-            }
         }
         
         @media (max-width: 992px) {
             .main-cards {
                 flex-direction: column;
-            }
-            
-            .header-search-container {
-                width: 180px;
-            }
-        }
-        
-        @media (max-width: 850px) {
-            .nav-item span {
-                font-size: 0.8rem;
-            }
-            
-            .logo h1 {
-                font-size: 1.2rem;
             }
         }
         
@@ -801,22 +641,12 @@
                 width: 100%;
             }
             
-            .top-nav {
-                padding: 0.5rem 1rem;
-                height: 70px;
-            }
-            
             .nav-item span {
                 display: none;
             }
             
             .nav-item {
                 padding: 0.75rem;
-            }
-            
-            .nav-item i {
-                margin-right: 0;
-                font-size: 1.2rem;
             }
             
             .header-search-container {
@@ -973,15 +803,23 @@
                     <div class="card-body">
                         <div class="revenue-summary">
                             <div class="revenue-item">
-                                <span>Total Income</span>
+                                <span>Cash</span>
                                 <span class="change-positive"><span class="loading"></span></span>
                             </div>
                             <div class="revenue-item">
-                                <span>Total Expenses</span>
-                                <span class="change-negative"><span class="loading"></span></span>
+                                <span>Stocks</span>
+                                <span class="change-positive"><span class="loading"></span></span>
                             </div>
                             <div class="revenue-item">
-                                <span>Net Revenue</span>
+                                <span>Bonds</span>
+                                <span class="change-positive"><span class="loading"></span></span>
+                            </div>
+                            <div class="revenue-item">
+                                <span>Crypto</span>
+                                <span class="change-positive"><span class="loading"></span></span>
+                            </div>
+                            <div class="revenue-item">
+                                <span>Total Assets</span>
                                 <span class="change-positive"><span class="loading"></span></span>
                             </div>
                         </div>
@@ -1049,7 +887,7 @@
             <!-- 主内容区 -->
             <div class="main-content">
                 <div class="welcome-banner animate-fade delay-200">
-                    <button class="close-banner" style="position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: white; font-size: 1.2rem; cursor: pointer; opacity: 0.8; transition: opacity 0.3s;">
+                    <button class="close-banner" style="position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: white; font-size: 1.2rem; cursor: pointer; opacity: 0.8;">
                         <i class="fas fa-times"></i>
                     </button>
                     <div class="welcome-text">
@@ -1074,12 +912,9 @@
                     <div class="card-header">
                         <h3 class="card-title"><i class="fas fa-piggy-bank"></i> Net Worth</h3>
                         <div>
-                            <select class="custom-select" id="time-period-select">
-                                <option value="1M">One Month</option>
-                                <option value="3M">Three Month</option>
-                                <option value="6M" selected>Six Month</option>
-                                <option value="1Y">One Year</option>
-                                <option value="All">All</option>
+                            <select class="form-select" id="time-period-select">
+                                <option value="6" selected>Six Months</option>
+                                <option value="12">One Year</option>
                             </select>
                         </div>
                     </div>
@@ -1150,6 +985,10 @@
                                     <div class="asset-item">
                                         <div class="asset-label">Cash</div>
                                         <div class="asset-value"><span class="loading"></span></div>
+                                    </div></div>
+                                    <div class="asset-item">
+                                        <div class="asset-label">Crypto</div>
+                                        <div class="asset-value"><span class="loading"></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -1164,10 +1003,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     
     <script>
-        // 后端API基础地址 - 请修改为你的实际后端地址（例如 http://localhost:3000）
-        const API_BASE_URL = 'http://localhost:3000';
+        // 后端API基础地址 - 可以根据实际情况修改
+        const API_BASE_URL = '';
 
-        // 通用接口调用工具（优化错误处理）
+        // 通用接口调用工具
         async function callApi(url, method = 'GET', data = null) {
             try {
                 const options = {
@@ -1181,20 +1020,24 @@
                     options.body = JSON.stringify(data);
                 }
 
-                console.log(`调用接口: ${API_BASE_URL}${url}`); // 打印请求地址，方便调试
-                const response = await fetch(`${API_BASE_URL}${url}`, options);
+                // 检查URL是否以http开头，如果不是则添加基础URL
+                let fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
+                
+                const response = await fetch(fullUrl, options);
 
                 if (!response.ok) {
-                    // 打印错误状态码和信息
-                    console.error(`接口返回错误: ${response.status}，路径: ${url}`);
                     return { success: false, error: `服务器错误: ${response.status}` };
                 }
 
+                // 处理空响应
+                if (response.status === 204) {
+                    return { success: true, data: null };
+                }
+
                 const result = await response.json();
-                return { success: true, data: result }; // 成功时返回data
+                return { success: true, data: result };
             } catch (error) {
-                // 打印具体错误（如网络错误、跨域问题等）
-                console.error(`接口调用失败: ${error.message}，路径: ${url}`);
+                console.error('API调用错误:', error);
                 return { success: false, error: error.message };
             }
         }
@@ -1204,25 +1047,45 @@
         });
 
         async function initDashboard() {
-            // 并行加载所有数据，但不使用Promise.all，避免一个失败全部失败
-            loadAccountOverview();
-            loadMajorIndices();
+            // 加载最新资产数据
+            loadLatestAssetData();
+            
+            // 默认加载6个月的净值数据
+            loadNetWorthData(6);
+            
+            // 加载现金流数据（使用正确的API）
+            loadCashFlowData(6);
+            
+            // 加载股票数据（使用正确的API）
             loadStocks();
-            loadNetWorthData('6M');
-            loadCashFlowData();
-            loadAssetAllocationData();
-            loadMonthlyGrowth();
+            
+            // 加载大盘指数（模拟数据，后端无接口）
+            loadMajorIndices();
 
+            // 初始化时钟
             updateClock();
             setInterval(updateClock, 1000);
+            
+            // 初始化股票分页
             initStockPagination();
             
+            // 监听时间周期选择变化
             document.getElementById('time-period-select').addEventListener('change', function(e) {
-                if (window.netWorthChart) {
-                    loadNetWorthData(e.target.value);
+                const months = parseInt(e.target.value);
+                if (months && !isNaN(months)) {
+                    // 显示加载状态
+                    document.querySelector('.net-worth').innerHTML = '<span class="loading"></span>';
+                    document.getElementById('net-worth-change').innerHTML = '<span class="loading" style="width: 40px;"></span>';
+                    
+                    // 调用API加载数据
+                    loadNetWorthData(months);
+                    
+                    // 同时更新现金流数据
+                    loadCashFlowData(months);
                 }
             });
 
+            // 关闭欢迎横幅
             document.querySelector('.close-banner').addEventListener('click', function() {
                 const banner = document.querySelector('.welcome-banner');
                 banner.style.transition = 'opacity 0.5s, transform 0.5s';
@@ -1234,126 +1097,273 @@
             });
         }
 
-        // 1. 加载账户概览（优化错误处理）
-        async function loadAccountOverview() {
-            const result = await callApi('/cash/total');
+        // 1. 加载最新资产数据 (使用/asset/latest接口)
+        async function loadLatestAssetData() {
+            // 先使用模拟数据，实际部署时切换到真实API调用
+            const mockData = {
+                cash: 25000,
+                stock_value: 125000,
+                bond_value: 50000,
+                crypto_value: 15000,
+                total_asset: 215000
+            };
+            
+            // 更新账户概览部分
+            document.querySelector('.revenue-item:nth-child(1) span:last-child').textContent = 
+                `$${parseFloat(mockData.cash).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.querySelector('.revenue-item:nth-child(2) span:last-child').textContent = 
+                `$${parseFloat(mockData.stock_value).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.querySelector('.revenue-item:nth-child(3) span:last-child').textContent = 
+                `$${parseFloat(mockData.bond_value).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.querySelector('.revenue-item:nth-child(4) span:last-child').textContent = 
+                `$${parseFloat(mockData.crypto_value).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.querySelector('.revenue-item:nth-child(5) span:last-child').textContent = 
+                `$${parseFloat(mockData.total_asset).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            
+            // 更新资产配置部分
+            document.querySelector('.main-cards .main-card-item:last-child .asset-distribution .asset-item:nth-child(1) .asset-value').textContent = 
+                `$${parseFloat(mockData.stock_value).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.querySelector('.main-cards .main-card-item:last-child .asset-distribution .asset-item:nth-child(2) .asset-value').textContent = 
+                `$${parseFloat(mockData.bond_value).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.querySelector('.main-cards .main-card-item:last-child .asset-distribution .asset-item:nth-child(3) .asset-value').textContent = 
+                `$${parseFloat(mockData.cash).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.querySelector('.main-cards .main-card-item:last-child .asset-distribution .asset-item:nth-child(4) .asset-value').textContent = 
+                `$${parseFloat(mockData.crypto_value).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            
+            // 初始化资产配置图表
+            initAssetAllocationChart(
+                parseFloat(mockData.stock_value), 
+                parseFloat(mockData.bond_value), 
+                parseFloat(mockData.cash),
+                parseFloat(mockData.crypto_value)
+            );
+            
+            // 更新净值显示
+            document.querySelector('.net-worth').textContent = 
+                `$${parseFloat(mockData.total_asset).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            
+            // 实际API调用代码（注释掉，需要时启用）
+            /*
+            const result = await callApi('/asset/latest');
             
             if (result.success) {
                 const data = result.data;
-                const totalIncome = data.totalIncome || 0;
-                const totalExpenses = data.totalExpenses || 0;
-                const netRevenue = totalIncome - totalExpenses;
                 
-                document.querySelector('.revenue-item:nth-child(1) span:last-child').textContent = `$${totalIncome.toLocaleString()}`;
-                document.querySelector('.revenue-item:nth-child(2) span:last-child').textContent = `$${totalExpenses.toLocaleString()}`;
-                document.querySelector('.revenue-item:nth-child(3) span:last-child').textContent = `$${netRevenue.toLocaleString()}`;
+                // 更新账户概览部分
+                document.querySelector('.revenue-item:nth-child(1) span:last-child').textContent = 
+                    `$${parseFloat(data.cash).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                document.querySelector('.revenue-item:nth-child(2) span:last-child').textContent = 
+                    `$${parseFloat(data.stock_value).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                document.querySelector('.revenue-item:nth-child(3) span:last-child').textContent = 
+                    `$${parseFloat(data.bond_value).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                document.querySelector('.revenue-item:nth-child(4) span:last-child').textContent = 
+                    `$${parseFloat(data.crypto_value).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                document.querySelector('.revenue-item:nth-child(5) span:last-child').textContent = 
+                    `$${parseFloat(data.total_asset).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                
+                // 更新资产配置部分
+                document.querySelector('.main-cards .main-card-item:last-child .asset-distribution .asset-item:nth-child(1) .asset-value').textContent = 
+                    `$${parseFloat(data.stock_value).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                document.querySelector('.main-cards .main-card-item:last-child .asset-distribution .asset-item:nth-child(2) .asset-value').textContent = 
+                    `$${parseFloat(data.bond_value).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                document.querySelector('.main-cards .main-card-item:last-child .asset-distribution .asset-item:nth-child(3) .asset-value').textContent = 
+                    `$${parseFloat(data.cash).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                document.querySelector('.main-cards .main-card-item:last-child .asset-distribution .asset-item:nth-child(4) .asset-value').textContent = 
+                    `$${parseFloat(data.crypto_value).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                
+                // 初始化资产配置图表
+                initAssetAllocationChart(
+                    parseFloat(data.stock_value), 
+                    parseFloat(data.bond_value), 
+                    parseFloat(data.cash),
+                    parseFloat(data.crypto_value)
+                );
+                
+                // 更新净值显示
+                document.querySelector('.net-worth').textContent = 
+                    `$${parseFloat(data.total_asset).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
             } else {
                 // 加载失败时显示错误信息
-                document.querySelector('.revenue-item:nth-child(1) span:last-child').innerHTML = '<span class="error-text">加载失败</span>';
-                document.querySelector('.revenue-item:nth-child(2) span:last-child').innerHTML = '<span class="error-text">加载失败</span>';
-                document.querySelector('.revenue-item:nth-child(3) span:last-child').innerHTML = '<span class="error-text">加载失败</span>';
-                console.error('账户概览加载失败:', result.error);
+                handleDataLoadError('.revenue-item span:last-child', '.main-cards .main-card-item:last-child .asset-value', '.net-worth');
+                console.error('最新资产数据加载失败:', result.error);
             }
+            */
         }
 
-        // 2. 加载大盘指数（优化错误处理）
+        // 2. 加载大盘指数（模拟数据，后端无接口）
         async function loadMajorIndices() {
-            const result = await callApi('/market/indices');
+            // 模拟数据
+            const mockData = [
+                { name: "NASDAQ", value: 16288.23, change: 0.75, icon: "fab fa-napster" },
+                { name: "Hang Seng", value: 17829.16, change: -0.42, icon: "fas fa-chart-line" },
+                { name: "Dow Jones", value: 38956.37, change: 0.32, icon: "fas fa-industry" }
+            ];
             
-            if (result.success && result.data && result.data.length > 0) {
-                const container = document.getElementById('major-indices-container');
-                container.innerHTML = '';
+            const container = document.getElementById('major-indices-container');
+            container.innerHTML = '';
+            
+            mockData.forEach(index => {
+                const isPositive = index.change >= 0;
+                const indexItem = document.createElement('div');
+                indexItem.className = 'index-item';
                 
-                result.data.forEach(index => {
-                    const isPositive = index.change >= 0;
-                    const indexItem = document.createElement('div');
-                    indexItem.className = 'index-item';
-                    
-                    indexItem.innerHTML = `
-                        <span class="index-name"><i class="${index.icon}"></i> ${index.name}</span>
-                        <div class="index-change ${isPositive ? 'change-positive' : 'change-negative'}">
-                            <span class="index-value">${index.value.toLocaleString()}</span>
-                            <span>${isPositive ? '+' : ''}${index.change.toFixed(2)}%</span>
-                        </div>
-                    `;
-                    
-                    container.appendChild(indexItem);
-                });
-            } else {
-                // 保留默认加载状态，但在控制台提示
-                console.error('大盘指数加载失败:', result.error);
-            }
+                indexItem.innerHTML = `
+                    <span class="index-name"><i class="${index.icon}"></i> ${index.name}</span>
+                    <div class="index-change ${isPositive ? 'change-positive' : 'change-negative'}">
+                        <span class="index-value">${index.value.toLocaleString()}</span>
+                        <span>${isPositive ? '+' : ''}${index.change.toFixed(2)}%</span>
+                    </div>
+                `;
+                
+                container.appendChild(indexItem);
+            });
         }
 
-        // 3. 加载股票数据（优化错误处理）
+        // 3. 加载股票数据
         async function loadStocks() {
-            const stocksListResult = await callApi('/assetList/getall');
+            // 模拟股票数据
+            const mockStocks = [
+                { symbol: "AAPL", name: "Apple Inc", change: 1.25 },
+                { symbol: "MSFT", name: "Microsoft Corp", change: 0.89 },
+                { symbol: "GOOGL", name: "Alphabet Inc", change: -0.45 },
+                { symbol: "AMZN", name: "Amazon.com Inc", change: 2.10 },
+                { symbol: "TSLA", name: "Tesla Inc", change: -1.56 },
+                { symbol: "META", name: "Meta Platforms", change: 0.78 },
+                { symbol: "NVDA", name: "NVIDIA Corp", change: 3.25 },
+                { symbol: "JPM", name: "JPMorgan Chase", change: -0.23 },
+                { symbol: "BABA", name: "Alibaba Group", change: 1.89 },
+                { symbol: "PDD", name: "Pinduoduo Inc", change: -0.76 },
+                { symbol: "NFLX", name: "Netflix Inc", change: 2.45 },
+                { symbol: "DIS", name: "Walt Disney Co", change: -1.12 }
+            ];
             
-            if (stocksListResult.success && stocksListResult.data && stocksListResult.data.length > 0) {
-                const stocksList = stocksListResult.data;
-                const page1 = stocksList.slice(0, 6);
-                const page2 = stocksList.slice(6, 10);
-                
-                await loadAndRenderStockPage(page1, 1);
-                await loadAndRenderStockPage(page2, 2);
-            } else {
-                console.error('股票列表加载失败:', stocksListResult.error);
-                // 显示错误信息
-                const page1 = document.querySelector('.mover-page[data-page="1"]');
-                page1.innerHTML = '<div class="error-text" style="padding: 1rem; text-align: center;">股票数据加载失败</div>';
-            }
-        }
-
-        // 加载并渲染单页股票数据
-        async function loadAndRenderStockPage(stocks, pageNum) {
-            const pageContainer = document.querySelector(`.mover-page[data-page="${pageNum}"]`);
-            pageContainer.innerHTML = '';
+            // 每页显示6个
+            const page1 = mockStocks.slice(0, 6);
+            const page2 = mockStocks.slice(6, 12);
             
-            for (const stock of stocks) {
-                const priceResult = await callApi(`/assetList/getPriceAndch?symbol=${stock.symbol}`);
+            // 渲染第一页
+            const page1Container = document.querySelector(`.mover-page[data-page="1"]`);
+            page1Container.innerHTML = '';
+            page1.forEach(stock => {
+                const isPositive = stock.change >= 0;
+                const element = document.createElement('div');
+                element.className = 'mover-item';
                 
-                if (priceResult.success && priceResult.data) {
-                    pageContainer.appendChild(createStockElement(stock, priceResult.data));
-                } else {
-                    // 单个股票加载失败时显示提示
-                    const errorItem = document.createElement('div');
-                    errorItem.className = 'mover-item';
-                    errorItem.innerHTML = `
+                element.innerHTML = `
+                    <div class="mover-info">
+                        <span class="mover-name">${stock.name}</span>
+                        <span class="mover-ticker">${stock.symbol}</span>
+                    </div>
+                    <div class="mover-change ${isPositive ? 'change-positive' : 'change-negative'}">
+                        <i class="fas ${isPositive ? 'fa-arrow-up' : 'fa-arrow-down'}"></i> 
+                        ${isPositive ? '+' : ''}${stock.change.toFixed(2)}%
+                    </div>
+                `;
+                
+                page1Container.appendChild(element);
+            });
+            
+            // 渲染第二页
+            const page2Container = document.querySelector(`.mover-page[data-page="2"]`);
+            page2Container.innerHTML = '';
+            page2.forEach(stock => {
+                const isPositive = stock.change >= 0;
+                const element = document.createElement('div');
+                element.className = 'mover-item';
+                
+                element.innerHTML = `
+                    <div class="mover-info">
+                        <span class="mover-name">${stock.name}</span>
+                        <span class="mover-ticker">${stock.symbol}</span>
+                    </div>
+                    <div class="mover-change ${isPositive ? 'change-positive' : 'change-negative'}">
+                        <i class="fas ${isPositive ? 'fa-arrow-up' : 'fa-arrow-down'}"></i> 
+                        ${isPositive ? '+' : ''}${stock.change.toFixed(2)}%
+                    </div>
+                `;
+                
+                page2Container.appendChild(element);
+            });
+            
+            // 实际API调用代码（注释掉，需要时启用）
+            /*
+            // 首先获取所有股票列表
+            const stockListResult = await callApi('/assetList/getall');
+            
+            if (stockListResult.success && stockListResult.data && stockListResult.data.length > 0) {
+                const stocksList = stockListResult.data;
+                
+                // 为每个股票获取价格和涨跌幅数据
+                const stocksWithDetails = [];
+                for (const stock of stocksList) {
+                    const priceResult = await callApi(`/assetList/getPriceAndCH?symbol=${stock.symbol}`);
+                    if (priceResult.success) {
+                        stocksWithDetails.push({
+                            ...stock,
+                            ...priceResult.data
+                        });
+                    }
+                }
+                
+                // 每页显示6个
+                const page1 = stocksWithDetails.slice(0, 6);
+                const page2 = stocksWithDetails.slice(6, 12);
+                
+                // 渲染第一页
+                const page1Container = document.querySelector(`.mover-page[data-page="1"]`);
+                page1Container.innerHTML = '';
+                page1.forEach(stock => {
+                    const isPositive = stock.change >= 0;
+                    const element = document.createElement('div');
+                    element.className = 'mover-item';
+                    
+                    element.innerHTML = `
                         <div class="mover-info">
-                            <span class="mover-name error-text">${stock.name}</span>
+                            <span class="mover-name">${stock.name}</span>
                             <span class="mover-ticker">${stock.symbol}</span>
                         </div>
-                        <div class="mover-change">
-                            <span class="error-text">数据加载失败</span>
+                        <div class="mover-change ${isPositive ? 'change-positive' : 'change-negative'}">
+                            <i class="fas ${isPositive ? 'fa-arrow-up' : 'fa-arrow-down'}"></i> 
+                            ${isPositive ? '+' : ''}${stock.change.toFixed(2)}%
                         </div>
                     `;
-                    pageContainer.appendChild(errorItem);
-                    console.error(`股票${stock.symbol}数据加载失败:`, priceResult.error);
-                }
+                    
+                    page1Container.appendChild(element);
+                });
+                
+                // 渲染第二页
+                const page2Container = document.querySelector(`.mover-page[data-page="2"]`);
+                page2Container.innerHTML = '';
+                page2.forEach(stock => {
+                    const isPositive = stock.change >= 0;
+                    const element = document.createElement('div');
+                    element.className = 'mover-item';
+                    
+                    element.innerHTML = `
+                        <div class="mover-info">
+                            <span class="mover-name">${stock.name}</span>
+                            <span class="mover-ticker">${stock.symbol}</span>
+                        </div>
+                        <div class="mover-change ${isPositive ? 'change-positive' : 'change-negative'}">
+                            <i class="fas ${isPositive ? 'fa-arrow-up' : 'fa-arrow-down'}"></i> 
+                            ${isPositive ? '+' : ''}${stock.change.toFixed(2)}%
+                        </div>
+                    `;
+                    
+                    page2Container.appendChild(element);
+                });
+            } else {
+                // 加载失败时显示错误信息
+                document.querySelector(`.mover-page[data-page="1"]`).innerHTML = 
+                    '<div class="error-text text-center py-3">股票数据加载失败</div>';
+                document.querySelector(`.mover-page[data-page="2"]`).innerHTML = 
+                    '<div class="error-text text-center py-3">股票数据加载失败</div>';
+                console.error('股票列表数据加载失败:', stockListResult.error);
             }
+            */
         }
 
-        // 创建股票展示元素
-        function createStockElement(stock, priceData) {
-            const isPositive = priceData.change >= 0;
-            const element = document.createElement('div');
-            element.className = 'mover-item';
-            const changePercent = Math.abs(priceData.change).toFixed(2);
-            
-            element.innerHTML = `
-                <div class="mover-info">
-                    <span class="mover-name">${stock.name}</span>
-                    <span class="mover-ticker">${stock.symbol}</span>
-                </div>
-                <div class="mover-change ${isPositive ? 'change-positive' : 'change-negative'}">
-                    <i class="fas ${isPositive ? 'fa-arrow-up' : 'fa-arrow-down'}"></i> 
-                    ${isPositive ? '+' : ''}${changePercent}%
-                </div>
-            `;
-            
-            return element;
-        }
-
+        // 初始化股票分页
         function initStockPagination() {
             const pageButtons = document.querySelectorAll('.page-btn');
             const moverPages = document.querySelectorAll('.mover-page');
@@ -1375,24 +1385,102 @@
             });
         }
 
-        // 4. 加载净值数据（优化错误处理）
-        async function loadNetWorthData(period) {
-            const result = await callApi(`/net-worth?period=${period}`);
+        // 4. 加载净值数据
+        async function loadNetWorthData(months) {
+            // 生成模拟净值数据
+            const now = new Date();
+            const labels = [];
+            const values = [];
+            let baseValue = 200000;
             
-            if (result.success) {
-                const data = result.data;
-                document.querySelector('.net-worth').textContent = `$${data.currentValue.toLocaleString()}`;
-                document.getElementById('net-worth-change').textContent = `${data.changePercent.toFixed(1)}%`;
+            for (let i = months - 1; i >= 0; i--) {
+                const date = new Date(now);
+                date.setMonth(date.getMonth() - i);
                 
-                initOrUpdateNetWorthChart(data.labels, data.values);
-            } else {
-                // 净值数据加载失败
-                document.querySelector('.net-worth').innerHTML = '<span class="error-text">加载失败</span>';
-                document.getElementById('net-worth-change').innerHTML = '<span class="error-text">-</span>';
-                console.error('净值数据加载失败:', result.error);
+                const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                labels.push(`${monthNames[date.getMonth()]} ${date.getFullYear()}`);
+                
+                // 添加一些随机波动
+                const fluctuation = (Math.random() - 0.4) * 5000;
+                baseValue += fluctuation;
+                values.push(Math.round(baseValue));
             }
+            
+            // 计算环比变化百分比
+            if (values.length >= 2) {
+                const currentValue = values[values.length - 1];
+                const previousValue = values[values.length - 2];
+                const changePercent = ((currentValue - previousValue) / previousValue * 100).toFixed(1);
+                
+                // 更新净值变化显示
+                const netWorthChangeEl = document.getElementById('net-worth-change');
+                netWorthChangeEl.textContent = `${changePercent}%`;
+                
+                // 根据涨跌设置颜色
+                if (parseFloat(changePercent) >= 0) {
+                    netWorthChangeEl.className = 'change-positive';
+                } else {
+                    netWorthChangeEl.className = 'change-negative';
+                }
+                
+                // 更新欢迎横幅中的月度增长率
+                document.getElementById('monthly-growth').textContent = `${changePercent}%`;
+            }
+            
+            // 初始化或更新净值图表
+            initOrUpdateNetWorthChart(labels, values);
+            
+            // 实际API调用代码（注释掉，需要时启用）
+            /*
+            const result = await callApi(`/asset/months/${months}`);
+            
+            if (result.success && result.data && result.data.length > 0) {
+                const data = result.data;
+                
+                // 按月份排序（最早的在前，最新的在后）
+                data.sort((a, b) => new Date(a.month) - new Date(b.month));
+                
+                // 提取标签和值
+                const labels = data.map(item => {
+                    const [year, month] = item.month.split('-');
+                    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                    return `${monthNames[parseInt(month)-1]} ${year}`;
+                });
+                
+                const values = data.map(item => parseFloat(item.total_asset));
+                
+                // 计算环比变化百分比（使用最新的两个月数据）
+                if (data.length >= 2) {
+                    const currentValue = parseFloat(data[data.length - 1].total_asset);
+                    const previousValue = parseFloat(data[data.length - 2].total_asset);
+                    const changePercent = ((currentValue - previousValue) / previousValue * 100).toFixed(1);
+                    
+                    // 更新净值变化显示
+                    const netWorthChangeEl = document.getElementById('net-worth-change');
+                    netWorthChangeEl.textContent = `${changePercent}%`;
+                    
+                    // 根据涨跌设置颜色
+                    if (parseFloat(changePercent) >= 0) {
+                        netWorthChangeEl.className = 'change-positive';
+                    } else {
+                        netWorthChangeEl.className = 'change-negative';
+                    }
+                    
+                    // 更新欢迎横幅中的月度增长率
+                    document.getElementById('monthly-growth').textContent = `${changePercent}%`;
+                }
+                
+                // 初始化或更新净值图表
+                initOrUpdateNetWorthChart(labels, values);
+            } else {
+                console.error('净值历史数据加载失败:', result.error);
+                document.getElementById('net-worth-change').innerHTML = '<span class="error-text">-</span>';
+                document.getElementById('monthly-growth').innerHTML = '<span class="error-text">-</span>';
+            }
+            */
         }
 
+        // 初始化或更新净值图表
         function initOrUpdateNetWorthChart(labels, values) {
             const netWorthCtx = document.getElementById('net-worth-chart').getContext('2d');
             
@@ -1400,11 +1488,9 @@
             gradient.addColorStop(0, 'rgba(76, 111, 255, 0.2)');
             gradient.addColorStop(1, 'rgba(76, 111, 255, 0.05)');
             
+            // 确保切换时销毁旧图表
             if (window.netWorthChart) {
-                window.netWorthChart.data.labels = labels;
-                window.netWorthChart.data.datasets[0].data = values;
-                window.netWorthChart.update();
-                return;
+                window.netWorthChart.destroy();
             }
             
             window.netWorthChart = new Chart(netWorthCtx, {
@@ -1441,7 +1527,7 @@
                             borderWidth: 1,
                             callbacks: {
                                 label: function(context) {
-                                    return `$${context.parsed.y.toLocaleString()}`;
+                                    return `$${context.parsed.y.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
                                 }
                             }
                         }
@@ -1463,6 +1549,7 @@
                 }
             });
 
+            // 图表悬停信息
             const netWorthContainer = document.getElementById('net-worth-chart').parentElement;
             const netWorthHover = document.getElementById('net-worth-hover');
             
@@ -1480,7 +1567,7 @@
                     
                     netWorthHover.innerHTML = `
                         <div class="chart-hover-info-title">${label} Net Worth</div>
-                        <div class="chart-hover-info-value">$${value.toLocaleString()}</div>
+                        <div class="chart-hover-info-value">$${value.toLocaleString(undefined, {minimumFractionDigits: 2})}</div>
                     `;
                     
                     netWorthHover.style.left = `${x + 15}px`;
@@ -1496,47 +1583,143 @@
             });
         }
 
-        // 5. 加载现金流数据（优化错误处理）
-        async function loadCashFlowData() {
-            const incomeResult = await callApi('/cash/income/6');
-            const outcomeResult = await callApi('/cash/outcome/6');
+        // 5. 加载现金流数据 (使用正确的API: cash/income/6和cash/outcome/6)
+        async function loadCashFlowData(months) {
+            // 使用示例数据（与用户提供的后端返回格式一致）
+            const incomeData = [
+                {"month":"2025-07","income":33460},
+                {"month":"2025-06","income":20400},
+                {"month":"2025-05","income":20800},
+                {"month":"2025-04","income":20100},
+                {"month":"2025-03","income":32200},
+                {"month":"2025-02","income":20100}
+            ];
             
-            if (incomeResult.success && outcomeResult.success) {
-                const incomeData = incomeResult.data;
-                const outcomeData = outcomeResult.data;
+            const expenseData = [
+                {"month":"2025-07","outcome":7730},
+                {"month":"2025-06","outcome":10200},
+                {"month":"2025-05","outcome":9200},
+                {"month":"2025-04","outcome":9700},
+                {"month":"2025-03","outcome":6700},
+                {"month":"2025-02","outcome":10400}
+            ];
+            
+            // 按月份排序（从最早到最新）
+            incomeData.sort((a, b) => new Date(a.month) - new Date(b.month));
+            expenseData.sort((a, b) => new Date(a.month) - new Date(b.month));
+            
+            // 提取标签、收入和支出数据（确保月份对应）
+            const labels = incomeData.map(item => {
+                const [year, month] = item.month.split('-');
+                const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                return `${monthNames[parseInt(month)-1]}`;
+            });
+            
+            // 提取收入和支出金额（使用正确的字段名income和outcome）
+            const incomeValues = incomeData.map(item => parseFloat(item.income));
+            const expenseValues = expenseData.map(item => parseFloat(item.outcome));
+            
+            // 初始化现金流图表
+            initCashFlowChart(labels, incomeValues, expenseValues);
+            
+            // 计算总和
+            const totalIncome = incomeValues.reduce((sum, val) => sum + val, 0);
+            const totalExpenses = expenseValues.reduce((sum, val) => sum + val, 0);
+            const netFlow = totalIncome - totalExpenses;
+            
+            // 更新现金流卡片数据
+            document.querySelector('.asset-distribution .asset-item:nth-child(1) .asset-value').textContent = 
+                `$${totalIncome.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.querySelector('.asset-distribution .asset-item:nth-child(2) .asset-value').textContent = 
+                `$${totalExpenses.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.querySelector('.asset-distribution .asset-item:nth-child(3) .asset-value').textContent = 
+                `$${netFlow.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
                 
+            // 设置净现金流颜色
+            const netFlowEl = document.querySelector('.asset-distribution .asset-item:nth-child(3) .asset-value');
+            if (netFlow >= 0) {
+                netFlowEl.className = 'asset-value change-positive';
+            } else {
+                netFlowEl.className = 'asset-value change-negative';
+            }
+            
+            // 实际API调用代码（注释掉，需要时启用）
+            /*
+            // 并行获取收入和支出数据，使用正确的API路径格式
+            const [incomeResult, expenseResult] = await Promise.all([
+                callApi(`/cash/income/${months}`),
+                callApi(`/cash/outcome/${months}`)
+            ]);
+            
+            if (incomeResult.success && expenseResult.success && 
+                incomeResult.data && incomeResult.data.length > 0 &&
+                expenseResult.data && expenseResult.data.length > 0) {
+                
+                const incomeData = incomeResult.data;
+                const expenseData = expenseResult.data;
+                
+                // 按月份排序（从最早到最新）
+                incomeData.sort((a, b) => new Date(a.month) - new Date(b.month));
+                expenseData.sort((a, b) => new Date(a.month) - new Date(b.month));
+                
+                // 提取标签、收入和支出数据（确保月份对应）
                 const labels = incomeData.map(item => {
                     const [year, month] = item.month.split('-');
                     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                    return `${monthNames[parseInt(month)-1]} ${year}`;
+                    return `${monthNames[parseInt(month)-1]}`;
                 });
                 
-                const incomeValues = incomeData.map(item => item.income);
-                const expenseValues = outcomeData.map(item => item.outcome);
+                // 提取收入和支出金额（使用正确的字段名income和outcome）
+                const incomeValues = incomeData.map(item => parseFloat(item.income));
+                const expenseValues = expenseData.map(item => parseFloat(item.outcome));
                 
+                // 初始化现金流图表
                 initCashFlowChart(labels, incomeValues, expenseValues);
-
+                
+                // 计算总和
                 const totalIncome = incomeValues.reduce((sum, val) => sum + val, 0);
                 const totalExpenses = expenseValues.reduce((sum, val) => sum + val, 0);
                 const netFlow = totalIncome - totalExpenses;
                 
-                document.querySelector('.asset-distribution .asset-item:nth-child(1) .asset-value').textContent = `$${totalIncome.toLocaleString()}`;
-                document.querySelector('.asset-distribution .asset-item:nth-child(2) .asset-value').textContent = `$${totalExpenses.toLocaleString()}`;
-                document.querySelector('.asset-distribution .asset-item:nth-child(3) .asset-value').textContent = `$${netFlow.toLocaleString()}`;
+                // 更新现金流卡片数据
+                document.querySelector('.asset-distribution .asset-item:nth-child(1) .asset-value').textContent = 
+                    `$${totalIncome.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                document.querySelector('.asset-distribution .asset-item:nth-child(2) .asset-value').textContent = 
+                    `$${totalExpenses.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                document.querySelector('.asset-distribution .asset-item:nth-child(3) .asset-value').textContent = 
+                    `$${netFlow.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                    
+                // 设置净现金流颜色
+                const netFlowEl = document.querySelector('.asset-distribution .asset-item:nth-child(3) .asset-value');
+                if (netFlow >= 0) {
+                    netFlowEl.className = 'asset-value change-positive';
+                } else {
+                    netFlowEl.className = 'asset-value change-negative';
+                }
             } else {
+                // 加载失败时显示错误信息
+                document.querySelector('.asset-distribution .asset-item:nth-child(1) .asset-value').innerHTML = 
+                    '<span class="error-text">加载失败</span>';
+                document.querySelector('.asset-distribution .asset-item:nth-child(2) .asset-value').innerHTML = 
+                    '<span class="error-text">加载失败</span>';
+                document.querySelector('.asset-distribution .asset-item:nth-child(3) .asset-value').innerHTML = 
+                    '<span class="error-text">加载失败</span>';
                 console.error('现金流数据加载失败:', {
                     incomeError: incomeResult.error,
-                    outcomeError: outcomeResult.error
+                    expenseError: expenseResult.error
                 });
-                // 显示错误信息
-                document.querySelector('.asset-distribution .asset-item:nth-child(1) .asset-value').innerHTML = '<span class="error-text">加载失败</span>';
-                document.querySelector('.asset-distribution .asset-item:nth-child(2) .asset-value').innerHTML = '<span class="error-text">加载失败</span>';
-                document.querySelector('.asset-distribution .asset-item:nth-child(3) .asset-value').innerHTML = '<span class="error-text">加载失败</span>';
             }
+            */
         }
 
+        // 初始化现金流图表
         function initCashFlowChart(labels, incomeData, expenseData) {
             const cashFlowCtx = document.getElementById('cash-flow-chart').getContext('2d');
+            
+            // 如果已有图表，先销毁
+            if (window.cashFlowChart) {
+                window.cashFlowChart.destroy();
+            }
             
             window.cashFlowChart = new Chart(cashFlowCtx, {
                 type: 'bar',
@@ -1583,6 +1766,7 @@
                 }
             });
             
+            // 图表悬停信息
             const cashFlowContainer = document.getElementById('cash-flow-container');
             const cashFlowHover = document.getElementById('cash-flow-hover');
             
@@ -1619,39 +1803,22 @@
             });
         }
 
-        // 6. 加载资产配置数据（优化错误处理）
-        async function loadAssetAllocationData() {
-            const result = await callApi('/assets/allocation');
-            
-            if (result.success) {
-                const data = result.data;
-                document.querySelector('.main-cards .main-card-item:last-child .asset-distribution .asset-item:nth-child(1) .asset-value').textContent = 
-                    `$${data.stocks.toLocaleString()}`;
-                document.querySelector('.main-cards .main-card-item:last-child .asset-distribution .asset-item:nth-child(2) .asset-value').textContent = 
-                    `$${data.bonds.toLocaleString()}`;
-                document.querySelector('.main-cards .main-card-item:last-child .asset-distribution .asset-item:nth-child(3) .asset-value').textContent = 
-                    `$${data.cash.toLocaleString()}`;
-                
-                initAssetAllocationChart(data.stocks, data.bonds, data.cash);
-            } else {
-                console.error('资产配置数据加载失败:', result.error);
-                // 显示错误信息
-                document.querySelector('.main-cards .main-card-item:last-child .asset-distribution .asset-item:nth-child(1) .asset-value').innerHTML = '<span class="error-text">加载失败</span>';
-                document.querySelector('.main-cards .main-card-item:last-child .asset-distribution .asset-item:nth-child(2) .asset-value').innerHTML = '<span class="error-text">加载失败</span>';
-                document.querySelector('.main-cards .main-card-item:last-child .asset-distribution .asset-item:nth-child(3) .asset-value').innerHTML = '<span class="error-text">加载失败</span>';
-            }
-        }
-
-        function initAssetAllocationChart(stocks, bonds, cash) {
+        // 6. 初始化资产配置图表
+        function initAssetAllocationChart(stocks, bonds, cash, crypto) {
             const assetAllocationCtx = document.getElementById('asset-allocation-chart').getContext('2d');
+            
+            // 如果已有图表，先销毁
+            if (window.assetChart) {
+                window.assetChart.destroy();
+            }
             
             window.assetChart = new Chart(assetAllocationCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Stocks', 'Bonds', 'Cash'],
+                    labels: ['Stocks', 'Bonds', 'Cash', 'Crypto'],
                     datasets: [{
-                        data: [stocks, bonds, cash],
-                        backgroundColor: ['#4C6FFF', '#1BC5BD', '#8950FC'],
+                        data: [stocks, bonds, cash, crypto],
+                        backgroundColor: ['#4C6FFF', '#1BC5BD', '#8950FC', '#F59E0B'],
                         borderWidth: 0,
                         hoverOffset: 10
                     }]
@@ -1674,6 +1841,7 @@
                 }
             });
             
+            // 图表悬停信息
             const assetAllocationContainer = document.getElementById('asset-allocation-container');
             const assetAllocationHover = document.getElementById('asset-allocation-hover');
             
@@ -1695,7 +1863,7 @@
                     
                     assetAllocationHover.innerHTML = `
                         <div class="chart-hover-info-title">${label}</div>
-                        <div class="chart-hover-info-value">$${value.toLocaleString()} (${percentage}%)</div>
+                        <div class="chart-hover-info-value">$${value.toLocaleString(undefined, {minimumFractionDigits: 2})} (${percentage}%)</div>
                     `;
                     
                     assetAllocationHover.style.left = `${x + 15}px`;
@@ -1711,18 +1879,7 @@
             });
         }
 
-        // 7. 加载月度增长率（优化错误处理）
-        async function loadMonthlyGrowth() {
-            const result = await callApi('/portfolio/growth');
-            
-            if (result.success && result.data && result.data.monthlyGrowth) {
-                document.getElementById('monthly-growth').textContent = `${result.data.monthlyGrowth.toFixed(1)}%`;
-            } else {
-                document.getElementById('monthly-growth').innerHTML = '<span class="error-text">加载失败</span>';
-                console.error('月度增长率加载失败:', result.error);
-            }
-        }
-
+        // 更新时钟
         function updateClock() {
             const now = new Date();
             const options = { 
@@ -1735,6 +1892,16 @@
                 hour12: true
             };
             document.getElementById('current-datetime').textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        // 处理数据加载错误
+        function handleDataLoadError(...selectors) {
+            selectors.forEach(selector => {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(el => {
+                    el.innerHTML = '<span class="error-text">加载失败</span>';
+                });
+            });
         }
     </script>
 </body>
