@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions & Trading | Portfolio Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4C6FFF;
+            --primary-light: #6B8AFF;
+            --secondary-color: #1BC5BD; /* 绿点核心颜色 */
+            --accent-color: #8950FC;
+            --rise-color: #c46060e3;   /* 上涨 - 红色 */
+            --fall-color: #10B981;     /* 下跌 - 绿色 */
+            --warning-color: #F59E0B;
+            
+            --text-primary: #1D2129;
+            --text-secondary: #4E5969;
+            --text-tertiary: #6a6d72;
+            --bg-light: #F7F9FC;
+            --bg-white: #FFFFFF;
+            --bg-card: #d1d5c730;
+            --card-border: rgba(0, 0, 0, 0.05);
+            --divider: #E2E8F0;
+            --top-nav-gray: #1A1A27; /* 导航栏背景 */
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --dropdown-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Manrope', 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+            padding-top: 70px;
+            line-height: 1.6;
+        }
+        
+        /* 顶部导航栏 */
+        .top-nav {
+            background: var(--top-nav-gray);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1.5rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+            border-bottom: 1px solid rgba(179, 69, 69, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+        
+        .logo h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--bg-white);
+            letter-spacing: -0.5px;
+        }
+        
+        .logo h1 span {
+            background: linear-gradient(to right, var(--primary-light), var(--accent-color));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0 0.5rem;
+            flex: 1;
+        }
+        
+        .nav-item {
+            padding: 0.7rem 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            color: rgba(227, 222, 222, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            position: relative;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--bg-white);
+        }
+        
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--secondary-color);
+            display: block;
+        }
+        
+        .nav-item i {
+            width: 1.1rem;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        /* 搜索框样式 */
+        .header-search-container {
+            position: relative;
+            width: 220px;
+            transition: all 0.3s ease;
+            flex-shrink: 1;
+            min-width: 150px;
+        }
+        
+        .header-search-input {
+            width: 100%;
+            padding: 0.7rem 0.85rem 0.7rem 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--bg-white);
+            font-weight: 500;
+        }
+        
+        .header-search-icon {
+            position: absolute;
+            left: 0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+        }
+        
+        /* 用户菜单 */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .user-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: none;
+            color: var(--bg-white);
+        }
+        
+        @media (min-width: 992px) {
+            .user-name {
+                display: block;
+            }
+        }
+        
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background-color: var(--bg-white);
+            border-radius: 12px;
+            box-shadow: var(--dropdown-shadow);
+            width: 220px;
+            padding: 0.75rem 0;
+            margin: 0;
+            list-style: none;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            border: 1px solid var(--divider);
+        }
+        
+        .user-menu:hover .user-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .user-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.85rem 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        
+        .user-dropdown a:hover {
+            background: rgba(76, 111, 255, 0.05);
+            color: var(--primary-color);
+        }
+        
+        /* 主内容区样式 */
+        .container {
+            max-width: 1200px;
+            margin: 1.25rem auto;
+            padding: 0 1rem;
+        }
+        
+        .page-title {
+            font-size: 1.85rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .trade-section {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            padding: 1.5rem;
+            height: 100%;
+            border: 1px solid var(--card-border);
+        }
+        
+        .section-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--divider);
+        }
+        
+        .trade-form .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .trade-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .trade-form input, .trade-form select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--bg-white);
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-trade {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .btn-buy {
+            background-color: var(--fall-color); /* 买入按钮用绿色 */
+            color: white;
+        }
+        
+        .btn-sell {
+            background-color: var(--rise-color); /* 卖出按钮用红色 */
+            color: white;
+        }
+        
+        .stock-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: rgba(245, 248, 255, 0.5);
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .stock-info.visible {
+            display: block;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        
+        .filter-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        .select-filter {
+            padding: 0.5rem;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background-color: var(--bg-white);
+        }
+        
+        .card {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+        }
+        
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--divider);
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .transactions-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .transactions-table th,
+        .transactions-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--divider);
+            font-size: 0.9rem;
+        }
+        
+        .transaction-type {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .type-buy {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--fall-color); /* 买入用绿色 */
+        }
+        
+        .type-sell {
+            background-color: rgba(196, 96, 96, 0.1);
+            color: var(--rise-color); /* 卖出用红色 */
+        }
+        
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        .message.success {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--fall-color);
+            display: block;
+        }
+        
+        .message.error {
+            background-color: rgba(196, 96, 96, 0.1);
+            color: var(--rise-color);
+            display: block;
+        }
+        
+        /* 红涨绿跌样式 */
+        .change-positive {
+            color: var(--rise-color); /* 上涨 - 红色 */
+        }
+        
+        .change-negative {
+            color: var(--fall-color); /* 下跌 - 绿色 */
+        }
+        
+        .badge.bg-success {
+            background-color: var(--rise-color) !important; /* 上涨 - 红色徽章 */
+            color: white !important;
+        }
+        
+        .badge.bg-danger {
+            background-color: var(--fall-color) !important; /* 下跌 - 绿色徽章 */
+            color: white !important;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .filters {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .transactions-table th:nth-child(5),
+            .transactions-table td:nth-child(5) {
+                display: none;
+            }
+            
+            .header-search-container {
+                order: 3;
+                width: 100%;
+                margin-top: 0.75rem;
+            }
+            
+            .nav-item span {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .transactions-table th:nth-child(4),
+            .transactions-table td:nth-child(4) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div class="top-nav">
+        <div class="logo">
+            <i class="fas fa-chart-line fa-lg" style="color: var(--primary-light);"></i>
+            <h1>Portfolio <span>Pro</span></h1>
+        </div>
+        
+        <div class="nav-links">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-home"></i> <span>Dashboard</span>
+            </a>
+            <a href="cash.html" class="nav-item">
+                <i class="fas fa-wallet"></i> <span>Cash</span>
+            </a>
+            <a href="stocks.html" class="nav-item">
+                <i class="fas fa-chart-line"></i> <span>Stocks</span>
+            </a>
+            <a href="transactions.html" class="nav-item active">
+                <i class="fas fa-exchange-alt"></i> <span>Transactions</span>
+            </a>
+        </div>
+        
+        <!-- 搜索框 -->
+        <div class="header-search-container">
+            <i class="fas fa-search header-search-icon"></i>
+            <input type="text" class="header-search-input" placeholder="Search stocks, bonds...">
+        </div>
+        
+        <div class="user-menu">
+            <div class="user-avatar" title="John Doe">JD</div>
+            <span class="user-name">John Doe</span>
+            <i class="fas fa-chevron-down"></i>
+            
+            <ul class="user-dropdown">
+                <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="#"><i class="fas fa-info-circle"></i> Info</a></li>
+                <li style="border-top: 1px solid var(--divider); margin-top: 0.25rem; padding-top: 0.5rem;">
+                    <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="container">
+        <h1 class="page-title">Transactions & Trading</h1>
+        
+        <div class="content-grid">
+            <!-- 左侧：交易表单 -->
+            <div class="trade-section">
+                <h2 class="section-title">Trade Stocks</h2>
+                
+                <div id="trade-message" class="message"></div>
+                
+                <form id="trade-form" class="trade-form">
+                    <div class="form-group">
+                        <label for="stock-symbol">Ticker Symbol</label>
+                        <input type="text" id="stock-symbol" placeholder="e.g. AAPL" required 
+                               style="text-transform: uppercase;" maxlength="5">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" id="quantity" min="1" placeholder="Enter number of shares" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Action</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="action-buy" name="action" value="buy" checked>
+                                <label for="action-buy">Buy</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="action-sell" name="action" value="sell">
+                                <label for="action-sell">Sell</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="stock-info" class="stock-info">
+                        <div class="info-row">
+                            <span class="info-label">Current Price:</span>
+                            <span class="info-value" id="current-price">$0.00</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Total Value:</span>
+                            <span class="info-value" id="total-value">$0.00</span>
+                        </div>
+                        
+                        <div class="holding-info" id="holding-info">
+                            <div class="info-row">
+                                <span class="info-label">Your Holdings:</span>
+                                <span class="info-value" id="your-holdings">0 shares</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" id="submit-trade" class="btn-trade btn-buy">
+                        <i class="fas fa-shopping-cart"></i> Buy Stock
+                    </button>
+                </form>
+            </div>
+            
+            <!-- 右侧：市场观察 -->
+            <div class="trade-section">
+                <h2 class="section-title">Market Watch</h2>
+                
+                <ul class="nav nav-tabs" id="marketTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="stock-tab" data-bs-toggle="tab"
+                            data-bs-target="#stock" type="button" role="tab">Stocks</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="bond-tab" data-bs-toggle="tab" data-bs-target="#bond"
+                            type="button" role="tab">Bonds</button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content mt-3" id="marketTabContent">
+                    <div class="tab-pane fade show active" id="stock" role="tabpanel">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center" data-symbol="AAPL">
+                                AAPL <span class="badge bg-success">$192.45 ▲1.2%</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center" data-symbol="MSFT">
+                                MSFT <span class="badge bg-danger">$335.10 ▼0.8%</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center" data-symbol="GOOGL">
+                                GOOGL <span class="badge bg-success">$148.50 ▲0.5%</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center" data-symbol="TSLA">
+                                TSLA <span class="badge bg-success">$255.32 ▲2.5%</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="bond" role="tabpanel">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                US 10Y <span class="badge bg-success">4.12% ▲0.03</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                EU 5Y <span class="badge bg-danger">2.75% ▼0.01</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="filters">
+            <div class="filter-group">
+                <label class="filter-label">Transaction Type</label>
+                <select id="type-filter" class="select-filter">
+                    <option value="all">All Types</option>
+                    <option value="buy">Buy</option>
+                    <option value="sell">Sell</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label class="filter-label">Asset Type</label>
+                <select id="asset-filter" class="select-filter">
+                    <option value="all">All Assets</option>
+                    <option value="stock">Stocks</option>
+                    <option value="bond">Bonds</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <span>Transaction Records</span>
+                <span id="transaction-count">Showing up to 5 transactions</span>
+            </div>
+            <div class="card-body">
+                <table class="transactions-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Asset</th>
+                            <th>Type</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total Value</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactions-table-body">
+                        <!-- 交易记录将动态加载 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeData();
+            loadTransactions();
+            setupEventListeners();
+        });
+        
+        // 初始化本地存储数据
+        function initializeData() {
+            if (!localStorage.getItem('stocks')) {
+                const initialStocks = [
+                    {
+                        id: 1,
+                        symbol: 'AAPL',
+                        name: 'Apple Inc.',
+                        shares: 10,
+                        purchasePrice: 170.50,
+                        purchaseDate: '2024-01-15',
+                        currentPrice: 182.35
+                    },
+                    {
+                        id: 2,
+                        symbol: 'MSFT',
+                        name: 'Microsoft Corp',
+                        shares: 5,
+                        purchasePrice: 280.25,
+                        purchaseDate: '2024-02-20',
+                        currentPrice: 320.75
+                    }
+                ];
+                localStorage.setItem('stocks', JSON.stringify(initialStocks));
+            }
+            
+            if (!localStorage.getItem('transactions')) {
+                localStorage.setItem('transactions', JSON.stringify(getMockTransactions()));
+            }
+        }
+        
+        // 设置事件监听器
+        function setupEventListeners() {
+            document.getElementById('stock-symbol').addEventListener('input', handleSymbolInput);
+            document.getElementById('quantity').addEventListener('input', calculateTotalValue);
+            
+            document.querySelectorAll('input[name="action"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const action = this.value;
+                    const button = document.getElementById('submit-trade');
+                    
+                    if (action === 'buy') {
+                        button.className = 'btn-trade btn-buy';
+                        button.innerHTML = '<i class="fas fa-shopping-cart"></i> Buy Stock';
+                    } else {
+                        button.className = 'btn-trade btn-sell';
+                        button.innerHTML = '<i class="fas fa-arrow-circle-right"></i> Sell Stock';
+                    }
+                    
+                    updateHoldingInfo();
+                    calculateTotalValue();
+                });
+            });
+            
+            document.querySelectorAll('.list-group-item[data-symbol]').forEach(item => {
+                item.addEventListener('click', function() {
+                    const symbol = this.getAttribute('data-symbol');
+                    document.getElementById('stock-symbol').value = symbol;
+                    handleSymbolInput();
+                });
+            });
+            
+            document.getElementById('trade-form').addEventListener('submit', handleTradeSubmit);
+            document.getElementById('type-filter').addEventListener('change', loadTransactions);
+            document.getElementById('asset-filter').addEventListener('change', loadTransactions);
+        }
+        
+        // 处理股票代码输入
+        function handleSymbolInput() {
+            const symbol = document.getElementById('stock-symbol').value.trim().toUpperCase();
+            if (symbol.length < 1) {
+                document.getElementById('stock-info').classList.remove('visible');
+                return;
+            }
+            
+            const stocks = JSON.parse(localStorage.getItem('stocks') || '[]');
+            const stock = stocks.find(s => s.symbol === symbol);
+            
+            let currentPrice = 0;
+            if (stock) {
+                currentPrice = stock.currentPrice;
+            } else {
+                currentPrice = (100 + Math.random() * 400).toFixed(2);
+            }
+            
+            document.getElementById('current-price').textContent = `$${parseFloat(currentPrice).toFixed(2)}`;
+            document.getElementById('stock-info').classList.add('visible');
+            updateHoldingInfo();
+            calculateTotalValue();
+        }
+        
+        // 更新持有信息
+        function updateHoldingInfo() {
+            const symbol = document.getElementById('stock-symbol').value.trim().toUpperCase();
+            const stocks = JSON.parse(localStorage.getItem('stocks') || '[]');
+            const stock = stocks.find(s => s.symbol === symbol);
+            const holdingInfo = document.getElementById('holding-info');
+            const yourHoldings = document.getElementById('your-holdings');
+            
+            const isSellAction = document.getElementById('action-sell').checked;
+            
+            if (stock && isSellAction) {
+                holdingInfo.style.display = 'block';
+                yourHoldings.textContent = `${stock.shares} shares`;
+            } else {
+                holdingInfo.style.display = 'none';
+            }
+        }
+        
+        // 计算总价值
+        function calculateTotalValue() {
+            const symbol = document.getElementById('stock-symbol').value.trim().toUpperCase();
+            if (!symbol) return;
+            
+            const quantity = parseInt(document.getElementById('quantity').value) || 0;
+            const priceText = document.getElementById('current-price').textContent;
+            const currentPrice = parseFloat(priceText.replace('$', '')) || 0;
+            
+            const totalValue = quantity * currentPrice;
+            document.getElementById('total-value').textContent = `$${totalValue.toFixed(2)}`;
+        }
+        
+        // 处理交易提交
+        function handleTradeSubmit(e) {
+            e.preventDefault();
+            
+            const symbol = document.getElementById('stock-symbol').value.trim().toUpperCase();
+            const quantity = parseInt(document.getElementById('quantity').value) || 0;
+            const action = document.querySelector('input[name="action"]:checked').value;
+            
+            if (!symbol || quantity <= 0) {
+                showMessage('Please enter valid symbol and quantity', 'error');
+                return;
+            }
+            
+            const priceText = document.getElementById('current-price').textContent;
+            const price = parseFloat(priceText.replace('$', '')) || 0;
+            
+            let stocks = JSON.parse(localStorage.getItem('stocks') || '[]');
+            
+            if (action === 'buy') {
+                const existingStockIndex = stocks.findIndex(s => s.symbol === symbol);
+                
+                if (existingStockIndex >= 0) {
+                    stocks[existingStockIndex].shares += quantity;
+                } else {
+                    stocks.push({
+                        id: Date.now(),
+                        symbol: symbol,
+                        name: getStockName(symbol),
+                        shares: quantity,
+                        purchasePrice: price,
+                        purchaseDate: new Date().toISOString().split('T')[0],
+                        currentPrice: price
+                    });
+                }
+                
+                addTransaction(symbol, quantity, price, 'buy');
+                showMessage(`Successfully bought ${quantity} shares of ${symbol}`, 'success');
+                
+            } else {
+                const stockIndex = stocks.findIndex(s => s.symbol === symbol);
+                
+                if (stockIndex === -1) {
+                    showMessage(`You don't own any shares of ${symbol}`, 'error');
+                    return;
+                }
+                
+                if (stocks[stockIndex].shares < quantity) {
+                    showMessage(`You only own ${stocks[stockIndex].shares} shares of ${symbol}`, 'error');
+                    return;
+                }
+                
+                stocks[stockIndex].shares -= quantity;
+                
+                if (stocks[stockIndex].shares === 0) {
+                    stocks.splice(stockIndex, 1);
+                }
+                
+                addTransaction(symbol, quantity, price, 'sell');
+                showMessage(`Successfully sold ${quantity} shares of ${symbol}`, 'success');
+            }
+            
+            localStorage.setItem('stocks', JSON.stringify(stocks));
+            loadTransactions();
+        }
+        
+        // 添加交易记录
+        function addTransaction(symbol, quantity, price, type) {
+            let transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
+            
+            const stock = JSON.parse(localStorage.getItem('stocks') || '[]').find(s => s.symbol === symbol);
+            const name = stock ? stock.name : getStockName(symbol);
+            
+            const newTransaction = {
+                id: Date.now(),
+                date: new Date().toISOString().split('T')[0],
+                symbol: symbol,
+                name: name,
+                type: type,
+                quantity: quantity,
+                price: price,
+                totalValue: quantity * price,
+                assetType: 'stock',
+                status: 'Completed'
+            };
+            
+            transactions.unshift(newTransaction);
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+        }
+        
+        // 显示消息提示
+        function showMessage(text, type) {
+            const messageElement = document.getElementById('trade-message');
+            messageElement.textContent = text;
+            messageElement.className = 'message';
+            messageElement.classList.add(type);
+            
+            setTimeout(() => {
+                messageElement.className = 'message';
+            }, 3000);
+        }
+        
+        // 加载交易记录
+        function loadTransactions() {
+            const typeFilter = document.getElementById('type-filter').value;
+            const assetFilter = document.getElementById('asset-filter').value;
+            
+            const allTransactions = JSON.parse(localStorage.getItem('transactions') || '[]');
+            
+            const filteredTransactions = allTransactions.filter(transaction => {
+                if (typeFilter !== 'all' && transaction.type !== typeFilter) return false;
+                if (assetFilter !== 'all' && transaction.assetType !== assetFilter) return false;
+                return true;
+            });
+            
+            const limitedTransactions = filteredTransactions.slice(0, 5);
+            
+            document.getElementById('transaction-count').textContent = 
+                `Showing ${limitedTransactions.length} of ${filteredTransactions.length} transactions`;
+            
+            renderTransactionsTable(limitedTransactions);
+        }
+        
+        // 渲染交易记录表格
+        function renderTransactionsTable(transactions) {
+            const tableBody = document.getElementById('transactions-table-body');
+            tableBody.innerHTML = '';
+            
+            if (transactions.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center">No transactions found matching your criteria</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            transactions.forEach(transaction => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${formatDate(transaction.date)}</td>
+                    <td>${transaction.symbol} (${transaction.name})</td>
+                    <td>
+                        <span class="transaction-type type-${transaction.type}">
+                            ${transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}
+                        </span>
+                    </td>
+                    <td>${transaction.quantity}</td>
+                    <td>$${parseFloat(transaction.price).toFixed(2)}</td>
+                    <td>$${parseFloat(transaction.totalValue).toFixed(2)}</td>
+                    <td>${transaction.status}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // 格式化日期
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}/${month}/${day}`;
+        }
+        
+        // 获取股票名称
+        function getStockName(symbol) {
+            const stockNames = {
+                'AAPL': 'Apple Inc.',
+                'MSFT': 'Microsoft Corp',
+                'GOOGL': 'Alphabet Inc.',
+                'TSLA': 'Tesla Inc.',
+                'AMZN': 'Amazon.com Inc.'
+            };
+            
+            return stockNames[symbol] || `${symbol} Company`;
+        }
+        
+        // 模拟交易记录数据
+        function getMockTransactions() {
+            return [
+                {
+                    id: 1,
+                    date: '2024-07-20',
+                    symbol: 'AAPL',
+                    name: 'Apple Inc.',
+                    type: 'buy',
+                    quantity: 10,
+                    price: 182.35,
+                    totalValue: 1823.50,
+                    assetType: 'stock',
+                    status: 'Completed'
+                },
+                {
+                    id: 2,
+                    date: '2024-07-15',
+                    symbol: 'MSFT',
+                    name: 'Microsoft Corp',
+                    type: 'sell',
+                    quantity: 5,
+                    price: 320.75,
+                    totalValue: 1603.75,
+                    assetType: 'stock',
+                    status: 'Completed'
+                },
+                {
+                    id: 3,
+                    date: '2024-07-10',
+                    symbol: 'GOOGL',
+                    name: 'Alphabet Inc.',
+                    type: 'buy',
+                    quantity: 8,
+                    price: 138.50,
+                    totalValue: 1108.00,
+                    assetType: 'stock',
+                    status: 'Completed'
+                },
+                {
+                    id: 4,
+                    date: '2024-07-05',
+                    symbol: 'TSLA',
+                    name: 'Tesla Inc.',
+                    type: 'buy',
+                    quantity: 3,
+                    price: 240.15,
+                    totalValue: 720.45,
+                    assetType: 'stock',
+                    status: 'Completed'
+                },
+                {
+                    id: 5,
+                    date: '2024-06-30',
+                    symbol: 'AMZN',
+                    name: 'Amazon.com Inc.',
+                    type: 'sell',
+                    quantity: 2,
+                    price: 175.80,
+                    totalValue: 351.60,
+                    assetType: 'stock',
+                    status: 'Completed'
+                }
+            ].sort((a, b) => new Date(b.date) - new Date(a.date));
+        }
+    </script>
+</body>
+</html>
