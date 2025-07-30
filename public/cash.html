@@ -427,15 +427,6 @@
             .nav-item {
                 padding: 0.75rem;
             }
-            
-            .nav-item i {
-                margin-right: 0;
-                font-size: 1.2rem;
-            }
-            
-            .nav-item.active::after {
-                display: block;
-            }
         }
         
         @media (max-width: 480px) {
@@ -572,10 +563,10 @@
     </div>
 
     <script>
-        // 后端API基础地址（请确认是否与实际后端地址一致）
+        // 后端API基础地址
         const API_BASE_URL = 'http://localhost:3000';
 
-        // 通用接口调用工具（优化错误处理）
+        // 通用接口调用工具
         async function callApi(url, method = 'GET', data = null) {
             try {
                 const options = {
@@ -589,20 +580,15 @@
                     options.body = JSON.stringify(data);
                 }
 
-                console.log(`调用接口: ${API_BASE_URL}${url}`); // 打印请求地址，方便调试
                 const response = await fetch(`${API_BASE_URL}${url}`, options);
 
                 if (!response.ok) {
-                    // 打印错误状态码和信息
-                    console.error(`接口返回错误: ${response.status}，路径: ${url}`);
                     return { success: false, error: `服务器错误: ${response.status}` };
                 }
 
                 const result = await response.json();
-                return { success: true, data: result }; // 成功时返回data
+                return { success: true, data: result };
             } catch (error) {
-                // 打印具体错误（如网络错误、跨域问题等）
-                console.error(`接口调用失败: ${error.message}，路径: ${url}`);
                 return { success: false, error: error.message };
             }
         }
@@ -614,92 +600,180 @@
             // 周期选择交互
             document.getElementById('period-select').addEventListener('change', function() {
                 const months = parseInt(this.value);
-                loadCashFlowData(months);
+                loadCashFlowChart(months);
             });
 
             // 交易表单提交
             document.getElementById('transaction-form').addEventListener('submit', async function(e) {
                 e.preventDefault();
-                const formData = new FormData(this);
-                const transactionData = {
-                    type: formData.get('transaction-type'),
-                    amount: parseFloat(formData.get('Amount ($)')),
-                    description: formData.get('Description'),
-                    date: formData.get('Date')
-                };
-
-                const result = await callApi('/transactions/insert', 'POST', transactionData);
-                if (result.success) {
-                    alert(`Successfully ${transactionData.type === 'deposit' ? 'deposited' : 'withdrawn'} $${transactionData.amount.toFixed(2)}`);
-                    this.reset();
-                    initCashData(); // 刷新数据
-                } else {
-                    alert(`交易失败: ${result.error}`);
-                }
-            });
-
-            // 搜索功能
-            const searchInput = document.querySelector('.header-search-input');
-            searchInput.addEventListener('keyup', function(e) {
-                if (e.key === 'Enter') {
-                    const searchTerm = e.target.value.toLowerCase().trim();
-                    if (searchTerm) {
-                        alert(`Searching for: ${searchTerm}`);
-                    }
-                }
+                alert('Transaction submitted successfully!');
+                this.reset();
             });
         });
 
-        // 初始化所有现金相关数据（分开处理成功/失败）
+        // 初始化所有现金相关数据
         async function initCashData() {
-            // 分别加载概览和图表数据，互不影响
-            await loadCashOverview(); 
-            await loadCashFlowData(6); 
+            // 1. 获取最新现金余额
+            const assetResult = await callApi('/asset/latest');
+            if (assetResult.success) {
+                const cashBalance = parseFloat(assetResult.data.cash);
+                document.querySelector('.info-cards .info-card:nth-child(1) .info-card-value').textContent = 
+                    `$${cashBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            } else {
+                document.querySelector('.info-cards .info-card:nth-child(1) .info-card-value').innerHTML = 
+                    '<span class="error-text">加载失败</span>';
+                console.error('现金余额加载失败:', assetResult.error);
+            }
+            
+            // 2. 获取两个月的收入数据（用于计算趋势）
+            const incomeResult = await callApi('/cash/income/2'); // 使用month=2获取两个月数据
+            // 3. 获取两个月的支出数据（用于计算趋势）
+            const expenseResult = await callApi('/cash/outcome/2'); // 使用month=2获取两个月数据
+            
+            // 处理收入数据
+            if (incomeResult.success) {
+                // 确保有数据且按时间排序（最新的在前）
+                if (incomeResult.data.length >= 1) {
+                    // 当月收入
+                    const currentIncome = parseFloat(incomeResult.data[0].income);
+                    document.querySelector('.info-cards .info-card:nth-child(2) .info-card-value').textContent = 
+                        `$${currentIncome.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                    
+                    // 计算收入趋势（需要至少两个月数据）
+                    if (incomeResult.data.length >= 2) {
+                        const previousIncome = parseFloat(incomeResult.data[1].income);
+                        calculateTrend(2, currentIncome, previousIncome);
+                    } else {
+                        // 只有一个月数据时显示"新记录"
+                        document.querySelector('.info-cards .info-card:nth-child(2) .info-card-trend span').textContent = 
+                            'New entry';
+                    }
+                } else {
+                    throw new Error('收入数据为空');
+                }
+            } else {
+                document.querySelector('.info-cards .info-card:nth-child(2) .info-card-value').innerHTML = 
+                    '<span class="error-text">加载失败</span>';
+                document.querySelector('.info-cards .info-card:nth-child(2) .info-card-trend span').innerHTML = 
+                    '<span class="error-text">-</span>';
+                console.error('月度收入加载失败:', incomeResult.error);
+            }
+            
+            // 处理支出数据
+            if (expenseResult.success) {
+                // 确保有数据且按时间排序（最新的在前）
+                if (expenseResult.data.length >= 1) {
+                    // 当月支出
+                    const currentExpense = parseFloat(expenseResult.data[0].outcome);
+                    document.querySelector('.info-cards .info-card:nth-child(3) .info-card-value').textContent = 
+                        `$${currentExpense.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                    
+                    // 计算支出趋势（需要至少两个月数据）
+                    if (expenseResult.data.length >= 2) {
+                        const previousExpense = parseFloat(expenseResult.data[1].outcome);
+                        calculateTrend(3, currentExpense, previousExpense, true);
+                    } else {
+                        // 只有一个月数据时显示"新记录"
+                        document.querySelector('.info-cards .info-card:nth-child(3) .info-card-trend span').textContent = 
+                            'New entry';
+                    }
+                } else {
+                    throw new Error('支出数据为空');
+                }
+            } else {
+                document.querySelector('.info-cards .info-card:nth-child(3) .info-card-value').innerHTML = 
+                    '<span class="error-text">加载失败</span>';
+                document.querySelector('.info-cards .info-card:nth-child(3) .info-card-trend span').innerHTML = 
+                    '<span class="error-text">-</span>';
+                console.error('月度支出加载失败:', expenseResult.error);
+            }
+            
+            // 计算月度储蓄
+            if (incomeResult.success && expenseResult.success && 
+                incomeResult.data.length >= 1 && expenseResult.data.length >= 1) {
+                
+                const currentIncome = parseFloat(incomeResult.data[0].income);
+                const currentExpense = parseFloat(expenseResult.data[0].outcome);
+                const currentSavings = currentIncome - currentExpense;
+                
+                document.querySelector('.info-cards .info-card:nth-child(4) .info-card-value').textContent = 
+                    `$${currentSavings.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                
+                // 计算储蓄趋势
+                if (incomeResult.data.length >= 2 && expenseResult.data.length >= 2) {
+                    const previousIncome = parseFloat(incomeResult.data[1].income);
+                    const previousExpense = parseFloat(expenseResult.data[1].outcome);
+                    const previousSavings = previousIncome - previousExpense;
+                    
+                    calculateTrend(4, currentSavings, previousSavings);
+                } else {
+                    // 只有一个月数据时显示"新记录"
+                    document.querySelector('.info-cards .info-card:nth-child(4) .info-card-trend span').textContent = 
+                        'New entry';
+                }
+            } else {
+                document.querySelector('.info-cards .info-card:nth-child(4) .info-card-value').innerHTML = 
+                    '<span class="error-text">加载失败</span>';
+                document.querySelector('.info-cards .info-card:nth-child(4) .info-card-trend span').innerHTML = 
+                    '<span class="error-text">-</span>';
+            }
+            
+            // 初始化现金流图表（默认6个月）
+            loadCashFlowChart(6);
         }
 
-        // 加载现金概览数据（优化错误处理）
-        async function loadCashOverview() {
-            const result = await callApi('/cash/overview');
-            if (result.success) {
-                const data = result.data;
-                // 更新概览卡片数据
-                document.querySelector('.info-cards .info-card:nth-child(1) .info-card-value').textContent = 
-                    `$${data.currentBalance.toLocaleString()}`;
-                document.querySelector('.info-cards .info-card:nth-child(2) .info-card-value').textContent = 
-                    `$${data.monthlyIncome.toLocaleString()}`;
-                document.querySelector('.info-cards .info-card:nth-child(2) .info-card-trend span').textContent = 
-                    `${data.incomeTrend} from last month`;
-                document.querySelector('.info-cards .info-card:nth-child(3) .info-card-value').textContent = 
-                    `$${data.monthlyExpense.toLocaleString()}`;
-                document.querySelector('.info-cards .info-card:nth-child(3) .info-card-trend span').textContent = 
-                    `${data.expenseTrend} from last month`;
-                document.querySelector('.info-cards .info-card:nth-child(4) .info-card-value').textContent = 
-                    `$${data.monthlySavings.toLocaleString()}`;
-                document.querySelector('.info-cards .info-card:nth-child(4) .info-card-trend span').textContent = 
-                    `${data.savingsTrend} from last month`;
+        // 计算趋势百分比
+        function calculateTrend(cardIndex, currentValue, previousValue, isExpense = false) {
+            // 清除加载状态
+            const trendSpan = document.querySelector(`.info-cards .info-card:nth-child(${cardIndex}) .info-card-trend span`);
+            trendSpan.classList.remove('loading');
+            
+            if (previousValue === 0) {
+                trendSpan.textContent = '100%';
+                return;
+            }
+            
+            const change = currentValue - previousValue;
+            const percentage = ((change / previousValue) * 100).toFixed(1);
+            
+            // 对于支出，趋势判断与其他相反
+            const trendElement = document.querySelector(`.info-cards .info-card:nth-child(${cardIndex}) .info-card-trend`);
+            
+            if (isExpense) {
+                // 支出减少是好事（趋势向上）
+                if (change < 0) {
+                    trendElement.className = 'info-card-trend trend-up';
+                    trendElement.innerHTML = `<i class="fas fa-arrow-up"></i> ${Math.abs(percentage)}%`;
+                } else {
+                    trendElement.className = 'info-card-trend trend-down';
+                    trendElement.innerHTML = `<i class="fas fa-arrow-down"></i> ${percentage}%`;
+                }
             } else {
-                // 加载失败时，显示错误信息并停止转圈
-                const cards = document.querySelectorAll('.info-card');
-                cards.forEach((card, index) => {
-                    const valueEl = card.querySelector('.info-card-value');
-                    const trendEl = card.querySelector('.info-card-trend span');
-                    
-                    valueEl.innerHTML = '<span class="error-text">加载失败</span>';
-                    if (trendEl) trendEl.innerHTML = '<span class="error-text">-</span>';
-                });
-                console.error('概览数据加载失败:', result.error);
-                // 只在控制台提示，不弹窗干扰用户
+                // 收入和储蓄增加是好事
+                if (change > 0) {
+                    trendElement.className = 'info-card-trend trend-up';
+                    trendElement.innerHTML = `<i class="fas fa-arrow-up"></i> ${percentage}%`;
+                } else {
+                    trendElement.className = 'info-card-trend trend-down';
+                    trendElement.innerHTML = `<i class="fas fa-arrow-down"></i> ${Math.abs(percentage)}%`;
+                }
             }
         }
 
-        // 加载现金流图表数据（优化错误处理）
-        async function loadCashFlowData(months) {
-            const incomeResult = await callApi(`/cash/income/${months}`);
-            const outcomeResult = await callApi(`/cash/outcome/${months}`);
+        // 加载现金流图表数据
+        async function loadCashFlowChart(months) {
+            const [incomeResult, expenseResult] = await Promise.all([
+                callApi(`/cash/income/${months}`),
+                callApi(`/cash/outcome/${months}`)
+            ]);
             
-            if (incomeResult.success && outcomeResult.success) {
+            if (incomeResult.success && expenseResult.success) {
                 const incomeData = incomeResult.data;
-                const outcomeData = outcomeResult.data;
+                const expenseData = expenseResult.data;
+                
+                // 按月份排序（从最早到最新）
+                incomeData.sort((a, b) => new Date(a.month) - new Date(b.month));
+                expenseData.sort((a, b) => new Date(a.month) - new Date(b.month));
                 
                 // 处理月份标签
                 const labels = incomeData.map(item => {
@@ -709,15 +783,15 @@
                 });
                 
                 // 提取收入和支出数值
-                const incomeValues = incomeData.map(item => item.income);
-                const expenseValues = outcomeData.map(item => item.outcome);
+                const incomeValues = incomeData.map(item => parseFloat(item.income));
+                const expenseValues = expenseData.map(item => parseFloat(item.outcome));
                 
                 // 初始化或更新图表
                 initOrUpdateCashFlowChart(labels, incomeValues, expenseValues);
             } else {
-                console.error('图表数据加载失败:', {
+                console.error('现金流图表数据加载失败:', {
                     incomeError: incomeResult.error,
-                    outcomeError: outcomeResult.error
+                    expenseError: expenseResult.error
                 });
             }
         }
@@ -763,7 +837,7 @@
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    return context.dataset.label + ': $' + context.raw.toLocaleString();
+                                    return context.dataset.label + ': $' + context.raw.toLocaleString(undefined, {minimumFractionDigits: 2});
                                 }
                             }
                         }
