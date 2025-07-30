@@ -20,14 +20,14 @@
             --text-primary: #1D2129;
             --text-secondary: #4E5969;
             --text-tertiary: #6a6d72;
-            --bg-light: #F7F9FC;
-            --bg-white: #FFFFFF;
-            --bg-card: #d1d5c730;
-            --card-border: rgba(0, 0, 0, 0.05);
-            --divider: #E2E8F0;
-            --top-nav-gray: #1A1A27;
-            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            --dropdown-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --bg-light: rgba(255, 255, 255, 0.7);
+            --bg-white: rgba(255, 255, 255, 0.85);
+            --bg-card: rgba(255, 255, 255, 0.15);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --divider: rgba(255, 255, 255, 0.15);
+            --top-nav-gray: rgba(26, 26, 39, 0.85);
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            --dropdown-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
         
         * {
@@ -38,15 +38,37 @@
         
         body {
             font-family: 'Manrope', 'Inter', sans-serif;
-            background-color: var(--bg-light);
             color: var(--text-primary);
             padding-top: 70px;
             line-height: 1.6;
+            min-height: 100vh;
+            /* 背景图片设置 */
+            background-image: url('https://www.10wallpaper.com/wallpaper/1366x768/2407/Modern_City_Night_Skyscrapers_Horizon_Dusk_5K_1366x768.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+        
+        /* 背景模糊遮罩 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            filter: blur(5px); /* 轻微模糊效果 */
+            z-index: -1;
+            transform: scale(1.02); /* 解决边缘模糊问题 */
         }
         
         .top-nav {
             background: var(--top-nav-gray);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: var(--card-shadow);
             padding: 0.5rem 1.5rem;
             position: fixed;
             top: 0;
@@ -57,7 +79,7 @@
             align-items: center;
             justify-content: space-between;
             height: 70px;
-            border-bottom: 1px solid rgba(179, 69, 69, 0.1);
+            border-bottom: 1px solid var(--card-border);
         }
         
         .logo {
@@ -199,7 +221,9 @@
             position: absolute;
             top: calc(100% + 10px);
             right: 0;
-            background-color: var(--bg-white);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 12px;
             box-shadow: var(--dropdown-shadow);
             width: 220px;
@@ -211,7 +235,7 @@
             transform: translateY(10px);
             transition: all 0.3s ease;
             z-index: 1001;
-            border: 1px solid var(--divider);
+            border: 1px solid var(--card-border);
         }
         
         .user-menu:hover .user-dropdown {
@@ -225,12 +249,12 @@
             align-items: center;
             gap: 0.85rem;
             padding: 0.85rem 1.5rem;
-            color: var(--text-primary);
+            color: var(--bg-white);
             text-decoration: none;
         }
         
         .user-dropdown a:hover {
-            background: rgba(76, 111, 255, 0.05);
+            background: rgba(76, 111, 255, 0.1);
             color: var(--primary-color);
         }
         
@@ -244,7 +268,8 @@
             font-size: 1.85rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            color: var(--text-primary);
+            color: var(--bg-white);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .info-cards {
@@ -255,7 +280,9 @@
         }
         
         .info-card {
-            background-color: var(--bg-card);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 16px;
             padding: 1.5rem;
             box-shadow: var(--card-shadow);
@@ -265,18 +292,19 @@
         
         .info-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
         }
         
         .info-card-title {
             font-size: 0.9rem;
-            color: var(--text-secondary);
+            color: rgba(255, 255, 255, 0.8);
             margin-bottom: 0.5rem;
         }
         
         .info-card-value {
             font-size: 1.4rem;
             font-weight: 600;
+            color: var(--bg-white);
         }
         
         .info-card-trend {
@@ -301,7 +329,9 @@
             gap: 1.5rem;
             align-items: center;
             padding: 2rem;
-            background-color: var(--bg-card);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 16px;
             box-shadow: var(--card-shadow);
             margin-bottom: 1.5rem;
@@ -317,7 +347,7 @@
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: var(--text-primary);
+            color: var(--bg-white);
         }
         
         .form-group {
@@ -329,22 +359,24 @@
         
         .form-label {
             font-size: 0.9rem;
-            color: var(--text-secondary);
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 500;
         }
         
         .form-control {
             padding: 0.85rem 1rem;
-            border: 1px solid var(--divider);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             font-size: 1rem;
             transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--bg-white);
         }
         
         .form-control:focus {
             outline: none;
             border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(76, 111, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(76, 111, 255, 0.2);
         }
         
         .radio-group {
@@ -360,6 +392,7 @@
             gap: 0.5rem;
             font-size: 0.95rem;
             cursor: pointer;
+            color: var(--bg-white);
         }
         
         .radio-option input[type="radio"] {
@@ -446,7 +479,9 @@
         }
         
         .card {
-            background-color: var(--bg-card);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 16px;
             box-shadow: var(--card-shadow);
             margin-bottom: 1.5rem;
@@ -462,6 +497,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: var(--bg-white);
         }
         
         .card-body {
@@ -572,15 +608,11 @@
         </div>
         
         <!-- Search Box -->
-        <!-- <div class="header-search-container">
-            <i class="fas fa-search header-search-icon"></i>
-            <input type="text" class="header-search-input" placeholder="Search stocks, bonds...">
-        </div> -->
           <div class="header-search-container" style="position: relative;">
                 <i class="fas fa-search header-search-icon"></i>
                 <input type="text" class="header-search-input" placeholder="Search stocks...">
                 <ul class="search-suggestions"
-                    style="position:absolute; top:100%; left:0; right:0; background:white; border:1px solid #ccc; list-style:none; margin:0; padding:0; z-index:1000;">
+                    style="position:absolute; top:100%; left:0; right:0; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); border:1px solid rgba(255, 255, 255, 0.2); list-style:none; margin:0; padding:0; z-index:1000;">
                 </ul>
             </div>
         
@@ -665,7 +697,7 @@
             
             <div class="form-section" style="min-width: 200px;">
                 <div class="form-section-title">Transaction Tips</div>
-                <ul style="padding-left: 1.25rem; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7;">
+                <ul style="padding-left: 1.25rem; color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; line-height: 1.7;">
                     <li>Minimum transaction amount is $0.01</li>
                     <li>Transactions are processed immediately</li>
                     <li>All transactions are automatically dated</li>
@@ -677,7 +709,7 @@
         <div class="card">
             <div class="card-header">
                 <span>Monthly Cash Flow</span>
-                <select class="form-control form-control-sm" style="width: auto;" id="period-select">
+                <select class="form-control form-control-sm" style="width: auto; background: rgba(26, 26, 39, 0.7); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.15); color: rgba(255, 255, 255, 0.9);" id="period-select">
                     <option value="6">Last 6 Months</option>
                     <option value="12">Last 12 Months</option>
                 </select>
@@ -716,7 +748,7 @@
 
             matches.forEach(stock => {
                 const li = document.createElement('li');
-                li.innerHTML = `<a href="/transactions.html" style="display:block; padding:8px;">${stock.symbol} - ${stock.name}</a>`;
+                li.innerHTML = `<a href="/transactions.html" style="display:block; padding:8px; color: var(--text-primary); text-decoration: none;">${stock.symbol} - ${stock.name}</a>`;
                 suggestions.appendChild(li);
             });
             });
@@ -1094,14 +1126,14 @@
                         {
                             label: 'Income',
                             data: incomeValues,
-                            backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                            backgroundColor: '#9576d2',
                             borderRadius: 4,
                             barPercentage: 0.7
                         },
                         {
                             label: 'Expenses',
                             data: expenseValues,
-                            backgroundColor: 'rgba(196, 96, 96, 0.7)',
+                            backgroundColor: '#74ebc4',
                             borderRadius: 4,
                             barPercentage: 0.7
                         }
@@ -1111,7 +1143,12 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'top' },
+                        legend: { 
+                            position: 'top',
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.8)'
+                            }
+                        },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
@@ -1124,15 +1161,23 @@
                         y: {
                             beginAtZero: true,
                             ticks: {
+                                color: 'rgba(255, 255, 255, 0.8)',
                                 callback: function(value) {
                                     return '$' + value.toLocaleString();
                                 }
                             },
                             grid: {
-                                color: 'rgba(0, 0, 0, 0.03)'
+                                color: 'rgba(255, 255, 255, 0.1)'
                             }
                         },
-                        x: { grid: { display: false } }
+                        x: { 
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.8)'
+                            },
+                            grid: { 
+                                display: false 
+                            } 
+                        }
                     }
                 }
             });
