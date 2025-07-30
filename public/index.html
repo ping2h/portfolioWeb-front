@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,10 +16,12 @@
             --primary-light: #6B8AFF;
             --secondary-color: #1BC5BD;
             --accent-color: #8950FC;
-            --success-color: #10B981; /* 绿色表示下跌 */
-            --danger-color: #c46060e3;  /* 红色表示上涨 */
+            --success-color: #10B981;
+            /* 绿色表示下跌 */
+            --danger-color: #c46060e3;
+            /* 红色表示上涨 */
             --warning-color: #F59E0B;
-            
+
             /* 浅色主题变量 */
             --text-primary: #1D2129;
             --text-secondary: #4E5969;
@@ -32,7 +35,7 @@
             --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             --dropdown-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
-        
+
         body {
             font-family: 'Manrope', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-light);
@@ -41,7 +44,7 @@
             padding-top: 70px;
             margin: 0;
         }
-        
+
         /* 顶部导航栏样式 */
         .top-nav {
             background: var(--top-nav-gray);
@@ -56,17 +59,21 @@
             align-items: center;
             justify-content: space-between;
             height: auto;
+            /* 修复搜索框位置：改为自动高度 */
+            height: auto;
             border-bottom: 1px solid rgba(179, 69, 69, 0.1);
             flex-wrap: wrap;
+            /* 允许导航项换行 */
+            flex-wrap: wrap;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             flex-shrink: 0;
         }
-        
+
         .logo h1 {
             font-size: 1.4rem;
             font-weight: 700;
@@ -74,14 +81,14 @@
             color: var(--bg-white);
             letter-spacing: -0.5px;
         }
-        
+
         .logo h1 span {
             background: linear-gradient(to right, var(--primary-light), var(--accent-color));
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        
+
         /* 导航链接容器 */
         .nav-links {
             display: flex;
@@ -90,7 +97,7 @@
             margin: 0 0.5rem;
             flex: 1;
         }
-        
+
         .nav-item {
             padding: 0.7rem 1.1rem;
             display: flex;
@@ -105,12 +112,13 @@
             font-weight: 500;
             flex-shrink: 0;
         }
-        
-        .nav-item:hover, .nav-item.active {
+
+        .nav-item:hover,
+        .nav-item.active {
             background: rgba(255, 255, 255, 0.15);
             color: var(--bg-white);
         }
-        
+
         .nav-item.active::after {
             content: '';
             position: absolute;
@@ -123,7 +131,7 @@
             border-radius: 50%;
             box-shadow: 0 0 10px var(--secondary-color);
         }
-        
+
         .nav-item i {
             width: 1.1rem;
             text-align: center;
@@ -138,7 +146,7 @@
             flex-shrink: 1;
             min-width: 150px;
         }
-        
+
         .header-search-input {
             width: 100%;
             padding: 0.7rem 0.85rem 0.7rem 2.5rem;
@@ -150,13 +158,13 @@
             color: var(--bg-white);
             font-weight: 500;
         }
-        
+
         .header-search-input:focus {
             outline: none;
             border-color: var(--primary-light);
             box-shadow: 0 0 0 3px rgba(76, 111, 255, 0.3);
         }
-        
+
         .header-search-icon {
             position: absolute;
             left: 0.85rem;
@@ -165,7 +173,7 @@
             color: rgba(255, 255, 255, 0.7);
             font-size: 1rem;
         }
-        
+
         /* 用户信息 */
         .user-menu {
             display: flex;
@@ -178,7 +186,7 @@
             transition: all 0.3s;
             flex-shrink: 0;
         }
-        
+
         .user-avatar {
             width: 40px;
             height: 40px;
@@ -191,20 +199,20 @@
             font-weight: 600;
             font-size: 1rem;
         }
-        
+
         .user-name {
             font-size: 0.9rem;
             font-weight: 500;
             display: none;
             color: var(--bg-white);
         }
-        
+
         @media (min-width: 992px) {
             .user-name {
                 display: block;
             }
         }
-        
+
         /* 用户下拉菜单 */
         .user-dropdown {
             position: absolute;
@@ -224,13 +232,13 @@
             z-index: 1001;
             border: 1px solid var(--divider);
         }
-        
+
         .user-menu:hover .user-dropdown {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
         }
-        
+
         .user-dropdown a {
             display: flex;
             align-items: center;
@@ -243,12 +251,12 @@
             margin: 0 0.25rem;
             font-size: 0.9rem;
         }
-        
+
         .user-dropdown a:hover {
             background: rgba(76, 111, 255, 0.05);
             color: var(--primary-color);
         }
-        
+
         /* 主要内容区域布局 */
         .content-wrapper {
             display: flex;
@@ -257,7 +265,7 @@
             max-width: 100%;
             box-sizing: border-box;
         }
-        
+
         /* 左侧边栏 */
         .sidebar {
             width: 320px;
@@ -266,7 +274,7 @@
             gap: 1.5rem;
             flex-shrink: 0;
         }
-        
+
         /* 卡片通用样式 */
         .card {
             background-color: var(--bg-card);
@@ -277,12 +285,12 @@
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
             position: relative;
         }
-        
+
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.08);
         }
-        
+
         .card-header {
             padding: 1.25rem 1.75rem;
             border-bottom: 1px solid var(--divider);
@@ -291,7 +299,7 @@
             align-items: center;
             background: transparent;
         }
-        
+
         .card-title {
             font-size: 1.15rem;
             font-weight: 600;
@@ -314,15 +322,15 @@
             background: var(--primary-color);
             transition: width 0.6s ease-out;
         }
-        
+
         .card:hover .card-title::after {
             width: 100%;
         }
-        
+
         .card-body {
             padding: 1.25rem 1.75rem;
         }
-        
+
         /* 账户概览（资产分类） */
         .asset-item {
             display: flex;
@@ -332,14 +340,14 @@
             padding: 0.75rem 0;
             border-bottom: 1px solid var(--divider);
         }
-        
+
         .asset-item:hover {
             background: rgba(245, 248, 255, 0.5);
             border-radius: 8px;
             padding: 0.75rem;
             margin: 0 -0.5rem;
         }
-        
+
         .asset-item:last-child {
             margin-bottom: 0;
             padding-top: 0.8rem;
@@ -348,7 +356,7 @@
             font-weight: 700;
             border-bottom: none;
         }
-        
+
         /* 大盘指数部分 */
         .major-indices {
             border-radius: 0;
@@ -357,7 +365,7 @@
             background: transparent;
             border: none;
         }
-        
+
         .indices-title {
             font-size: 0.95rem;
             font-weight: 600;
@@ -367,7 +375,7 @@
             align-items: center;
             gap: 0.75rem;
         }
-        
+
         .indices-title::before,
         .indices-title::after {
             content: '';
@@ -375,7 +383,7 @@
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--divider), transparent);
         }
-        
+
         .index-item {
             display: flex;
             justify-content: space-between;
@@ -383,21 +391,21 @@
             border-bottom: 1px solid var(--divider);
             transition: all 0.3s;
         }
-        
+
         .index-item:hover {
             background: rgba(245, 248, 255, 0.5);
             border-radius: 8px;
             padding: 0.8rem;
             margin: 0 -0.5rem;
         }
-        
+
         .index-name {
             font-weight: 500;
             display: flex;
             align-items: center;
             gap: 0.75rem;
         }
-        
+
         .index-change {
             display: flex;
             align-items: center;
@@ -405,16 +413,18 @@
             font-weight: 600;
             font-size: 0.95rem;
         }
-        
+
         /* 涨跌颜色 */
         .change-positive {
-            color: var(--danger-color); /* 上涨 - 红色 */
+            color: var(--danger-color);
+            /* 上涨 - 红色 */
         }
-        
+
         .change-negative {
-            color: var(--success-color); /* 下跌 - 绿色 */
+            color: var(--success-color);
+            /* 下跌 - 绿色 */
         }
-        
+
         /* 个股区域标题 */
         .stocks-section-header {
             font-size: 0.95rem;
@@ -425,7 +435,7 @@
             align-items: center;
             gap: 0.75rem;
         }
-        
+
         .stocks-section-header::before,
         .stocks-section-header::after {
             content: '';
@@ -433,27 +443,27 @@
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--divider), transparent);
         }
-        
+
         .movers-container {
             flex-grow: 1;
             min-height: 300px;
         }
-        
+
         .mover-page {
             display: none;
         }
-        
+
         .mover-page.active {
             display: block;
         }
-        
+
         .pagination {
             display: flex;
             justify-content: flex-end;
             margin-top: 1rem;
             gap: 0.5rem;
         }
-        
+
         .page-btn {
             width: 34px;
             height: 34px;
@@ -468,14 +478,15 @@
             transition: all 0.3s;
             font-size: 0.9rem;
         }
-        
-        .page-btn:hover, .page-btn.active {
+
+        .page-btn:hover,
+        .page-btn.active {
             background: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
             transform: translateY(-2px);
         }
-        
+
         /* 主内容区 */
         .main-content {
             flex: 1;
@@ -483,7 +494,7 @@
             flex-direction: column;
             gap: 1.75rem;
         }
-        
+
         .header {
             margin-bottom: 0.75rem;
             display: flex;
@@ -492,7 +503,7 @@
             flex-wrap: wrap;
             gap: 1.5rem;
         }
-        
+
         .page-title {
             font-size: 1.85rem;
             font-weight: 700;
@@ -504,7 +515,7 @@
             letter-spacing: -0.5px;
             position: relative;
         }
-        
+
         .page-title::after {
             content: '';
             width: 8px;
@@ -526,11 +537,11 @@
             background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
             transition: width 0.8s ease-out;
         }
-        
+
         .header:hover .page-title::before {
             width: 100%;
         }
-        
+
         /* 实时时钟样式 */
         .live-clock {
             color: var(--text-secondary);
@@ -545,11 +556,11 @@
             min-width: 200px;
             text-align: right;
         }
-        
+
         .live-clock i {
             color: var(--primary-color);
         }
-        
+
         .net-worth {
             font-size: 2.25rem;
             font-weight: 800;
@@ -561,14 +572,14 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        
+
         .asset-distribution {
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
             margin-top: 1.5rem;
         }
-        
+
         .distribution-item {
             flex: 1;
             min-width: 140px;
@@ -580,20 +591,20 @@
             display: flex;
             flex-direction: column;
         }
-        
+
         .asset-value {
             font-size: 1.35rem;
             font-weight: 700;
             margin: 0.5rem 0;
             letter-spacing: -0.5px;
         }
-        
+
         .asset-label {
             color: var(--text-tertiary);
             font-size: 0.9rem;
             font-weight: 500;
         }
-        
+
         .mover-item {
             display: flex;
             justify-content: space-between;
@@ -601,35 +612,35 @@
             border-bottom: 1px solid var(--divider);
             transition: all 0.3s;
         }
-        
+
         .mover-item:hover {
             background: rgba(245, 248, 255, 0.5);
             border-radius: 8px;
             padding: 0.8rem;
             margin: 0 -0.5rem;
         }
-        
+
         .mover-info {
             display: flex;
             flex-direction: column;
         }
-        
+
         .mover-name {
             font-weight: 600;
             font-size: 0.95rem;
         }
-        
+
         .mover-ticker {
             color: var(--text-tertiary);
             font-size: 0.85rem;
             font-weight: 500;
         }
-        
+
         .mover-price {
             font-size: 0.9rem;
             color: var(--text-secondary);
         }
-        
+
         .mover-change {
             font-weight: 600;
             font-size: 0.95rem;
@@ -638,18 +649,18 @@
             align-items: flex-end;
             gap: 0.2rem;
         }
-        
+
         /* 主内容区两列布局 */
         .main-cards {
             display: flex;
             gap: 1.75rem;
         }
-        
+
         .main-card-item {
             flex: 1;
             min-width: 300px;
         }
-        
+
         /* 悬停显示数字信息 */
         .chart-hover-info {
             position: absolute;
@@ -665,13 +676,13 @@
             opacity: 0;
             transition: opacity 0.2s ease;
         }
-        
+
         .chart-hover-info-title {
             font-weight: 600;
             margin-bottom: 5px;
             color: var(--text-primary);
         }
-        
+
         .chart-hover-info-value {
             font-weight: 700;
             color: var(--primary-color);
@@ -683,44 +694,44 @@
                 width: 300px;
             }
         }
-        
+
         @media (max-width: 992px) {
             .main-cards {
                 flex-direction: column;
             }
         }
-        
+
         @media (max-width: 768px) {
             .content-wrapper {
                 flex-direction: column;
                 padding: 1rem;
             }
-            
+
             .sidebar {
                 width: 100%;
             }
-            
+
             .top-nav {
                 padding: 0.5rem 1rem;
             }
-            
+
             .nav-item span {
                 display: none;
             }
-            
+
             .header-search-container {
                 order: 3;
                 width: 100%;
                 margin-top: 0.5rem;
                 margin-bottom: 0.5rem;
             }
-            
+
             .header {
                 flex-direction: column;
                 align-items: flex-start;
             }
         }
-        
+
         /* 欢迎横幅 */
         .welcome-banner {
             background: linear-gradient(90deg, var(--primary-color) 0%, var(--accent-color) 100%);
@@ -735,7 +746,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .welcome-banner::before {
             content: '';
             position: absolute;
@@ -746,14 +757,14 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
         }
-        
+
         .welcome-text h2 {
             font-size: 1.5rem;
             font-weight: 700;
             margin: 0 0 0.5rem;
             position: relative;
         }
-        
+
         .welcome-text p {
             font-size: 1rem;
             opacity: 0.9;
@@ -761,7 +772,7 @@
             max-width: 600px;
             position: relative;
         }
-        
+
         /* 自定义选择框 */
         .custom-select {
             border-radius: 10px;
@@ -780,22 +791,40 @@
             background-size: 16px;
             padding-right: 2.5rem;
         }
-        
+
         /* 动画效果 */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
+
         .animate-fade {
             animation: fadeIn 0.6s ease-out forwards;
         }
-        
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-        .delay-400 { animation-delay: 0.4s; }
-        
+
+        .delay-100 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-200 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-300 {
+            animation-delay: 0.3s;
+        }
+
+        .delay-400 {
+            animation-delay: 0.4s;
+        }
+
         /* 加载状态样式 */
         .loading {
             display: flex;
@@ -804,7 +833,7 @@
             height: 40px;
             color: var(--primary-color);
         }
-        
+
         .spinner {
             width: 20px;
             height: 20px;
@@ -814,11 +843,13 @@
             animation: spin 1s ease-in-out infinite;
             margin-right: 10px;
         }
-        
+
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
-        
+
         /* 错误提示样式 */
         .error-message {
             color: #e53e3e;
@@ -832,13 +863,14 @@
             height: 350px;
             width: 100%;
         }
-        
+
         #cash-flow-container {
             height: 300px;
             width: 100%;
         }
     </style>
 </head>
+
 <body>
     <div class="container-fluid p-0">
         <!-- 顶部导航栏 -->
@@ -847,7 +879,7 @@
                 <i class="fas fa-chart-line fa-lg" style="color: var(--primary-light);"></i>
                 <h1>Portfolio <span>Pro</span></h1>
             </div>
-            
+
             <!-- 导航链接 -->
             <div class="nav-links">
                 <a href="index.html" class="nav-item active">
@@ -867,19 +899,26 @@
                     <span>Transactions</span>
                 </a>
             </div>
-            
+
             <!-- 搜索框 -->
-            <div class="header-search-container">
+            <!-- <div class="header-search-container">
                 <i class="fas fa-search header-search-icon"></i>
                 <input type="text" class="header-search-input" placeholder="Search stocks, bonds...">
+            </div> -->
+            <div class="header-search-container" style="position: relative;">
+                <i class="fas fa-search header-search-icon"></i>
+                <input type="text" class="header-search-input" placeholder="Search stocks...">
+                <ul class="search-suggestions"
+                    style="position:absolute; top:100%; left:0; right:0; background:white; border:1px solid #ccc; list-style:none; margin:0; padding:0; z-index:1000;">
+                </ul>
             </div>
-            
+
             <!-- 用户信息 -->
             <div class="user-menu">
                 <div class="user-avatar" title="John Doe">JD</div>
                 <span class="user-name">John Doe</span>
                 <i class="fas fa-chevron-down"></i>
-                
+
                 <!-- 用户下拉菜单 -->
                 <ul class="user-dropdown">
                     <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
@@ -891,7 +930,7 @@
                 </ul>
             </div>
         </div>
-        
+
         <!-- 内容区域 -->
         <div class="content-wrapper">
             <!-- 左侧边栏 -->
@@ -951,7 +990,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- 市场动态 -->
                 <div class="card market-movers-card animate-fade delay-100">
                     <div class="card-header">
@@ -972,13 +1011,13 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- 个股区域标题 -->
                         <div class="stocks-section-header">
                             <i class="fas fa-layer-group"></i>
                             <span>Individual Assets</span>
                         </div>
-                        
+
                         <div class="movers-container">
                             <!-- 第一页 - 股票列表 -->
                             <div class="mover-page active" data-page="1" id="stock-page-1">
@@ -987,7 +1026,7 @@
                                     <span>Loading assets...</span>
                                 </div>
                             </div>
-                            
+
                             <!-- 第二页 - 股票列表 -->
                             <div class="mover-page" data-page="2" id="stock-page-2">
                                 <div class="loading">
@@ -996,7 +1035,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- 分页按钮 -->
                         <div class="pagination">
                             <button class="page-btn active" data-page="1">
@@ -1009,23 +1048,25 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- 主内容区 -->
             <div class="main-content">
                 <!-- 欢迎横幅 -->
                 <div class="welcome-banner animate-fade delay-200">
-                    <button class="close-banner" style="position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: white; font-size: 1.2rem; cursor: pointer; opacity: 0.8; transition: opacity 0.3s;">
+                    <button class="close-banner"
+                        style="position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: white; font-size: 1.2rem; cursor: pointer; opacity: 0.8; transition: opacity 0.3s;">
                         <i class="fas fa-times"></i>
                     </button>
                     <div class="welcome-text">
                         <h2>Welcome back, John!</h2>
-                        <p>Your portfolio is up <span id="welcome-change" class="change-positive">-</span> this month. Review your latest investments and market trends.</p>
+                        <p>Your portfolio is up <span id="welcome-change" class="change-positive">-</span> this month.
+                            Review your latest investments and market trends.</p>
                     </div>
                     <div style="position: relative;">
                         <i class="fas fa-chart-line fa-3x" style="opacity: 0.9;"></i>
                     </div>
                 </div>
-                
+
                 <div class="header">
                     <h2 class="page-title">Financial Dashboard</h2>
                     <!-- 实时时钟 -->
@@ -1034,7 +1075,7 @@
                         <span id="current-datetime"></span>
                     </div>
                 </div>
-                
+
                 <!-- 净值卡片 -->
                 <div class="card animate-fade delay-300">
                     <div class="card-header">
@@ -1064,7 +1105,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- 两列布局: 现金流 & 资产配置 -->
                 <div class="main-cards">
                     <!-- 现金流 -->
@@ -1107,7 +1148,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- 资产配置 -->
                     <div class="main-card-item">
                         <div class="card h-100 animate-fade delay-400">
@@ -1119,7 +1160,7 @@
                                     <canvas id="asset-allocation-chart"></canvas>
                                     <div class="chart-hover-info" id="asset-allocation-hover"></div>
                                 </div>
-                                
+
                                 <!-- 资产分布可视化 -->
                                 <div class="asset-distribution mt-3">
                                     <div class="distribution-item">
@@ -1165,11 +1206,58 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
-    
+
     <script>
+
+        
         // 配置API基础URL
         const API_BASE_URL = 'http://localhost:3000';
-        
+
+        let stockList = [];
+
+            window.addEventListener('DOMContentLoaded', async () => {
+            // 获取 symbol 列表
+            const res = await fetch('/assetList/getall');
+            stockList = await res.json();
+            });
+
+            const input = document.querySelector('.header-search-input');
+            const suggestions = document.querySelector('.search-suggestions');
+
+            input.addEventListener('input', () => {
+            const query = input.value.trim().toLowerCase();
+            suggestions.innerHTML = '';
+
+            if (!query) return;
+
+            const matches = stockList.filter(stock =>
+                stock.symbol.toLowerCase().includes(query) ||
+                stock.name.toLowerCase().includes(query)
+            );
+
+            matches.forEach(stock => {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="/transactions.html" style="display:block; padding:8px;">${stock.symbol} - ${stock.name}</a>`;
+                suggestions.appendChild(li);
+            });
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // //////////
         // 格式化货币显示
         function formatCurrency(value) {
             return new Intl.NumberFormat('en-US', {
@@ -1178,14 +1266,14 @@
                 minimumFractionDigits: 2
             }).format(parseFloat(value));
         }
-        
+
         // 格式化月份显示
         function formatMonth(monthString) {
             const [year, month] = monthString.split('-');
             const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             return `${monthNames[parseInt(month) - 1]} ${year}`;
         }
-        
+
         // 通用API请求函数
         async function apiRequest(endpoint, method = 'GET') {
             try {
@@ -1196,11 +1284,11 @@
                         'Content-Type': 'application/json',
                     },
                 });
-                
+
                 if (!response.ok) {
                     throw new Error(`API request failed: ${response.statusText}`);
                 }
-                
+
                 return await response.json();
             } catch (error) {
                 console.error(`Error fetching ${endpoint}:`, error);
@@ -1271,26 +1359,26 @@
         async function fetchLatestAsset() {
             try {
                 const data = await apiRequest('/asset/latest');
-                
+
                 // 更新净值显示
                 document.getElementById('total-asset').textContent = formatCurrency(data.total_asset);
-                
+
                 // 更新左侧边栏资产数据
                 document.getElementById('sidebar-cash').textContent = formatCurrency(data.cash);
                 document.getElementById('sidebar-stock').textContent = formatCurrency(data.stock_value);
                 document.getElementById('sidebar-bond').textContent = formatCurrency(data.bond_value);
                 document.getElementById('sidebar-crypto').textContent = formatCurrency(data.crypto_value);
                 document.getElementById('sidebar-total').textContent = formatCurrency(data.total_asset);
-                
+
                 // 更新主内容区资产数据
                 document.getElementById('main-cash-value').textContent = formatCurrency(data.cash);
                 document.getElementById('main-stock-value').textContent = formatCurrency(data.stock_value);
                 document.getElementById('main-bond-value').textContent = formatCurrency(data.bond_value);
                 document.getElementById('main-crypto-value').textContent = formatCurrency(data.crypto_value);
-                
+
                 // 更新资产配置图表
                 updateAssetAllocationChart(data);
-                
+
                 return data;
             } catch (error) {
                 console.error('Error fetching latest asset data:', error);
@@ -1307,20 +1395,20 @@
                 document.getElementById('main-crypto-value').textContent = errorText;
             }
         }
-        
+
         // 获取月度资产数据（用于计算增长率和净值图表）
         async function fetchMonthlyAssets(months = 6) {
             try {
                 const data = await apiRequest(`/asset/months/${months}`);
-                
+
                 // 按时间升序排列
                 const sortedData = [...data].sort((a, b) => {
                     return new Date(a.month) - new Date(b.month);
                 });
-                
+
                 // 更新净值图表
                 updateNetWorthChart(sortedData);
-                
+
                 // 计算近2个月增长率
                 if (sortedData.length >= 2) {
                     const currentMonth = sortedData[sortedData.length - 1];
@@ -1328,11 +1416,11 @@
                     const currentValue = parseFloat(currentMonth.total_asset);
                     const prevValue = parseFloat(prevMonth.total_asset);
                     const changePercent = ((currentValue - prevValue) / prevValue * 100).toFixed(1);
-                    
+
                     // 更新月度变化率
                     const changeElement = document.querySelector('#monthly-change');
                     const welcomeChangeElement = document.getElementById('welcome-change');
-                    
+
                     if (parseFloat(changePercent) >= 0) {
                         changeElement.className = 'change-positive';
                         changeElement.innerHTML = `<i class="fas fa-arrow-up"></i> <span>${changePercent}%</span> from last month`;
@@ -1342,10 +1430,10 @@
                         changeElement.innerHTML = `<i class="fas fa-arrow-down"></i> <span>${Math.abs(changePercent)}%</span> from last month`;
                         welcomeChangeElement.className = 'change-negative';
                     }
-                    
+
                     welcomeChangeElement.textContent = `${changePercent}%`;
                 }
-                
+
                 return sortedData;
             } catch (error) {
                 console.error('Error fetching monthly asset data:', error);
@@ -1360,52 +1448,52 @@
             try {
                 const incomeData = await apiRequest(`/cash/income/${months}`);
                 const outcomeData = await apiRequest(`/cash/outcome/${months}`);
-                
+
                 // 处理支出数据可能的结构差异
                 const normalizedOutcome = outcomeData.map(item => ({
                     month: item.month,
                     outcome: item.outcome || item.value || 0
                 }));
-                
+
                 // 过滤掉Jan 2025的数据
                 const filteredIncome = incomeData.filter(item => item.month !== '2025-01');
                 const filteredOutcome = normalizedOutcome.filter(item => item.month !== '2025-01');
-                
+
                 // 按时间升序排列
                 const sortedIncome = [...filteredIncome].sort((a, b) => {
                     return new Date(a.month) - new Date(b.month);
                 });
-                
+
                 const sortedOutcome = [...filteredOutcome].sort((a, b) => {
                     return new Date(a.month) - new Date(b.month);
                 });
-                
+
                 // 确保只显示最近6个月的数据
                 const recentIncome = sortedIncome.slice(-6);
                 const recentOutcome = sortedOutcome.slice(-6);
-                
+
                 // 更新现金流图表
                 updateCashFlowChart(recentIncome, recentOutcome);
-                
+
                 // 计算总和
                 const totalIncome = recentIncome.reduce((sum, item) => sum + parseFloat(item.income || 0), 0);
                 const totalExpenses = recentOutcome.reduce((sum, item) => sum + parseFloat(item.outcome || 0), 0);
                 const netFlow = totalIncome - totalExpenses;
-                
+
                 // 更新现金流摘要
                 document.getElementById('sum-income').textContent = formatCurrency(totalIncome);
                 document.getElementById('sum-expenses').textContent = formatCurrency(totalExpenses);
-                
+
                 const netFlowElement = document.getElementById('net-flow');
                 netFlowElement.textContent = formatCurrency(netFlow);
-                
+
                 // 设置净值颜色
                 if (netFlow >= 0) {
                     netFlowElement.className = 'asset-value change-positive';
                 } else {
                     netFlowElement.className = 'asset-value change-negative';
                 }
-                
+
                 return { incomeData: recentIncome, outcomeData: recentOutcome };
             } catch (error) {
                 console.error('Error fetching cash flow data:', error);
@@ -1415,22 +1503,22 @@
                 document.getElementById('net-flow').textContent = errorText;
             }
         }
-        
+
         // 获取资产列表和价格
         async function fetchAssetList() {
             try {
                 const assets = await apiRequest('/assetList/getall');
-                
+
                 // 分两页显示
                 const page1 = assets.slice(0, 6);
                 const page2 = assets.slice(6);
-                
+
                 // 渲染第一页
                 renderAssetPage(page1, 'stock-page-1');
-                
+
                 // 渲染第二页
                 renderAssetPage(page2, 'stock-page-2');
-                
+
                 return assets;
             } catch (error) {
                 console.error('Error fetching asset list:', error);
@@ -1438,7 +1526,7 @@
                 document.getElementById('stock-page-2').innerHTML = '<div class="error-message">Failed to load assets</div>';
             }
         }
-        
+
         // 获取资产价格和变化
         async function fetchAssetPrice(symbol) {
             try {
@@ -1448,32 +1536,32 @@
                 return null;
             }
         }
-        
+
         // 渲染资产页面
         async function renderAssetPage(assets, containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
             
             container.innerHTML = '';
-            
+
             for (const asset of assets) {
                 try {
                     // 获取资产价格和变化
                     const priceData = await fetchAssetPrice(asset.symbol);
-                    
+
                     if (!priceData) {
                         throw new Error('Price data unavailable');
                     }
-                    
+
                     // 创建资产项
                     const assetItem = document.createElement('div');
                     assetItem.className = 'mover-item';
-                    
+
                     const change = parseFloat(priceData.change);
                     const changeClass = change >= 0 ? 'change-positive' : 'change-negative';
                     const arrowIcon = change >= 0 ? 'fa-arrow-up' : 'fa-arrow-down';
                     const changeText = `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`;
-                    
+
                     assetItem.innerHTML = `
                         <div class="mover-info">
                             <span class="mover-name">${asset.name}</span>
@@ -1484,7 +1572,7 @@
                             <span class="${changeClass}"><i class="fas ${arrowIcon}"></i> ${changeText}</span>
                         </div>
                     `;
-                    
+
                     container.appendChild(assetItem);
                 } catch (error) {
                     console.error(`Error loading data for ${asset.symbol}:`, error);
@@ -1501,30 +1589,30 @@
                 }
             }
         }
-        
+
         // 更新净值图表
         function updateNetWorthChart(data) {
             if (!data || data.length === 0) {
                 console.error('No data available for net worth chart');
                 return;
             }
-            
+
             const ctx = document.getElementById('net-worth-chart').getContext('2d');
-            
+
             // 准备数据
             const labels = data.map(item => formatMonth(item.month));
             const values = data.map(item => parseFloat(item.total_asset));
-            
+
             // 创建渐变
             const gradient = ctx.createLinearGradient(0, 0, 0, 260);
             gradient.addColorStop(0, 'rgba(76, 111, 255, 0.2)');
             gradient.addColorStop(1, 'rgba(76, 111, 255, 0.05)');
-            
+
             // 销毁现有图表
             if (window.netWorthChart) {
                 window.netWorthChart.destroy();
             }
-            
+
             // 创建新图表
             window.netWorthChart = new Chart(ctx, {
                 type: 'line',
@@ -1547,29 +1635,29 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { 
+                    plugins: {
                         legend: { display: false },
                         tooltip: { enabled: false }
                     },
                     scales: {
                         y: {
                             beginAtZero: false,
-                            grid: { 
+                            grid: {
                                 color: 'rgba(0, 0, 0, 0.05)',
                                 drawBorder: false
                             },
-                            ticks: { 
-                                callback: value => `$${(value/1000).toFixed(1)}k`,
+                            ticks: {
+                                callback: value => `$${(value / 1000).toFixed(1)}k`,
                                 font: { size: 12, family: 'Manrope' },
                                 color: '#4E5969'
                             }
                         },
                         x: {
-                            grid: { 
+                            grid: {
                                 display: false,
                                 drawBorder: false
                             },
-                            ticks: { 
+                            ticks: {
                                 font: { family: 'Manrope' },
                                 color: '#4E5969'
                             }
@@ -1577,20 +1665,20 @@
                     }
                 }
             });
-            
+
             // 添加悬停交互
             const netWorthContainer = document.getElementById('net-worth-chart-container');
             const netWorthHover = document.getElementById('net-worth-hover');
-            
+
             // 移除旧事件监听器
             netWorthContainer.removeEventListener('mousemove', handleNetWorthMouseMove);
             netWorthContainer.removeEventListener('mouseleave', handleNetWorthMouseLeave);
-            
+
             function handleNetWorthMouseMove(e) {
                 const rect = ctx.canvas.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                
+
                 // 查找最近的数据点
                 const points = window.netWorthChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
                 if (points.length) {
@@ -1598,7 +1686,7 @@
                     const index = point.index;
                     const value = window.netWorthChart.data.datasets[0].data[index];
                     const label = window.netWorthChart.data.labels[index];
-                    
+
                     // 更新悬停信息
                     netWorthHover.innerHTML = `
                         <div class="chart-hover-info-title">${label} Net Worth</div>
@@ -1612,7 +1700,7 @@
                     
                     let hoverX = x + 10;
                     let hoverY = y + 10;
-                    
+
                     // 边界检查
                     if (hoverX + hoverWidth > containerRect.width) {
                         hoverX = x - hoverWidth - 10;
@@ -1620,7 +1708,7 @@
                     if (hoverY + hoverHeight > containerRect.height) {
                         hoverY = y - hoverHeight - 10;
                     }
-                    
+
                     netWorthHover.style.left = `${hoverX}px`;
                     netWorthHover.style.top = `${hoverY}px`;
                     netWorthHover.style.opacity = '1';
@@ -1628,69 +1716,69 @@
                     netWorthHover.style.opacity = '0';
                 }
             }
-            
+
             function handleNetWorthMouseLeave() {
                 netWorthHover.style.opacity = '0';
             }
-            
+
             netWorthContainer.addEventListener('mousemove', handleNetWorthMouseMove);
             netWorthContainer.addEventListener('mouseleave', handleNetWorthMouseLeave);
         }
-        
+
         // 更新现金流图表
         function updateCashFlowChart(incomeData, outcomeData) {
             if (!incomeData || !outcomeData || incomeData.length === 0 && outcomeData.length === 0) {
                 console.error('No data available for cash flow chart');
                 return;
             }
-            
+
             const ctx = document.getElementById('cash-flow-chart').getContext('2d');
-            
+
             // 确保数据按月份排序并对齐
             const months = [...new Set([...incomeData.map(i => i.month), ...outcomeData.map(o => o.month)])].sort();
-            
+
             // 准备收入和支出数据
             const incomeValues = months.map(month => {
                 const item = incomeData.find(i => i.month === month);
                 return item ? parseFloat(item.income || 0) : 0;
             });
-            
+
             const outcomeValues = months.map(month => {
                 const item = outcomeData.find(o => o.month === month);
                 return item ? parseFloat(item.outcome || 0) : 0;
             });
-            
+
             // 格式化标签
             const labels = months.map(month => formatMonth(month));
-            
+
             // 销毁现有图表
             if (window.cashFlowChart) {
                 window.cashFlowChart.destroy();
             }
-            
+
             // 计算最大值，为Y轴设置合理的范围
             const maxIncome = Math.max(...incomeValues);
             const maxOutcome = Math.max(...outcomeValues);
             const maxValue = Math.max(maxIncome, maxOutcome);
             const yAxisMax = maxValue > 0 ? maxValue * 1.1 : 1000;
-            
+
             // 创建新图表
             window.cashFlowChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [
-                        { 
-                            label: 'Income', 
-                            data: incomeValues, 
+                        {
+                            label: 'Income',
+                            data: incomeValues,
                             backgroundColor: '#9576d2',
                             borderRadius: 6,
                             borderSkipped: false,
                             barThickness: 20
                         },
-                        { 
-                            label: 'Expenses', 
-                            data: outcomeValues, 
+                        {
+                            label: 'Expenses',
+                            data: outcomeValues,
                             backgroundColor: '#74ebc4',
                             borderRadius: 6,
                             borderSkipped: false,
@@ -1701,8 +1789,8 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { 
+                    plugins: {
+                        legend: {
                             position: 'top',
                             labels: {
                                 font: { size: 13, family: 'Manrope', color: '#1D2129' },
@@ -1714,26 +1802,26 @@
                             enabled: false
                         }
                     },
-                    scales: { 
-                        y: { 
+                    scales: {
+                        y: {
                             min: 0,
                             max: yAxisMax,
-                            grid: { 
+                            grid: {
                                 color: 'rgba(0, 0, 0, 0.05)',
                                 drawBorder: false
                             },
-                            ticks: { 
-                                callback: value => `$${value >= 1000 ? (value/1000).toFixed(1) + 'k' : value}`,
+                            ticks: {
+                                callback: value => `$${value >= 1000 ? (value / 1000).toFixed(1) + 'k' : value}`,
                                 font: { size: 12, family: 'Manrope' },
                                 color: '#4E5969'
-                            } 
+                            }
                         },
                         x: {
-                            grid: { 
+                            grid: {
                                 display: false,
                                 drawBorder: false
                             },
-                            ticks: { 
+                            ticks: {
                                 font: { family: 'Manrope' },
                                 color: '#4E5969'
                             }
@@ -1741,7 +1829,7 @@
                     }
                 }
             });
-            
+
             // 添加悬停效果
             const cashFlowContainer = document.getElementById('cash-flow-container');
             const cashFlowHover = document.getElementById('cash-flow-hover');
@@ -1749,30 +1837,30 @@
             // 移除旧事件监听器
             cashFlowContainer.removeEventListener('mousemove', cashFlowMouseMoveHandler);
             cashFlowContainer.removeEventListener('mouseleave', cashFlowMouseLeaveHandler);
-            
+
             function cashFlowMouseMoveHandler(e) {
                 const canvas = ctx.canvas;
                 const rect = canvas.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                
+
                 // 查找最近的柱状图
                 const points = window.cashFlowChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
                 if (points.length) {
                     const bar = points[0];
                     const datasetIndex = bar.datasetIndex;
                     const index = bar.index;
-                    
+
                     const dataset = window.cashFlowChart.data.datasets[datasetIndex];
                     const value = dataset.data[index];
                     const label = window.cashFlowChart.data.labels[index];
-                    
+
                     // 更新悬停信息
                     cashFlowHover.innerHTML = `
                         <div class="chart-hover-info-title">${label} - ${datasetIndex === 0 ? 'Income' : 'Expenses'}</div>
                         <div class="chart-hover-info-value">$${value.toLocaleString()}</div>
                     `;
-                    
+
                     cashFlowHover.style.left = `${x + 15}px`;
                     cashFlowHover.style.top = `${y + 15}px`;
                     cashFlowHover.style.opacity = '1';
@@ -1780,24 +1868,24 @@
                     cashFlowHover.style.opacity = '0';
                 }
             }
-            
+
             function cashFlowMouseLeaveHandler() {
                 cashFlowHover.style.opacity = '0';
             }
-            
+
             cashFlowContainer.addEventListener('mousemove', cashFlowMouseMoveHandler);
             cashFlowContainer.addEventListener('mouseleave', cashFlowMouseLeaveHandler);
         }
-        
+
         // 更新资产配置图表
         function updateAssetAllocationChart(data) {
             if (!data) {
                 console.error('No data available for asset allocation chart');
                 return;
             }
-            
+
             const ctx = document.getElementById('asset-allocation-chart').getContext('2d');
-            
+
             // 准备数据
             const labels = ['Stocks', 'Bonds', 'Cash', 'Crypto'];
             const values = [
@@ -1807,12 +1895,12 @@
                 parseFloat(data.crypto_value) || 0
             ];
             const colors = ['#4C6FFF', '#1BC5BD', '#8950FC', '#F59E0B'];
-            
+
             // 销毁现有图表
             if (window.assetChart) {
                 window.assetChart.destroy();
             }
-            
+
             // 创建新图表
             window.assetChart = new Chart(ctx, {
                 type: 'doughnut',
@@ -1828,8 +1916,8 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { 
+                    plugins: {
+                        legend: {
                             position: 'bottom',
                             labels: {
                                 font: { size: 13, family: 'Manrope', color: '#1D2129' },
@@ -1845,7 +1933,7 @@
                     cutout: '65%'
                 }
             });
-            
+
             // 添加悬停效果
             const assetAllocationContainer = document.getElementById('asset-allocation-container');
             const assetAllocationHover = document.getElementById('asset-allocation-hover');
@@ -1853,18 +1941,18 @@
             // 移除旧事件监听器
             assetAllocationContainer.removeEventListener('mousemove', assetAllocationMouseMoveHandler);
             assetAllocationContainer.removeEventListener('mouseleave', assetAllocationMouseLeaveHandler);
-            
+
             function assetAllocationMouseMoveHandler(e) {
                 const canvas = ctx.canvas;
                 const rect = canvas.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                
+
                 const points = window.assetChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
                 if (points.length) {
                     const slice = points[0];
                     const index = slice.index;
-                    
+
                     const label = window.assetChart.data.labels[index];
                     const value = window.assetChart.data.datasets[0].data[index];
                     const total = window.assetChart.data.datasets[0].data.reduce((a, b) => a + b, 0);
@@ -1875,7 +1963,7 @@
                         <div class="chart-hover-info-title">${label}</div>
                         <div class="chart-hover-info-value">${formatCurrency(value)} (${percentage}%)</div></div>
                     `;
-                    
+
                     assetAllocationHover.style.left = `${x + 15}px`;
                     assetAllocationHover.style.top = `${y + 15}px`;
                     assetAllocationHover.style.opacity = '1';
@@ -1883,39 +1971,39 @@
                     assetAllocationHover.style.opacity = '0';
                 }
             }
-            
-            
+
+
             function assetAllocationMouseLeaveHandler() {
                 assetAllocationHover.style.opacity = '0';
             }
-            
+
             assetAllocationContainer.addEventListener('mousemove', assetAllocationMouseMoveHandler);
             assetAllocationContainer.addEventListener('mouseleave', assetAllocationMouseLeaveHandler);
         }
-        
+
         // 更新实时时钟
         function updateDateTime() {
             const now = new Date();
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
                 day: 'numeric',
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit',
                 hour12: true
             };
-            
+
             document.getElementById('current-datetime').textContent = now.toLocaleDateString('en-US', options);
         }
-        
+
         // 初始化页面
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // 启动时钟
             updateDateTime();
             setInterval(updateDateTime, 1000);
-            
+
             // 加载数据
             fetchLatestAsset();
             fetchMonthlyAssets();
@@ -1936,20 +2024,20 @@
                     const btn = e.target.closest('.page-btn');
                     if (btn) {
                         const page = btn.getAttribute('data-page');
-                        
+
                         // 更新按钮状态
                         document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
                         btn.classList.add('active');
-                        
+
                         // 更新显示页面
                         document.querySelectorAll('.mover-page').forEach(p => p.classList.remove('active'));
                         document.querySelector(`.mover-page[data-page="${page}"]`).classList.add('active');
                     }
                 });
             }
-            
+
             // 关闭欢迎横幅
-            document.querySelector('.close-banner').addEventListener('click', function() {
+            document.querySelector('.close-banner').addEventListener('click', function () {
                 document.querySelector('.welcome-banner').style.opacity = '0';
                 setTimeout(() => {
                     document.querySelector('.welcome-banner').style.display = 'none';
@@ -1958,5 +2046,5 @@
         });
     </script>
 </body>
+
 </html>
-    
