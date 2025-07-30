@@ -55,9 +55,9 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: auto; /* 修复搜索框位置：改为自动高度 */
+            height: auto;
             border-bottom: 1px solid rgba(179, 69, 69, 0.1);
-            flex-wrap: wrap; /* 允许导航项换行 */
+            flex-wrap: wrap;
         }
         
         .logo {
@@ -130,7 +130,7 @@
             font-size: 1.1rem;
         }
         
-        /* 搜索框 - 修复位置问题 */
+        /* 搜索框 */
         .header-search-container {
             position: relative;
             width: 220px;
@@ -677,7 +677,7 @@
             color: var(--primary-color);
         }
         
-        /* 响应式设计调整 - 修复搜索框位置 */
+        /* 响应式设计调整 */
         @media (max-width: 1199px) {
             .sidebar {
                 width: 300px;
@@ -711,8 +711,8 @@
             .header-search-container {
                 order: 3;
                 width: 100%;
-                margin-top: 0.5rem; /* 减少顶部间距 */
-                margin-bottom: 0.5rem; /* 添加底部间距 */
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
             }
             
             .header {
@@ -964,25 +964,11 @@
                                 <i class="fab fa-napster"></i>
                                 <span>Major Indices</span>
                             </div>
-                            <div class="index-item">
-                                <span class="index-name"><i class="fab fa-napster"></i> NASDAQ</span>
-                                <div class="index-change change-positive">
-                                    <span class="index-value">14,874.46</span>
-                                    <span>+1.23%</span>
-                                </div>
-                            </div>
-                            <div class="index-item">
-                                <span class="index-name"><i class="fas fa-chart-line"></i> Hang Seng</span>
-                                <div class="index-change change-negative">
-                                    <span class="index-value">25,347.82</span>
-                                    <span>-0.87%</span>
-                                </div>
-                            </div>
-                            <div class="index-item">
-                                <span class="index-name"><i class="fas fa-industry"></i> Dow Jones</span>
-                                <div class="index-change change-positive">
-                                    <span class="index-value">35,678.21</span>
-                                    <span>+0.54%</span>
+                            <div id="indices-container">
+                                <!-- 指数数据将通过JavaScript动态加载 -->
+                                <div class="index-item">
+                                    <span class="index-name"><i class="fas fa-sync-alt fa-spin"></i> Loading indices...</span>
+                                    <div class="index-change"></div>
                                 </div>
                             </div>
                         </div>
@@ -1222,6 +1208,65 @@
             }
         }
         
+        // 获取大盘指数数据
+        async function fetchMarketIndices() {
+            try {
+                const indices = await apiRequest('/assetList/getIndex');
+                const container = document.getElementById('indices-container');
+                
+                if (!container) return;
+                
+                // 清空容器
+                container.innerHTML = '';
+                
+                // 定义指数图标映射
+                const indexIcons = {
+                    'NASDAQ': 'fab fa-napster',
+                    'DOWJONES': 'fas fa-industry',
+                    'HANGSENG': 'fas fa-chart-line'
+                };
+                
+                // 遍历指数数据并创建元素
+                indices.forEach(index => {
+                    const indexItem = document.createElement('div');
+                    indexItem.className = 'index-item';
+                    
+                    // 获取对应的图标类
+                    const iconClass = indexIcons[index.symbol] || 'fas fa-chart-line';
+                    
+                    // 计算变化百分比
+                    const changePercent = (index.change).toFixed(2);
+                    
+                    // 确定涨跌颜色类
+                    const changeClass = index.change >= 0 ? 'change-positive' : 'change-negative';
+                    const arrowIcon = index.change >= 0 ? 'fa-arrow-up' : 'fa-arrow-down';
+                    
+                    // 设置HTML内容
+                    indexItem.innerHTML = `
+                        <span class="index-name"><i class="${iconClass}"></i> ${index.symbol}</span>
+                        <div class="index-change ${changeClass}">
+                            <span class="index-value">${parseFloat(index.price).toFixed(2)}</span>
+                            <span><i class="fas ${arrowIcon}"></i>${changePercent}%</span>
+                        </div>
+                    `;
+                    
+                    container.appendChild(indexItem);
+                });
+                
+                return indices;
+            } catch (error) {
+                console.error('Error fetching market indices:', error);
+                const container = document.getElementById('indices-container');
+                if (container) {
+                    container.innerHTML = `
+                        <div class="index-item">
+                            <span class="error-message">Failed to load indices data</span>
+                        </div>
+                    `;
+                }
+            }
+        }
+        
         // 获取最新资产数据
         async function fetchLatestAsset() {
             try {
@@ -1309,7 +1354,7 @@
             }
         }
         
-        // 获取现金流数据 - 固定为6个月，不随时间选择器变化，修复了多出的Jan 2025数据
+        // 获取现金流数据 - 固定为6个月
         async function fetchCashFlow() {
             const months = 6; // 固定为6个月
             try {
@@ -1407,7 +1452,7 @@
         // 渲染资产页面
         async function renderAssetPage(assets, containerId) {
             const container = document.getElementById(containerId);
-            if (!container) return; // 修复错误：检查容器是否存在
+            if (!container) return;
             
             container.innerHTML = '';
             
@@ -1459,7 +1504,6 @@
         
         // 更新净值图表
         function updateNetWorthChart(data) {
-            // 修复错误：检查数据是否有效
             if (!data || data.length === 0) {
                 console.error('No data available for net worth chart');
                 return;
@@ -1561,12 +1605,11 @@
                         <div class="chart-hover-info-value">$${value.toLocaleString()}</div>
                     `;
                     
-                    // 计算信息框位置 - 靠近数据点
+                    // 计算信息框位置
                     const containerRect = netWorthContainer.getBoundingClientRect();
                     const hoverWidth = 150;
                     const hoverHeight = 60;
                     
-                    // 让信息框位于数据点的右下方，更靠近数据点
                     let hoverX = x + 10;
                     let hoverY = y + 10;
                     
@@ -1596,7 +1639,6 @@
         
         // 更新现金流图表
         function updateCashFlowChart(incomeData, outcomeData) {
-            // 修复错误：检查数据是否有效
             if (!incomeData || !outcomeData || incomeData.length === 0 && outcomeData.length === 0) {
                 console.error('No data available for cash flow chart');
                 return;
@@ -1704,7 +1746,7 @@
             const cashFlowContainer = document.getElementById('cash-flow-container');
             const cashFlowHover = document.getElementById('cash-flow-hover');
             
-            // 移除旧事件监听器（修复错误）
+            // 移除旧事件监听器
             cashFlowContainer.removeEventListener('mousemove', cashFlowMouseMoveHandler);
             cashFlowContainer.removeEventListener('mouseleave', cashFlowMouseLeaveHandler);
             
@@ -1749,7 +1791,6 @@
         
         // 更新资产配置图表
         function updateAssetAllocationChart(data) {
-            // 修复错误：检查数据是否有效
             if (!data) {
                 console.error('No data available for asset allocation chart');
                 return;
@@ -1760,7 +1801,7 @@
             // 准备数据
             const labels = ['Stocks', 'Bonds', 'Cash', 'Crypto'];
             const values = [
-                parseFloat(data.stock_value) || 0,  // 修复错误：处理可能的null值
+                parseFloat(data.stock_value) || 0,
                 parseFloat(data.bond_value) || 0,
                 parseFloat(data.cash) || 0,
                 parseFloat(data.crypto_value) || 0
@@ -1809,7 +1850,7 @@
             const assetAllocationContainer = document.getElementById('asset-allocation-container');
             const assetAllocationHover = document.getElementById('asset-allocation-hover');
             
-            // 移除旧事件监听器（修复错误）
+            // 移除旧事件监听器
             assetAllocationContainer.removeEventListener('mousemove', assetAllocationMouseMoveHandler);
             assetAllocationContainer.removeEventListener('mouseleave', assetAllocationMouseLeaveHandler);
             
@@ -1827,7 +1868,7 @@
                     const label = window.assetChart.data.labels[index];
                     const value = window.assetChart.data.datasets[0].data[index];
                     const total = window.assetChart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                    const percentage = total > 0 ? Math.round((value / total) * 100) : 0; // 修复错误：避免除以零
+                    const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
                     
                     // 更新悬停信息
                     assetAllocationHover.innerHTML = `
@@ -1878,18 +1919,19 @@
             // 加载数据
             fetchLatestAsset();
             fetchMonthlyAssets();
-            fetchCashFlow(); // 现金流固定为6个月
+            fetchCashFlow();
             fetchAssetList();
+            fetchMarketIndices();
             
-            // 时间范围选择器 - 只影响净值图表
+            // 时间范围选择器
             document.getElementById('time-period-select').addEventListener('change', function(e) {
                 const months = parseInt(e.target.value);
-                fetchMonthlyAssets(months); // 只更新净值图表
+                fetchMonthlyAssets(months);
             });
             
-            // 分页按钮 - 修复事件绑定错误
+            // 分页按钮
             const paginationContainer = document.querySelector('.pagination');
-            if (paginationContainer) { // 检查容器是否存在
+            if (paginationContainer) {
                 paginationContainer.addEventListener('click', function(e) {
                     const btn = e.target.closest('.page-btn');
                     if (btn) {
