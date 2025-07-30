@@ -12,6 +12,7 @@
             --primary-color: #4C6FFF;
             --primary-light: #6B8AFF;
             --secondary-color: #1BC5BD;
+            --accent-color: #8950FC;
             --rise-color: #c46060e3;
             --fall-color: #10B981;
             --warning-color: #F59E0B;
@@ -259,6 +260,12 @@
             padding: 1.5rem;
             box-shadow: var(--card-shadow);
             border: 1px solid var(--card-border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
         }
         
         .info-card-title {
@@ -289,35 +296,49 @@
         }
         
         .transaction-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-            align-items: end;
-            padding: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: center;
+            padding: 2rem;
             background-color: var(--bg-card);
             border-radius: 16px;
             box-shadow: var(--card-shadow);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             border: 1px solid var(--card-border);
+        }
+        
+        .form-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .form-section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
         }
         
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 0.35rem;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
         }
         
         .form-label {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-secondary);
             font-weight: 500;
         }
         
         .form-control {
-            padding: 0.75rem;
+            padding: 0.85rem 1rem;
             border: 1px solid var(--divider);
             border-radius: 8px;
             font-size: 1rem;
+            transition: all 0.3s ease;
         }
         
         .form-control:focus {
@@ -328,20 +349,33 @@
         
         .radio-group {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             align-items: center;
+            margin-bottom: 1rem;
         }
         
         .radio-option {
             display: flex;
             align-items: center;
-            gap: 0.35rem;
-            font-size: 0.9rem;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            cursor: pointer;
         }
         
-        .submit-btn {
-            padding: 0.75rem 1rem;
-            background-color: var(--primary-color);
+        .radio-option input[type="radio"] {
+            width: 1.1rem;
+            height: 1.1rem;
+            accent-color: var(--primary-color);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .transaction-btn {
+            padding: 0.9rem 1.5rem;
             border: none;
             border-radius: 8px;
             font-weight: 600;
@@ -350,19 +384,72 @@
             align-items: center;
             gap: 0.5rem;
             font-size: 1rem;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            flex: 1;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .transaction-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.4s ease;
+        }
+        
+        .transaction-btn:hover::after {
+            left: 100%;
+        }
+        
+        .deposit-btn {
+            background-color: var(--fall-color);
             color: white;
         }
         
-        .submit-btn:hover {
-            background-color: var(--primary-light);
+        .deposit-btn:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        
+        .withdraw-btn {
+            background-color: var(--rise-color);
+            color: white;
+        }
+        
+        .withdraw-btn:hover {
+            background-color: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(196, 96, 96, 0.3);
+        }
+        
+        .transaction-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .button-loading {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
         }
         
         .card {
             background-color: var(--bg-card);
             border-radius: 16px;
             box-shadow: var(--card-shadow);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             overflow: hidden;
             border: 1px solid var(--card-border);
         }
@@ -401,8 +488,25 @@
             font-style: italic;
         }
         
+        .success-message {
+            color: var(--fall-color);
+            padding: 0.75rem 1rem;
+            background-color: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: fadeIn 0.3s ease;
+        }
+        
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         @media (max-width: 768px) {
@@ -427,6 +531,14 @@
             .nav-item {
                 padding: 0.75rem;
             }
+            
+            .transaction-form {
+                padding: 1.5rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
         }
         
         @media (max-width: 480px) {
@@ -437,6 +549,7 @@
     </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
     <div class="top-nav">
         <div class="logo">
             <i class="fas fa-chart-line fa-lg" style="color: var(--primary-light);"></i>
@@ -458,6 +571,7 @@
             </a>
         </div>
         
+        <!-- Search Box -->
         <div class="header-search-container">
             <i class="fas fa-search header-search-icon"></i>
             <input type="text" class="header-search-input" placeholder="Search stocks, bonds...">
@@ -482,7 +596,7 @@
     <div class="container">
         <h1 class="page-title">Cash Management</h1>
         
-        <!-- 现金概览卡片 -->
+        <!-- Cash Overview Cards -->
         <div class="info-cards">
             <div class="info-card">
                 <div class="info-card-title">Current Balance</div>
@@ -511,10 +625,11 @@
             </div>
         </div>
         
-        <!-- 交易操作区 -->
-        <form class="transaction-form" id="transaction-form">
-            <div class="form-group">
-                <label class="form-label">Transaction Type</label>
+        <!-- Transaction Section -->
+        <div class="transaction-form">
+            <div class="form-section">
+                <div class="form-section-title">Cash Transactions</div>
+                
                 <div class="radio-group">
                     <label class="radio-option">
                         <input type="radio" name="transaction-type" value="deposit" checked> Deposit
@@ -523,29 +638,35 @@
                         <input type="radio" name="transaction-type" value="withdraw"> Withdraw
                     </label>
                 </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Amount ($)</label>
+                    <input type="number" step="0.01" min="0.01" class="form-control" id="transaction-amount" placeholder="0.00" required>
+                </div>
+                
+                <div class="action-buttons">
+                    <button type="button" class="transaction-btn deposit-btn" id="deposit-btn">
+                        <i class="fas fa-plus-circle"></i> Deposit Funds
+                    </button>
+                    <button type="button" class="transaction-btn withdraw-btn" id="withdraw-btn">
+                        <i class="fas fa-minus-circle"></i> Withdraw Funds
+                    </button>
+                </div>
+                
+                <div id="transaction-message" style="display: none;"></div>
             </div>
             
-            <div class="form-group">
-                <label class="form-label">Amount ($)</label>
-                <input type="number" step="0.01" class="form-control" placeholder="0.00" required>
+            <div class="form-section" style="min-width: 200px;">
+                <div class="form-section-title">Transaction Tips</div>
+                <ul style="padding-left: 1.25rem; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7;">
+                    <li>Minimum transaction amount is $0.01</li>
+                    <li>Transactions are processed immediately</li>
+                    <li>All transactions are automatically dated</li>
+                </ul>
             </div>
-            
-            <div class="form-group">
-                <label class="form-label">Description</label>
-                <input type="text" class="form-control" placeholder="e.g. Salary, Rent" required>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Date</label>
-                <input type="date" class="form-control" required>
-            </div>
-            
-            <div class="form-group">
-                <button type="submit" class="submit-btn">Submit Transaction</button>
-            </div>
-        </form>
+        </div>
         
-        <!-- 月度现金流图表 -->
+        <!-- Monthly Cash Flow Chart -->
         <div class="card">
             <div class="card-header">
                 <span>Monthly Cash Flow</span>
@@ -563,57 +684,196 @@
     </div>
 
     <script>
-        // 后端API基础地址
+        // Backend API base URL - Please confirm this is correct
         const API_BASE_URL = 'http://localhost:3000';
+        // Alternative API URLs to try if main URL fails
+        const ALTERNATE_API_BASE_URLS = [
+            'http://localhost:3001',
+            'http://127.0.0.1:3000',
+            'http://127.0.0.1:3001'
+        ];
 
-        // 通用接口调用工具
-        async function callApi(url, method = 'GET', data = null) {
+        // Generic API call utility
+        async function callApi(url, method = 'GET', data = null, baseUrl = API_BASE_URL) {
             try {
                 const options = {
                     method: method,
                     headers: {
                         'Content-Type': 'application/json',
-                    }
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    credentials: 'include'
                 };
 
                 if (data) {
                     options.body = JSON.stringify(data);
                 }
 
-                const response = await fetch(`${API_BASE_URL}${url}`, options);
+                const fullUrl = `${baseUrl}${url}`;
+                const response = await fetch(fullUrl, options);
 
                 if (!response.ok) {
-                    return { success: false, error: `服务器错误: ${response.status}` };
+                    return { 
+                        success: false, 
+                        error: `Server error: ${response.status} (${response.statusText})`,
+                        status: response.status,
+                        url: fullUrl
+                    };
                 }
 
                 const result = await response.json();
                 return { success: true, data: result };
             } catch (error) {
-                return { success: false, error: error.message };
+                return { 
+                    success: false, 
+                    error: `Request failed: ${error.message}`,
+                    url: `${baseUrl}${url}`
+                };
             }
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // 初始化页面数据
+            // Initialize page data
             initCashData();
             
-            // 周期选择交互
+            // Period selection interaction
             document.getElementById('period-select').addEventListener('change', function() {
                 const months = parseInt(this.value);
                 loadCashFlowChart(months);
             });
 
-            // 交易表单提交
-            document.getElementById('transaction-form').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                alert('Transaction submitted successfully!');
-                this.reset();
+            // Transaction button event listeners
+            document.getElementById('deposit-btn').addEventListener('click', function() {
+                processTransaction('deposit');
+            });
+            
+            document.getElementById('withdraw-btn').addEventListener('click', function() {
+                processTransaction('withdraw');
+            });
+            
+            // Update button states when transaction type changes
+            const radioButtons = document.querySelectorAll('input[name="transaction-type"]');
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const type = this.value;
+                    document.getElementById('deposit-btn').disabled = type !== 'deposit';
+                    document.getElementById('withdraw-btn').disabled = type !== 'withdraw';
+                });
             });
         });
 
-        // 初始化所有现金相关数据
+        // Process transaction
+        async function processTransaction(type) {
+            const amountInput = document.getElementById('transaction-amount');
+            const amount = parseFloat(amountInput.value);
+            const messageElement = document.getElementById('transaction-message');
+            const depositBtn = document.getElementById('deposit-btn');
+            const withdrawBtn = document.getElementById('withdraw-btn');
+            
+            // Validate amount
+            if (isNaN(amount) || amount <= 0) {
+                showMessage(messageElement, 'Please enter a valid amount greater than 0', 'error');
+                return;
+            }
+            
+            // Disable buttons and show loading state
+            depositBtn.disabled = true;
+            withdrawBtn.disabled = true;
+            
+            const originalDepositHTML = depositBtn.innerHTML;
+            const originalWithdrawHTML = withdrawBtn.innerHTML;
+            
+            if (type === 'deposit') {
+                depositBtn.innerHTML = `<span class="button-loading"></span> Processing...`;
+            } else {
+                withdrawBtn.innerHTML = `<span class="button-loading"></span> Processing...`;
+            }
+            
+            try {
+                // Format amount
+                const formattedAmount = amount.toFixed(2).replace(/,/g, '');
+                
+                // Prepare multiple URL formats to try
+                const urlFormats = [
+                    `/cash/${type}/${formattedAmount}`,
+                    `/cash/${type}?amount=${formattedAmount}`,
+                    `/cash/transaction?type=${type}&amount=${formattedAmount}`
+                ];
+                
+                let result;
+                let baseUrlsToTry = [API_BASE_URL, ...ALTERNATE_API_BASE_URLS];
+                
+                // Try all possible URL and base address combinations
+                for (const baseUrl of baseUrlsToTry) {
+                    for (const url of urlFormats) {
+                        result = await callApi(url, 'PUT', null, baseUrl);
+                        
+                        if (result.success) {
+                            // Success - break out of loops
+                            break;
+                        } else if (result.status !== 404) {
+                            // Not a 404 error - break out of loops
+                            break;
+                        }
+                    }
+                    
+                    if (result && (result.success || result.status !== 404)) {
+                        break;
+                    }
+                }
+                
+                if (result.success) {
+                    // Show success message
+                    const actionText = type === 'deposit' ? 'deposited' : 'withdrawn';
+                    showMessage(
+                        messageElement, 
+                        `Successfully ${actionText} $${amount.toFixed(2)}`, 
+                        'success'
+                    );
+                    
+                    // Clear input and refresh data
+                    amountInput.value = '';
+                    initCashData();
+                    loadCashFlowChart(parseInt(document.getElementById('period-select').value));
+                } else {
+                    // Show error message
+                    let errorMsg = `Transaction failed: ${result.error}`;
+                    showMessage(messageElement, errorMsg, 'error');
+                }
+            } catch (error) {
+                showMessage(messageElement, `An error occurred: ${error.message}`, 'error');
+            } finally {
+                // Restore button states
+                depositBtn.innerHTML = originalDepositHTML;
+                withdrawBtn.innerHTML = originalWithdrawHTML;
+                depositBtn.disabled = false;
+                withdrawBtn.disabled = false;
+                
+                // Update button states based on selected transaction type
+                const selectedType = document.querySelector('input[name="transaction-type"]:checked').value;
+                depositBtn.disabled = selectedType !== 'deposit';
+                withdrawBtn.disabled = selectedType !== 'withdraw';
+            }
+        }
+        
+        // Show message notification
+        function showMessage(element, text, type) {
+            element.innerHTML = '';
+            element.style.display = 'flex';
+            
+            if (type === 'success') {
+                element.className = 'success-message';
+                element.innerHTML = `<i class="fas fa-check-circle"></i> ${text}`;
+            } else {
+                element.className = 'error-text';
+                element.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${text}`;
+            }
+        }
+
+        // Initialize all cash-related data
         async function initCashData() {
-            // 1. 获取最新现金余额
+            // Get latest cash balance
             const assetResult = await callApi('/asset/latest');
             if (assetResult.success) {
                 const cashBalance = parseFloat(assetResult.data.cash);
@@ -621,74 +881,66 @@
                     `$${cashBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
             } else {
                 document.querySelector('.info-cards .info-card:nth-child(1) .info-card-value').innerHTML = 
-                    '<span class="error-text">加载失败</span>';
-                console.error('现金余额加载失败:', assetResult.error);
+                    '<span class="error-text">Failed to load</span>';
+                console.error('Failed to load cash balance:', assetResult.error);
             }
             
-            // 2. 获取两个月的收入数据（用于计算趋势）
-            const incomeResult = await callApi('/cash/income/2'); // 使用month=2获取两个月数据
-            // 3. 获取两个月的支出数据（用于计算趋势）
-            const expenseResult = await callApi('/cash/outcome/2'); // 使用month=2获取两个月数据
+            // Get income data for two months (for trend calculation)
+            const incomeResult = await callApi('/cash/income/2');
+            // Get expense data for two months (for trend calculation)
+            const expenseResult = await callApi('/cash/outcome/2');
             
-            // 处理收入数据
+            // Process income data
             if (incomeResult.success) {
-                // 确保有数据且按时间排序（最新的在前）
                 if (incomeResult.data.length >= 1) {
-                    // 当月收入
                     const currentIncome = parseFloat(incomeResult.data[0].income);
                     document.querySelector('.info-cards .info-card:nth-child(2) .info-card-value').textContent = 
                         `$${currentIncome.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
                     
-                    // 计算收入趋势（需要至少两个月数据）
                     if (incomeResult.data.length >= 2) {
                         const previousIncome = parseFloat(incomeResult.data[1].income);
                         calculateTrend(2, currentIncome, previousIncome);
                     } else {
-                        // 只有一个月数据时显示"新记录"
                         document.querySelector('.info-cards .info-card:nth-child(2) .info-card-trend span').textContent = 
                             'New entry';
                     }
                 } else {
-                    throw new Error('收入数据为空');
+                    throw new Error('Income data is empty');
                 }
             } else {
                 document.querySelector('.info-cards .info-card:nth-child(2) .info-card-value').innerHTML = 
-                    '<span class="error-text">加载失败</span>';
+                    '<span class="error-text">Failed to load</span>';
                 document.querySelector('.info-cards .info-card:nth-child(2) .info-card-trend span').innerHTML = 
                     '<span class="error-text">-</span>';
-                console.error('月度收入加载失败:', incomeResult.error);
+                console.error('Failed to load monthly income:', incomeResult.error);
             }
             
-            // 处理支出数据
+            // Process expense data
             if (expenseResult.success) {
-                // 确保有数据且按时间排序（最新的在前）
                 if (expenseResult.data.length >= 1) {
-                    // 当月支出
                     const currentExpense = parseFloat(expenseResult.data[0].outcome);
                     document.querySelector('.info-cards .info-card:nth-child(3) .info-card-value').textContent = 
                         `$${currentExpense.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
                     
-                    // 计算支出趋势（需要至少两个月数据）
                     if (expenseResult.data.length >= 2) {
                         const previousExpense = parseFloat(expenseResult.data[1].outcome);
                         calculateTrend(3, currentExpense, previousExpense, true);
                     } else {
-                        // 只有一个月数据时显示"新记录"
                         document.querySelector('.info-cards .info-card:nth-child(3) .info-card-trend span').textContent = 
                             'New entry';
                     }
                 } else {
-                    throw new Error('支出数据为空');
+                    throw new Error('Expense data is empty');
                 }
             } else {
                 document.querySelector('.info-cards .info-card:nth-child(3) .info-card-value').innerHTML = 
-                    '<span class="error-text">加载失败</span>';
+                    '<span class="error-text">Failed to load</span>';
                 document.querySelector('.info-cards .info-card:nth-child(3) .info-card-trend span').innerHTML = 
                     '<span class="error-text">-</span>';
-                console.error('月度支出加载失败:', expenseResult.error);
+                console.error('Failed to load monthly expenses:', expenseResult.error);
             }
             
-            // 计算月度储蓄
+            // Calculate monthly savings
             if (incomeResult.success && expenseResult.success && 
                 incomeResult.data.length >= 1 && expenseResult.data.length >= 1) {
                 
@@ -699,7 +951,6 @@
                 document.querySelector('.info-cards .info-card:nth-child(4) .info-card-value').textContent = 
                     `$${currentSavings.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
                 
-                // 计算储蓄趋势
                 if (incomeResult.data.length >= 2 && expenseResult.data.length >= 2) {
                     const previousIncome = parseFloat(incomeResult.data[1].income);
                     const previousExpense = parseFloat(expenseResult.data[1].outcome);
@@ -707,24 +958,22 @@
                     
                     calculateTrend(4, currentSavings, previousSavings);
                 } else {
-                    // 只有一个月数据时显示"新记录"
                     document.querySelector('.info-cards .info-card:nth-child(4) .info-card-trend span').textContent = 
                         'New entry';
                 }
             } else {
                 document.querySelector('.info-cards .info-card:nth-child(4) .info-card-value').innerHTML = 
-                    '<span class="error-text">加载失败</span>';
+                    '<span class="error-text">Failed to load</span>';
                 document.querySelector('.info-cards .info-card:nth-child(4) .info-card-trend span').innerHTML = 
                     '<span class="error-text">-</span>';
             }
             
-            // 初始化现金流图表（默认6个月）
+            // Initialize cash flow chart (default 6 months)
             loadCashFlowChart(6);
         }
 
-        // 计算趋势百分比
+        // Calculate trend percentage
         function calculateTrend(cardIndex, currentValue, previousValue, isExpense = false) {
-            // 清除加载状态
             const trendSpan = document.querySelector(`.info-cards .info-card:nth-child(${cardIndex}) .info-card-trend span`);
             trendSpan.classList.remove('loading');
             
@@ -736,11 +985,9 @@
             const change = currentValue - previousValue;
             const percentage = ((change / previousValue) * 100).toFixed(1);
             
-            // 对于支出，趋势判断与其他相反
             const trendElement = document.querySelector(`.info-cards .info-card:nth-child(${cardIndex}) .info-card-trend`);
             
             if (isExpense) {
-                // 支出减少是好事（趋势向上）
                 if (change < 0) {
                     trendElement.className = 'info-card-trend trend-up';
                     trendElement.innerHTML = `<i class="fas fa-arrow-up"></i> ${Math.abs(percentage)}%`;
@@ -749,7 +996,6 @@
                     trendElement.innerHTML = `<i class="fas fa-arrow-down"></i> ${percentage}%`;
                 }
             } else {
-                // 收入和储蓄增加是好事
                 if (change > 0) {
                     trendElement.className = 'info-card-trend trend-up';
                     trendElement.innerHTML = `<i class="fas fa-arrow-up"></i> ${percentage}%`;
@@ -760,7 +1006,7 @@
             }
         }
 
-        // 加载现金流图表数据
+        // Load cash flow chart data
         async function loadCashFlowChart(months) {
             const [incomeResult, expenseResult] = await Promise.all([
                 callApi(`/cash/income/${months}`),
@@ -771,32 +1017,28 @@
                 const incomeData = incomeResult.data;
                 const expenseData = expenseResult.data;
                 
-                // 按月份排序（从最早到最新）
                 incomeData.sort((a, b) => new Date(a.month) - new Date(b.month));
                 expenseData.sort((a, b) => new Date(a.month) - new Date(b.month));
                 
-                // 处理月份标签
                 const labels = incomeData.map(item => {
                     const [year, month] = item.month.split('-');
                     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                     return `${monthNames[parseInt(month)-1]} ${year}`;
                 });
                 
-                // 提取收入和支出数值
                 const incomeValues = incomeData.map(item => parseFloat(item.income));
                 const expenseValues = expenseData.map(item => parseFloat(item.outcome));
                 
-                // 初始化或更新图表
                 initOrUpdateCashFlowChart(labels, incomeValues, expenseValues);
             } else {
-                console.error('现金流图表数据加载失败:', {
+                console.error('Failed to load cash flow chart data:', {
                     incomeError: incomeResult.error,
                     expenseError: expenseResult.error
                 });
             }
         }
 
-        // 初始化或更新现金流图表
+        // Initialize or update cash flow chart
         function initOrUpdateCashFlowChart(labels, incomeValues, expenseValues) {
             const ctx = document.getElementById('monthly-flow-chart').getContext('2d');
             
