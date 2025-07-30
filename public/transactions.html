@@ -19,15 +19,15 @@
             --text-primary: #1D2129;
             --text-secondary: #4E5969;
             --text-tertiary: #6a6d72;
-            --bg-light: #F7F9FC;
-            --bg-white: #FFFFFF;
-            --bg-card: #ffffff;
-            --card-border: rgba(0, 0, 0, 0.05);
-            --divider: #E2E8F0;
-            --top-nav-gray: #1A1A27; /* 导航栏背景 */
-            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            --dropdown-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            --chart-bg: #f8fafc;
+            --bg-light: rgba(255, 255, 255, 0.7);
+            --bg-white: rgba(255, 255, 255, 0.85);
+            --bg-card: rgba(255, 255, 255, 0.15);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --divider: rgba(255, 255, 255, 0.15);
+            --top-nav-gray: rgba(26, 26, 39, 0.85); /* 导航栏背景 - 半透明 */
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            --dropdown-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            --chart-bg: rgba(255, 255, 255, 0.26);
             --chart-line: #64748b;
             --chart-fill: rgba(94, 124, 226, 0.15);
             --chart-grid: rgba(148, 163, 184, 0.1);
@@ -41,16 +41,38 @@
         
         body {
             font-family: 'Manrope', 'Inter', sans-serif;
-            background-color: var(--bg-light);
             color: var(--text-primary);
             padding-top: 70px;
             line-height: 1.6;
+            min-height: 100vh;
+            /* 背景图片设置 */
+            background-image: url('https://www.10wallpaper.com/wallpaper/1366x768/2407/Modern_City_Night_Skyscrapers_Horizon_Dusk_5K_1366x768.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
         }
         
-        /* 顶部导航栏 - 保持不变 */
+        /* 背景模糊遮罩 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            filter: blur(5px); /* 轻微模糊效果 */
+            z-index: -1;
+            transform: scale(1.02); /* 解决边缘模糊问题 */
+        }
+        
+        /* 顶部导航栏 - 液态玻璃效果 */
         .top-nav {
             background: var(--top-nav-gray);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: var(--card-shadow);
             padding: 0.5rem 1.5rem;
             position: fixed;
             top: 0;
@@ -61,7 +83,7 @@
             align-items: center;
             justify-content: space-between;
             height: 70px;
-            border-bottom: 1px solid rgba(179, 69, 69, 0.1);
+            border-bottom: 1px solid var(--card-border);
         }
         
         .logo {
@@ -205,7 +227,9 @@
             position: absolute;
             top: calc(100% + 10px);
             right: 0;
-            background-color: var(--bg-white);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 12px;
             box-shadow: var(--dropdown-shadow);
             width: 220px;
@@ -217,7 +241,7 @@
             transform: translateY(10px);
             transition: all 0.3s ease;
             z-index: 1001;
-            border: 1px solid var(--divider);
+            border: 1px solid var(--card-border);
         }
         
         .user-menu:hover .user-dropdown {
@@ -236,7 +260,7 @@
         }
         
         .user-dropdown a:hover {
-            background: rgba(76, 111, 255, 0.05);
+            background: rgba(76, 111, 255, 0.1);
             color: var(--primary-color);
         }
         
@@ -251,7 +275,8 @@
             font-size: 1.85rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            color: var(--text-primary);
+            color: var(--bg-white);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .content-grid {
@@ -267,8 +292,11 @@
             }
         }
         
-        .trade-section {
-            background-color: var(--bg-card);
+        /* 液态玻璃效果卡片 */
+        .trade-section, .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 16px;
             box-shadow: var(--card-shadow);
             padding: 1.5rem;
@@ -277,9 +305,9 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         
-        .trade-section:hover {
+        .trade-section:hover, .card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
         }
         
         .section-title {
@@ -288,6 +316,7 @@
             margin-bottom: 1rem;
             padding-bottom: 0.5rem;
             border-bottom: 1px solid var(--divider);
+            color: var(--bg-white);
         }
         
         .trade-form .form-group {
@@ -299,22 +328,28 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
             font-size: 0.9rem;
+            color: var(--bg-white);
         }
         
         .trade-form input, .trade-form select {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid #ced4da;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             font-size: 1rem;
-            background: var(--bg-white);
-            transition: border-color 0.2s ease;
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--bg-white);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .trade-form input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
         }
         
         .trade-form input:focus, .trade-form select:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(76, 111, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(76, 111, 255, 0.2);
         }
         
         .radio-group {
@@ -327,6 +362,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: var(--bg-white);
         }
         
         .btn-trade {
@@ -346,23 +382,22 @@
         }
         
         .btn-buy {
-        background: linear-gradient(90deg, #4C6FFF 25%, #6C8AFF 50%, #4C6FFF 75%);
-        background-size: 200% 100%;
-        animation: loading 1.5s infinite;
-        color: white;
-        border: none;
-        transition: all 0.3s ease;
-    }
+            background: linear-gradient(90deg, #4C6FFF 25%, #6C8AFF 50%, #4C6FFF 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+        }
 
-@keyframes loading {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-}
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
         
         .btn-buy:hover {
-            background-color: #2d528e;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(4, 30, 66, 0.3);
+            box-shadow: 0 4px 12px rgba(76, 111, 255, 0.4);
         }
         
         .btn-sell {
@@ -373,16 +408,16 @@
         .btn-sell:hover {
             background-color: #b91c1c;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(196, 96, 96, 0.3);
+            box-shadow: 0 4px 12px rgba(196, 96, 96, 0.4);
         }
         
         .stock-info {
             margin-top: 1rem;
             padding: 1rem;
-            background-color: rgba(245, 248, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.08);
             border-radius: 8px;
             display: none;
-            border: 1px solid rgba(76, 111, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .stock-info.visible {
@@ -396,11 +431,12 @@
         }
         
         .info-label {
-            color: var(--text-secondary);
+            color: rgba(255, 255, 255, 0.8);
         }
         
         .info-value {
             font-weight: 500;
+            color: var(--bg-white);
         }
         
         .filters {
@@ -419,30 +455,22 @@
         
         .filter-label {
             font-size: 0.85rem;
-            color: var(--text-secondary);
+            color: rgba(255, 255, 255, 0.8);
         }
         
         .select-filter {
             padding: 0.5rem;
-            border: 1px solid #ced4da;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             font-size: 0.9rem;
-            background-color: var(--bg-white);
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--bg-white);
             transition: border-color 0.2s ease;
         }
         
         .select-filter:focus {
             outline: none;
             border-color: var(--primary-color);
-        }
-        
-        .card {
-            background-color: var(--bg-card);
-            border-radius: 16px;
-            box-shadow: var(--card-shadow);
-            margin-bottom: 1rem;
-            overflow: hidden;
-            border: 1px solid var(--card-border);
         }
         
         .card-header {
@@ -453,6 +481,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: var(--bg-white);
         }
         
         .card-body {
@@ -470,15 +499,16 @@
             text-align: left;
             border-bottom: 1px solid var(--divider);
             font-size: 0.9rem;
+            color: var(--bg-white);
         }
         
         .transactions-table th {
-            color: var(--text-secondary);
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 600;
         }
         
         .transactions-table tr:hover td {
-            background-color: rgba(76, 111, 255, 0.03);
+            background-color: rgba(76, 111, 255, 0.1);
         }
         
         .transaction-type {
@@ -489,12 +519,12 @@
         }
         
         .type-buy {
-            background-color: rgba(16, 185, 129, 0.1);
+            background-color: rgba(16, 185, 129, 0.2);
             color: var(--fall-color); /* 买入用绿色 */
         }
         
         .type-sell {
-            background-color: rgba(196, 96, 96, 0.1);
+            background-color: rgba(196, 96, 96, 0.2);
             color: var(--rise-color); /* 卖出用红色 */
         }
         
@@ -507,17 +537,17 @@
         }
         
         .message.success {
-            background-color: rgba(16, 185, 129, 0.1);
+            background-color: rgba(16, 185, 129, 0.2);
             color: var(--fall-color);
             display: block;
-            border-color: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.3);
         }
         
         .message.error {
-            background-color: rgba(196, 96, 96, 0.1);
+            background-color: rgba(196, 96, 96, 0.2);
             color: var(--rise-color);
             display: block;
-            border-color: rgba(196, 96, 96, 0.2);
+            border-color: rgba(196, 96, 96, 0.3);
         }
         
         /* 红涨绿跌样式 */
@@ -543,19 +573,24 @@
         #chartContainer {
             width: 100%;
             background: var(--chart-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             padding: 20px;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             margin-top: 1rem;
+            border: 1px solid var(--card-border);
         }
         
         #stockSelect {
             padding: 6px 10px;
             border-radius: 6px;
-            border: 1px solid #ced4da;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             font-size: 1rem;
             cursor: pointer;
             margin-right: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--bg-white);
             transition: border-color 0.2s ease;
         }
         
@@ -621,7 +656,7 @@
     </style>
 </head>
 <body>
-    <!-- 顶部导航栏 - 保持不变 -->
+    <!-- 顶部导航栏 - 液态玻璃效果 -->
     <div class="top-nav">
         <div class="logo">
             <i class="fas fa-chart-line fa-lg" style="color: var(--primary-light);"></i>
@@ -710,6 +745,10 @@
                         <div class="info-row">
                             <span class="info-label">Current Price:</span>
                             <span class="info-value" id="current-price">$0.00</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Price Change:</span>
+                            <span class="info-value" id="price-change">$0.00</span>
                         </div>
                         <div class="info-row">
                             <span class="info-label">Total Value:</span>
@@ -809,17 +848,20 @@
         
         // 初始化
         document.addEventListener('DOMContentLoaded', function() {
-            // 根据模式选择获取数据的方式
-            if (USE_MOCK_DATA) {
-                loadMockPositions();
-                loadMockTransactions();
-            } else {
-                fetchPositions();
-                fetchTransactions();
-            }
-            setupEventListeners();
-            // 初始化股票图表
-            loadChart();
+            // 性能优化：使用requestAnimationFrame延迟初始化非关键组件
+            requestAnimationFrame(() => {
+                // 根据模式选择获取数据的方式
+                if (USE_MOCK_DATA) {
+                    loadMockPositions();
+                    loadMockTransactions();
+                } else {
+                    fetchPositions();
+                    fetchTransactions();
+                }
+                setupEventListeners();
+                // 初始化股票图表
+                loadChart();
+            });
         });
         
         // 模拟持仓数据
@@ -914,7 +956,7 @@
         // 渲染交易记录表格
         function renderTransactionsTable(transactions) {
             const tableBody = document.getElementById('transactions-table-body');
-            tableBody.innerHTML = '';
+            const fragment = document.createDocumentFragment(); // 性能优化：使用文档片段减少重绘
             
             if (transactions.length === 0) {
                 tableBody.innerHTML = `
@@ -940,14 +982,25 @@
                     <td>$${parseFloat(transaction.totalValue).toFixed(2)}</td>
                     <td>${transaction.status}</td>
                 `;
-                tableBody.appendChild(row);
+                fragment.appendChild(row);
             });
+            
+            tableBody.innerHTML = '';
+            tableBody.appendChild(fragment);
         }
         
         // 设置事件监听器
         function setupEventListeners() {
-            document.getElementById('stock-symbol').addEventListener('input', handleSymbolInput);
-            document.getElementById('quantity').addEventListener('input', calculateTotalValue);
+            // 为Ticker Symbol输入框添加点击事件，实现点击时显示价格
+            const stockSymbolInput = document.getElementById('stock-symbol');
+            stockSymbolInput.addEventListener('click', handleSymbolClick);
+            
+            // 性能优化：输入防抖
+            const debouncedSymbolInput = debounce(handleSymbolInput, 300);
+            stockSymbolInput.addEventListener('input', debouncedSymbolInput);
+            
+            const debouncedQuantityInput = debounce(calculateTotalValue, 150);
+            document.getElementById('quantity').addEventListener('input', debouncedQuantityInput);
             
             document.querySelectorAll('input[name="action"]').forEach(radio => {
                 radio.addEventListener('change', function() {
@@ -974,6 +1027,102 @@
             document.getElementById('fetchBtn').addEventListener('click', loadChart);
         }
         
+        // 处理Ticker Symbol点击事件
+        async function handleSymbolClick() {
+            const symbol = document.getElementById('stock-symbol').value.trim().toUpperCase();
+            
+            // 如果已有输入值，直接获取价格
+            if (symbol) {
+                await fetchAndDisplayStockPrice(symbol);
+            } else {
+                // 如果没有输入值，显示提示信息
+                document.getElementById('asset-name').textContent = 'Please enter a ticker symbol';
+                document.getElementById('current-price').textContent = '$0.00';
+                document.getElementById('price-change').textContent = '$0.00';
+                document.getElementById('stock-info').classList.add('visible');
+            }
+        }
+        
+        // 获取并显示股票价格
+        async function fetchAndDisplayStockPrice(symbol) {
+            try {
+                // 显示加载状态
+                document.getElementById('asset-name').textContent = 'Loading...';
+                document.getElementById('current-price').textContent = 'Loading...';
+                document.getElementById('price-change').textContent = 'Loading...';
+                document.getElementById('stock-info').classList.add('visible');
+                
+                // 调用价格API
+                const response = await fetch(`${API_BASE_URL}/assetList/getpriceAndCh?symbol=${symbol}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch price for ${symbol}`);
+                }
+                
+                const data = await response.json();
+                
+                // 查找资产名称
+                const asset = allPositions.find(item => item.symbol === symbol);
+                const assetName = asset ? asset.name : `${symbol} (Unknown)`;
+                
+                // 更新显示
+                document.getElementById('asset-name').textContent = assetName;
+                document.getElementById('current-price').textContent = `$${parseFloat(data.price).toFixed(2)}`;
+                
+                // 设置价格变动的颜色
+                const priceChangeEl = document.getElementById('price-change');
+                priceChangeEl.textContent = `$${parseFloat(data.change).toFixed(2)}`;
+                priceChangeEl.className = 'info-value';
+                
+                if (data.change > 0) {
+                    priceChangeEl.classList.add('change-positive');
+                } else if (data.change < 0) {
+                    priceChangeEl.classList.add('change-negative');
+                }
+                
+                updateHoldingInfo();
+                calculateTotalValue();
+                
+            } catch (error) {
+                console.error('Error fetching stock price:', error);
+                
+                // 尝试使用模拟数据
+                const asset = allPositions.find(item => item.symbol === symbol);
+                if (asset) {
+                    document.getElementById('asset-name').textContent = asset.name;
+                    document.getElementById('current-price').textContent = `$${parseFloat(asset.current_price).toFixed(2)}`;
+                    
+                    // 生成随机价格变动
+                    const randomChange = (Math.random() * 5 - 2.5).toFixed(2);
+                    const priceChangeEl = document.getElementById('price-change');
+                    priceChangeEl.textContent = `$${randomChange}`;
+                    priceChangeEl.className = 'info-value';
+                    
+                    if (parseFloat(randomChange) > 0) {
+                        priceChangeEl.classList.add('change-positive');
+                    } else {
+                        priceChangeEl.classList.add('change-negative');
+                    }
+                    
+                    updateHoldingInfo();
+                    calculateTotalValue();
+                } else {
+                    document.getElementById('asset-name').textContent = `${symbol} not found`;
+                    document.getElementById('current-price').textContent = '$0.00';
+                    document.getElementById('price-change').textContent = '$0.00';
+                }
+            }
+        }
+        
+        // 防抖函数 - 性能优化
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+        
         // 处理代码输入
         function handleSymbolInput() {
             const symbol = document.getElementById('stock-symbol').value.trim().toUpperCase();
@@ -983,21 +1132,8 @@
                 return;
             }
             
-            // 查找资产
-            const asset = allPositions.find(item => item.symbol === symbol);
-            
-            if (asset) {
-                document.getElementById('asset-name').textContent = asset.name;
-                document.getElementById('current-price').textContent = `$${parseFloat(asset.current_price).toFixed(2)}`;
-                document.getElementById('stock-info').classList.add('visible');
-            } else {
-                document.getElementById('asset-name').textContent = 'Not found in portfolio';
-                document.getElementById('current-price').textContent = '$0.00';
-                document.getElementById('stock-info').classList.add('visible');
-            }
-            
-            updateHoldingInfo();
-            calculateTotalValue();
+            // 调用API获取价格
+            fetchAndDisplayStockPrice(symbol);
         }
         
         // 更新持有信息
@@ -1026,12 +1162,11 @@
             
             if (!symbol || quantity <= 0) return;
             
-            // 查找资产
-            const asset = allPositions.find(item => item.symbol === symbol);
+            // 从显示的当前价格获取数值
+            const priceText = document.getElementById('current-price').textContent;
+            const currentPrice = parseFloat(priceText.replace('$', '')) || 0;
             
-            const currentPrice = asset ? parseFloat(asset.current_price) : 0;
             const totalValue = quantity * currentPrice;
-            
             document.getElementById('total-value').textContent = `$${totalValue.toFixed(2)}`;
         }
         
@@ -1250,8 +1385,8 @@
                         datasets: [{
                             label: `${symbol} Open Price (USD)`,
                             data: opens,
-                            borderColor: '#64748b', // 较浅的线条颜色
-                            backgroundColor: 'rgba(94, 124, 226, 0.15)', // 更浅的填充色
+                            borderColor: '#4C6FFF', // 较浅的线条颜色
+                            backgroundColor: 'rgba(76, 111, 255, 0.1)', // 更浅的填充色
                             fill: true,
                             tension: 0.3,
                             pointRadius: 3, // 减小点大小
@@ -1272,14 +1407,14 @@
                             legend: {
                                 position: 'top',
                                 labels: {
-                                    color: '#475569',
+                                    color: '#ffffff',
                                     font: { weight: '600' }
                                 }
                             },
                             tooltip: {
                                 mode: 'index',
                                 intersect: false,
-                                backgroundColor: '#f8fafc',
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)',
                                 titleColor: '#1e293b',
                                 bodyColor: '#334155',
                                 borderColor: 'rgba(148, 163, 184, 0.2)',
@@ -1299,21 +1434,21 @@
                                 title: {
                                     display: true,
                                     text: 'Date',
-                                    color: '#64748b',
+                                    color: '#ffffff',
                                     font: { weight: '600' }
                                 },
-                                ticks: { color: '#64748b' },
-                                grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                                ticks: { color: '#ffffff' },
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' }
                             },
                             y: {
                                 title: {
                                     display: true,
                                     text: 'Open Price(USD)',
-                                    color: '#64748b',
+                                    color: '#ffffff',
                                     font: { weight: '600' }
                                 },
-                                ticks: { color: '#64748b' },
-                                grid: { color: 'rgba(148, 163, 184, 0.1)' },
+                                ticks: { color: '#ffffff' },
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
                                 beginAtZero: false,
                             }
                         }
@@ -1386,14 +1521,14 @@
                         legend: {
                             position: 'top',
                             labels: {
-                                color: '#475569',
+                                color: '#ffffff',
                                 font: { weight: '600' }
                             }
                         },
                         tooltip: {
                             mode: 'index',
                             intersect: false,
-                            backgroundColor: '#f8fafc',
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
                             titleColor: '#1e293b',
                             bodyColor: '#334155',
                             borderColor: 'rgba(148, 163, 184, 0.2)',
@@ -1405,21 +1540,21 @@
                             title: {
                                 display: true,
                                 text: 'Date',
-                                color: '#64748b',
+                                color: '#ffffff',
                                 font: { weight: '600' }
                             },
-                            ticks: { color: '#64748b' },
-                            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                            ticks: { color: '#ffffff' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
                         },
                         y: {
                             title: {
                                 display: true,
                                 text: 'Open Price(USD)',
-                                color: '#64748b',
+                                color: '#ffffff',
                                 font: { weight: '600' }
                             },
-                            ticks: { color: '#64748b' },
-                            grid: { color: 'rgba(148, 163, 184, 0.1)' },
+                            ticks: { color: '#ffffff' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
                             beginAtZero: false,
                         }
                     }
