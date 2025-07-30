@@ -15,21 +15,21 @@
             --primary-light: #6B8AFF;
             --secondary-color: #1BC5BD; /* 绿点核心颜色 */
             --accent-color: #8950FC;
-            --rise-color: #c46060e3;   /* 上涨 - 红色 */
+            --rise-color: #efefef;   /* 上涨 - 红色 */
             --fall-color: #10B981;     /* 下跌 - 绿色 */
             --warning-color: #F59E0B;
             
             --text-primary: #1D2129;
-            --text-secondary: #4E5969;
-            --text-tertiary: #6a6d72;
-            --bg-light: #F7F9FC;
-            --bg-white: #FFFFFF;
-            --bg-card: #d1d5c730;
-            --card-border: rgba(0, 0, 0, 0.05);
-            --divider: #E2E8F0;
-            --top-nav-gray: #1A1A27; /* 导航栏背景 */
-            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            --dropdown-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --text-secondary: #E2E8F0;
+            --text-tertiary: #f1f9e7;
+            --bg-light: rgba(255, 255, 255, 0.7);
+            --bg-white: rgba(255, 255, 255, 0.85);
+            --bg-card: rgba(255, 255, 255, 0.15);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --divider: rgba(255, 255, 255, 0.15);
+            --top-nav-gray: rgba(26, 26, 39, 0.85); /* 导航栏背景 - 半透明 */
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            --dropdown-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
         
         * {
@@ -40,16 +40,38 @@
         
         body {
             font-family: 'Manrope', 'Inter', sans-serif;
-            background-color: var(--bg-light);
             color: var(--text-primary);
             padding-top: 70px;
             line-height: 1.6;
+            min-height: 100vh;
+            /* 背景图片设置 */
+            background-image: url('https://www.10wallpaper.com/wallpaper/1366x768/2407/Modern_City_Night_Skyscrapers_Horizon_Dusk_5K_1366x768.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
         }
         
-        /* 顶部导航栏 */
+        /* 背景模糊遮罩 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            filter: blur(5px); /* 轻微模糊效果 */
+            z-index: -1;
+            transform: scale(1.02); /* 解决边缘模糊问题 */
+        }
+        
+        /* 顶部导航栏 - 液态玻璃效果 */
         .top-nav {
             background: var(--top-nav-gray);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: var(--card-shadow);
             padding: 0.5rem 1.5rem;
             position: fixed;
             top: 0;
@@ -60,7 +82,7 @@
             align-items: center;
             justify-content: space-between;
             height: 70px;
-            border-bottom: 1px solid rgba(179, 69, 69, 0.1);
+            border-bottom: 1px solid var(--card-border);
         }
         
         .logo {
@@ -204,7 +226,9 @@
             position: absolute;
             top: calc(100% + 10px);
             right: 0;
-            background-color: var(--bg-white);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 12px;
             box-shadow: var(--dropdown-shadow);
             width: 220px;
@@ -216,7 +240,7 @@
             transform: translateY(10px);
             transition: all 0.3s ease;
             z-index: 1001;
-            border: 1px solid var(--divider);
+            border: 1px solid var(--card-border);
         }
         
         .user-menu:hover .user-dropdown {
@@ -235,7 +259,7 @@
         }
         
         .user-dropdown a:hover {
-            background: rgba(76, 111, 255, 0.05);
+            background: rgba(76, 111, 255, 0.1);
             color: var(--primary-color);
         }
         
@@ -250,10 +274,11 @@
             font-size: 1.85rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            color: var(--text-primary);
+            color: var(--bg-white);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
-        /* 信息卡片 */
+        /* 信息卡片 - 液态玻璃效果 */
         .info-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -262,22 +287,31 @@
         }
         
         .info-card {
-            background-color: var(--bg-card);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 16px;
             padding: 1.5rem;
             box-shadow: var(--card-shadow);
             border: 1px solid var(--card-border);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
         }
         
         .info-card-title {
             font-size: 0.9rem;
-            color: var(--text-secondary);
+            color: var(--text-tertiary);
             margin-bottom: 0.5rem;
         }
         
         .info-card-value {
             font-size: 1.4rem;
             font-weight: 600;
+            color: var(--bg-white);
         }
         
         .info-card-trend {
@@ -296,14 +330,22 @@
             color: var(--fall-color);
         }
         
-        /* 卡片样式 */
+        /* 卡片样式 - 液态玻璃效果 */
         .card {
-            background-color: var(--bg-card);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 16px;
             box-shadow: var(--card-shadow);
             margin-bottom: 1rem;
             overflow: hidden;
             border: 1px solid var(--card-border);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
         }
         
         .card-header {
@@ -314,6 +356,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: var(--bg-white);
         }
         
         .card-body {
@@ -327,11 +370,11 @@
             cursor: pointer;
             padding: 0.25rem 0.5rem;
             margin: 0 0.25rem;
-            color: var(--text-secondary);
+            color: var(--text-tertiary);
         }
         
         .action-btn:hover {
-            color: var(--text-primary);
+            color: var(--bg-white);
         }
         
         /* 表格样式 */
@@ -347,11 +390,12 @@
             text-align: left;
             border-bottom: 1px solid var(--divider);
             font-size: 0.9rem;
+            color: var(--bg-white);
         }
         
         .records-table th {
             font-weight: 600;
-            color: var(--text-secondary);
+            color: var(--text-tertiary);
         }
         
         .records-table tbody tr.selected {
@@ -376,10 +420,11 @@
         .flatpickr-input {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid #ced4da;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             font-size: 1rem;
-            background: var(--bg-white);
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--bg-white);
         }
         
         /* 响应式调整 */
@@ -489,7 +534,7 @@
         <div class="info-cards">
             <div class="info-card">
                 <div class="info-card-title">Total Stocks</div>
-                <div class="info-card-value">3</div>
+                <div class="info-card-value">2</div>
             </div>
             <div class="info-card">
                 <div class="info-card-title">Total Value</div>
@@ -764,15 +809,19 @@
                             ticks: {
                                 callback: function(value) {
                                     return '$' + value;
-                                }
+                                },
+                                color: 'rgba(255, 255, 255, 0.7)'
                             },
                             grid: {
-                                color: 'rgba(0, 0, 0, 0.03)'
+                                color: 'rgba(255, 255, 255, 0.1)'
                             }
                         },
                         x: {
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            },
                             grid: {
-                                display: false
+                                color: 'rgba(255, 255, 255, 0.1)'
                             }
                         }
                     }
