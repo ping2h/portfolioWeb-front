@@ -10,7 +10,7 @@
         :root {
             --primary-color: #4C6FFF;
             --primary-light: #6B8AFF;
-            --secondary-color: #1BC5BD; /* 绿点核心颜色 */
+            --secondary-color: #1BC5BD;
             --accent-color: #8950FC;
             --rise-color: #c46060e3;   /* 上涨 - 红色 */
             --fall-color: #10B981;     /* 下跌 - 绿色 */
@@ -21,12 +21,16 @@
             --text-tertiary: #6a6d72;
             --bg-light: #F7F9FC;
             --bg-white: #FFFFFF;
-            --bg-card: #d1d5c730;
+            --bg-card: #ffffff;
             --card-border: rgba(0, 0, 0, 0.05);
             --divider: #E2E8F0;
             --top-nav-gray: #1A1A27; /* 导航栏背景 */
             --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             --dropdown-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --chart-bg: #f8fafc;
+            --chart-line: #64748b;
+            --chart-fill: rgba(94, 124, 226, 0.15);
+            --chart-grid: rgba(148, 163, 184, 0.1);
         }
         
         * {
@@ -43,7 +47,7 @@
             line-height: 1.6;
         }
         
-        /* 顶部导航栏 */
+        /* 顶部导航栏 - 保持不变 */
         .top-nav {
             background: var(--top-nav-gray);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -253,8 +257,8 @@
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
         
         @media (max-width: 768px) {
@@ -270,6 +274,12 @@
             padding: 1.5rem;
             height: 100%;
             border: 1px solid var(--card-border);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .trade-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
         }
         
         .section-title {
@@ -298,6 +308,13 @@
             border-radius: 8px;
             font-size: 1rem;
             background: var(--bg-white);
+            transition: border-color 0.2s ease;
+        }
+        
+        .trade-form input:focus, .trade-form select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(76, 111, 255, 0.1);
         }
         
         .radio-group {
@@ -329,13 +346,34 @@
         }
         
         .btn-buy {
-            background-color: var(--fall-color); /* 买入按钮用绿色 */
-            color: white;
+        background: linear-gradient(90deg, #4C6FFF 25%, #6C8AFF 50%, #4C6FFF 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+        
+        .btn-buy:hover {
+            background-color: #2d528e;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(4, 30, 66, 0.3);
         }
         
         .btn-sell {
             background-color: var(--rise-color); /* 卖出按钮用红色 */
             color: white;
+        }
+        
+        .btn-sell:hover {
+            background-color: #b91c1c;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(196, 96, 96, 0.3);
         }
         
         .stock-info {
@@ -344,6 +382,7 @@
             background-color: rgba(245, 248, 255, 0.5);
             border-radius: 8px;
             display: none;
+            border: 1px solid rgba(76, 111, 255, 0.1);
         }
         
         .stock-info.visible {
@@ -354,6 +393,14 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 0.5rem;
+        }
+        
+        .info-label {
+            color: var(--text-secondary);
+        }
+        
+        .info-value {
+            font-weight: 500;
         }
         
         .filters {
@@ -381,6 +428,12 @@
             border-radius: 8px;
             font-size: 0.9rem;
             background-color: var(--bg-white);
+            transition: border-color 0.2s ease;
+        }
+        
+        .select-filter:focus {
+            outline: none;
+            border-color: var(--primary-color);
         }
         
         .card {
@@ -419,6 +472,15 @@
             font-size: 0.9rem;
         }
         
+        .transactions-table th {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        
+        .transactions-table tr:hover td {
+            background-color: rgba(76, 111, 255, 0.03);
+        }
+        
         .transaction-type {
             padding: 0.25rem 0.5rem;
             border-radius: 4px;
@@ -441,18 +503,21 @@
             border-radius: 8px;
             margin-bottom: 1rem;
             display: none;
+            border: 1px solid transparent;
         }
         
         .message.success {
             background-color: rgba(16, 185, 129, 0.1);
             color: var(--fall-color);
             display: block;
+            border-color: rgba(16, 185, 129, 0.2);
         }
         
         .message.error {
             background-color: rgba(196, 96, 96, 0.1);
             color: var(--rise-color);
             display: block;
+            border-color: rgba(196, 96, 96, 0.2);
         }
         
         /* 红涨绿跌样式 */
@@ -472,6 +537,56 @@
         .badge.bg-danger {
             background-color: var(--fall-color) !important; /* 下跌 - 绿色徽章 */
             color: white !important;
+        }
+        
+        /* 股票图表样式 - 优化部分 */
+        #chartContainer {
+            width: 100%;
+            background: var(--chart-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-top: 1rem;
+        }
+        
+        #stockSelect {
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-right: 15px;
+            transition: border-color 0.2s ease;
+        }
+        
+        #stockSelect:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        #fetchBtn {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(76, 111, 255, 0.2);
+            transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+        }
+        
+        #fetchBtn:disabled {
+            background-color: #93c5fd;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        
+        #fetchBtn:hover:not(:disabled) {
+            background-color: #3a5bdb;
+            box-shadow: 0 6px 14px rgba(58, 91, 219, 0.3);
+            transform: translateY(-1px);
         }
         
         /* 响应式调整 */
@@ -506,7 +621,7 @@
     </style>
 </head>
 <body>
-    <!-- 顶部导航栏 -->
+    <!-- 顶部导航栏 - 保持不变 -->
     <div class="top-nav">
         <div class="logo">
             <i class="fas fa-chart-line fa-lg" style="color: var(--primary-light);"></i>
@@ -557,20 +672,20 @@
         <div class="content-grid">
             <!-- 左侧：交易表单 -->
             <div class="trade-section">
-                <h2 class="section-title">Trade Stocks</h2>
+                <h2 class="section-title">Trade Assets</h2>
                 
                 <div id="trade-message" class="message"></div>
                 
                 <form id="trade-form" class="trade-form">
                     <div class="form-group">
                         <label for="stock-symbol">Ticker Symbol</label>
-                        <input type="text" id="stock-symbol" placeholder="e.g. AAPL" required 
-                               style="text-transform: uppercase;" maxlength="5">
+                        <input type="text" id="stock-symbol" placeholder="e.g. AAPL, TSLA, BTC" required 
+                               style="text-transform: uppercase;" maxlength="10">
                     </div>
                     
                     <div class="form-group">
                         <label for="quantity">Quantity</label>
-                        <input type="number" id="quantity" min="1" placeholder="Enter number of shares" required>
+                        <input type="number" id="quantity" min="0.0001" step="0.0001" placeholder="Enter quantity" required>
                     </div>
                     
                     <div class="form-group">
@@ -589,6 +704,10 @@
                     
                     <div id="stock-info" class="stock-info">
                         <div class="info-row">
+                            <span class="info-label">Asset Name:</span>
+                            <span class="info-value" id="asset-name">-</span>
+                        </div>
+                        <div class="info-row">
                             <span class="info-label">Current Price:</span>
                             <span class="info-value" id="current-price">$0.00</span>
                         </div>
@@ -597,63 +716,40 @@
                             <span class="info-value" id="total-value">$0.00</span>
                         </div>
                         
-                        <div class="holding-info" id="holding-info">
-                            <div class="info-row">
-                                <span class="info-label">Your Holdings:</span>
-                                <span class="info-value" id="your-holdings">0 shares</span>
-                            </div>
+                        <div class="info-row" id="holding-info">
+                            <span class="info-label">Your Holdings:</span>
+                            <span class="info-value" id="your-holdings">0</span>
                         </div>
                     </div>
                     
                     <button type="submit" id="submit-trade" class="btn-trade btn-buy">
-                        <i class="fas fa-shopping-cart"></i> Buy Stock
+                        <i class="fas fa-shopping-cart"></i> Buy Asset
                     </button>
                 </form>
             </div>
             
-            <!-- 右侧：市场观察 -->
+            <!-- 右侧：股票开盘价图表 -->
             <div class="trade-section">
-                <h2 class="section-title">Market Watch</h2>
+                <h2 class="section-title">Stock Opening Price Inquiry</h2>
                 
-                <ul class="nav nav-tabs" id="marketTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="stock-tab" data-bs-toggle="tab"
-                            data-bs-target="#stock" type="button" role="tab">Stocks</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="bond-tab" data-bs-toggle="tab" data-bs-target="#bond"
-                            type="button" role="tab">Bonds</button>
-                    </li>
-                </ul>
+                <div>
+                    <label for="stockSelect">Select stocks</label>
+                    <select id="stockSelect" aria-label="Select Stock">
+                        <option value="TSLA" selected>Tesla TSLA</option>
+                        <option value="AAPL">Apple AAPL</option>
+                        <option value="GOOGL">Alphabet GOOGL</option>
+                        <option value="MSFT">Microsoft MSFT</option>
+                        <option value="AMZN">Amazon AMZN</option>
+                        <option value="NFLX">Netflix NFLX</option>
+                        <option value="NVDA">NVIDIA NVDA</option>
+                        <option value="BABA">Alibaba BABA</option>
+                        <option value="META">Meta META</option>
+                    </select>
+                    <button id="fetchBtn">Load the opening price</button>
+                </div>
                 
-                <div class="tab-content mt-3" id="marketTabContent">
-                    <div class="tab-pane fade show active" id="stock" role="tabpanel">
-                        <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between align-items-center" data-symbol="AAPL">
-                                AAPL <span class="badge bg-success">$192.45 ▲1.2%</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center" data-symbol="MSFT">
-                                MSFT <span class="badge bg-danger">$335.10 ▼0.8%</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center" data-symbol="GOOGL">
-                                GOOGL <span class="badge bg-success">$148.50 ▲0.5%</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center" data-symbol="TSLA">
-                                TSLA <span class="badge bg-success">$255.32 ▲2.5%</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="tab-pane fade" id="bond" role="tabpanel">
-                        <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                US 10Y <span class="badge bg-success">4.12% ▲0.03</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                EU 5Y <span class="badge bg-danger">2.75% ▼0.01</span>
-                            </li>
-                        </ul>
-                    </div>
+                <div id="chartContainer">
+                    <canvas id="openPriceChart" height="400"></canvas>
                 </div>
             </div>
         </div>
@@ -667,21 +763,12 @@
                     <option value="sell">Sell</option>
                 </select>
             </div>
-            
-            <div class="filter-group">
-                <label class="filter-label">Asset Type</label>
-                <select id="asset-filter" class="select-filter">
-                    <option value="all">All Assets</option>
-                    <option value="stock">Stocks</option>
-                    <option value="bond">Bonds</option>
-                </select>
-            </div>
         </div>
         
         <div class="card">
             <div class="card-header">
                 <span>Transaction Records</span>
-                <span id="transaction-count">Showing up to 5 transactions</span>
+                <span id="transaction-count">Showing up to 10 transactions</span>
             </div>
             <div class="card-body">
                 <table class="transactions-table">
@@ -697,7 +784,9 @@
                         </tr>
                     </thead>
                     <tbody id="transactions-table-body">
-                        <!-- 交易记录将动态加载 -->
+                        <tr>
+                            <td colspan="7" class="text-center">Loading transactions...</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -705,251 +794,116 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        // API基础URL
+        const API_BASE_URL = 'http://localhost:3000';
+        let allPositions = [];
+        let allTransactions = [];
+        // 使用模拟数据模式
+        const USE_MOCK_DATA = true;
+        
+        // 股票图表相关配置
+        const STOCK_API_KEY = 'a197aab59f1f4a73b2c41b4b83298b61'; // 建议替换为自己的API密钥
+        let chartInstance = null;
+        
         // 初始化
         document.addEventListener('DOMContentLoaded', function() {
-            initializeData();
-            loadTransactions();
+            // 根据模式选择获取数据的方式
+            if (USE_MOCK_DATA) {
+                loadMockPositions();
+                loadMockTransactions();
+            } else {
+                fetchPositions();
+                fetchTransactions();
+            }
             setupEventListeners();
+            // 初始化股票图表
+            loadChart();
         });
         
-        // 初始化本地存储数据
-        function initializeData() {
-            if (!localStorage.getItem('stocks')) {
-                const initialStocks = [
-                    {
-                        id: 1,
-                        symbol: 'AAPL',
-                        name: 'Apple Inc.',
-                        shares: 10,
-                        purchasePrice: 170.50,
-                        purchaseDate: '2024-01-15',
-                        currentPrice: 182.35
-                    },
-                    {
-                        id: 2,
-                        symbol: 'MSFT',
-                        name: 'Microsoft Corp',
-                        shares: 5,
-                        purchasePrice: 280.25,
-                        purchaseDate: '2024-02-20',
-                        currentPrice: 320.75
-                    }
-                ];
-                localStorage.setItem('stocks', JSON.stringify(initialStocks));
-            }
-            
-            if (!localStorage.getItem('transactions')) {
-                localStorage.setItem('transactions', JSON.stringify(getMockTransactions()));
-            }
+        // 模拟持仓数据
+        function loadMockPositions() {
+            allPositions = [
+                { symbol: 'AAPL', name: 'Apple Inc.', shares: 15, current_price: 178.32 },
+                { symbol: 'MSFT', name: 'Microsoft Corp.', shares: 10, current_price: 338.45 },
+                { symbol: 'TSLA', name: 'Tesla Inc.', shares: 5, current_price: 240.12 },
+                { symbol: 'BTC', name: 'Bitcoin', shares: 0.25, current_price: 42500.75 },
+                { symbol: 'USB10Y', name: 'US 10 Year Treasury', shares: 1000, current_price: 99.85 }
+            ];
+            console.log('Loaded mock positions:', allPositions);
         }
         
-        // 设置事件监听器
-        function setupEventListeners() {
-            document.getElementById('stock-symbol').addEventListener('input', handleSymbolInput);
-            document.getElementById('quantity').addEventListener('input', calculateTotalValue);
-            
-            document.querySelectorAll('input[name="action"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    const action = this.value;
-                    const button = document.getElementById('submit-trade');
-                    
-                    if (action === 'buy') {
-                        button.className = 'btn-trade btn-buy';
-                        button.innerHTML = '<i class="fas fa-shopping-cart"></i> Buy Stock';
-                    } else {
-                        button.className = 'btn-trade btn-sell';
-                        button.innerHTML = '<i class="fas fa-arrow-circle-right"></i> Sell Stock';
-                    }
-                    
-                    updateHoldingInfo();
-                    calculateTotalValue();
-                });
-            });
-            
-            document.querySelectorAll('.list-group-item[data-symbol]').forEach(item => {
-                item.addEventListener('click', function() {
-                    const symbol = this.getAttribute('data-symbol');
-                    document.getElementById('stock-symbol').value = symbol;
-                    handleSymbolInput();
-                });
-            });
-            
-            document.getElementById('trade-form').addEventListener('submit', handleTradeSubmit);
-            document.getElementById('type-filter').addEventListener('change', loadTransactions);
-            document.getElementById('asset-filter').addEventListener('change', loadTransactions);
-        }
-        
-        // 处理股票代码输入
-        function handleSymbolInput() {
-            const symbol = document.getElementById('stock-symbol').value.trim().toUpperCase();
-            if (symbol.length < 1) {
-                document.getElementById('stock-info').classList.remove('visible');
-                return;
-            }
-            
-            const stocks = JSON.parse(localStorage.getItem('stocks') || '[]');
-            const stock = stocks.find(s => s.symbol === symbol);
-            
-            let currentPrice = 0;
-            if (stock) {
-                currentPrice = stock.currentPrice;
-            } else {
-                currentPrice = (100 + Math.random() * 400).toFixed(2);
-            }
-            
-            document.getElementById('current-price').textContent = `$${parseFloat(currentPrice).toFixed(2)}`;
-            document.getElementById('stock-info').classList.add('visible');
-            updateHoldingInfo();
-            calculateTotalValue();
-        }
-        
-        // 更新持有信息
-        function updateHoldingInfo() {
-            const symbol = document.getElementById('stock-symbol').value.trim().toUpperCase();
-            const stocks = JSON.parse(localStorage.getItem('stocks') || '[]');
-            const stock = stocks.find(s => s.symbol === symbol);
-            const holdingInfo = document.getElementById('holding-info');
-            const yourHoldings = document.getElementById('your-holdings');
-            
-            const isSellAction = document.getElementById('action-sell').checked;
-            
-            if (stock && isSellAction) {
-                holdingInfo.style.display = 'block';
-                yourHoldings.textContent = `${stock.shares} shares`;
-            } else {
-                holdingInfo.style.display = 'none';
-            }
-        }
-        
-        // 计算总价值
-        function calculateTotalValue() {
-            const symbol = document.getElementById('stock-symbol').value.trim().toUpperCase();
-            if (!symbol) return;
-            
-            const quantity = parseInt(document.getElementById('quantity').value) || 0;
-            const priceText = document.getElementById('current-price').textContent;
-            const currentPrice = parseFloat(priceText.replace('$', '')) || 0;
-            
-            const totalValue = quantity * currentPrice;
-            document.getElementById('total-value').textContent = `$${totalValue.toFixed(2)}`;
-        }
-        
-        // 处理交易提交
-        function handleTradeSubmit(e) {
-            e.preventDefault();
-            
-            const symbol = document.getElementById('stock-symbol').value.trim().toUpperCase();
-            const quantity = parseInt(document.getElementById('quantity').value) || 0;
-            const action = document.querySelector('input[name="action"]:checked').value;
-            
-            if (!symbol || quantity <= 0) {
-                showMessage('Please enter valid symbol and quantity', 'error');
-                return;
-            }
-            
-            const priceText = document.getElementById('current-price').textContent;
-            const price = parseFloat(priceText.replace('$', '')) || 0;
-            
-            let stocks = JSON.parse(localStorage.getItem('stocks') || '[]');
-            
-            if (action === 'buy') {
-                const existingStockIndex = stocks.findIndex(s => s.symbol === symbol);
-                
-                if (existingStockIndex >= 0) {
-                    stocks[existingStockIndex].shares += quantity;
-                } else {
-                    stocks.push({
-                        id: Date.now(),
-                        symbol: symbol,
-                        name: getStockName(symbol),
-                        shares: quantity,
-                        purchasePrice: price,
-                        purchaseDate: new Date().toISOString().split('T')[0],
-                        currentPrice: price
-                    });
-                }
-                
-                addTransaction(symbol, quantity, price, 'buy');
-                showMessage(`Successfully bought ${quantity} shares of ${symbol}`, 'success');
-                
-            } else {
-                const stockIndex = stocks.findIndex(s => s.symbol === symbol);
-                
-                if (stockIndex === -1) {
-                    showMessage(`You don't own any shares of ${symbol}`, 'error');
-                    return;
-                }
-                
-                if (stocks[stockIndex].shares < quantity) {
-                    showMessage(`You only own ${stocks[stockIndex].shares} shares of ${symbol}`, 'error');
-                    return;
-                }
-                
-                stocks[stockIndex].shares -= quantity;
-                
-                if (stocks[stockIndex].shares === 0) {
-                    stocks.splice(stockIndex, 1);
-                }
-                
-                addTransaction(symbol, quantity, price, 'sell');
-                showMessage(`Successfully sold ${quantity} shares of ${symbol}`, 'success');
-            }
-            
-            localStorage.setItem('stocks', JSON.stringify(stocks));
+        // 模拟交易数据
+        function loadMockTransactions() {
+            allTransactions = getMockTransactions();
             loadTransactions();
         }
         
-        // 添加交易记录
-        function addTransaction(symbol, quantity, price, type) {
-            let transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
-            
-            const stock = JSON.parse(localStorage.getItem('stocks') || '[]').find(s => s.symbol === symbol);
-            const name = stock ? stock.name : getStockName(symbol);
-            
-            const newTransaction = {
-                id: Date.now(),
-                date: new Date().toISOString().split('T')[0],
-                symbol: symbol,
-                name: name,
-                type: type,
-                quantity: quantity,
-                price: price,
-                totalValue: quantity * price,
-                assetType: 'stock',
-                status: 'Completed'
-            };
-            
-            transactions.unshift(newTransaction);
-            localStorage.setItem('transactions', JSON.stringify(transactions));
+        // 从API获取所有持仓数据
+        async function fetchPositions() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/position/all`);
+                
+                if (!response.ok) {
+                    const errorContent = await response.text();
+                    console.error('API Error Response:', errorContent);
+                    throw new Error(`Failed to fetch positions (${response.status} ${response.statusText})`);
+                }
+                
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const nonJsonContent = await response.text();
+                    console.error('Expected JSON but got:', nonJsonContent);
+                    throw new Error('API did not return JSON data');
+                }
+                
+                allPositions = await response.json();
+                console.log('Fetched positions:', allPositions);
+                
+            } catch (error) {
+                console.error('Error fetching positions:', error);
+                showMessage(`Failed to load market data: ${error.message}. Using mock data instead.`, 'error');
+                // 加载模拟数据作为备选
+                loadMockPositions();
+            }
         }
         
-        // 显示消息提示
-        function showMessage(text, type) {
-            const messageElement = document.getElementById('trade-message');
-            messageElement.textContent = text;
-            messageElement.className = 'message';
-            messageElement.classList.add(type);
-            
-            setTimeout(() => {
-                messageElement.className = 'message';
-            }, 3000);
+        // 获取所有交易记录
+        async function fetchTransactions() {
+            try {
+                const transactionsTable = document.getElementById('transactions-table-body');
+                transactionsTable.innerHTML = '<tr><td colspan="7" class="text-center">Loading transactions...</td></tr>';
+                
+                const response = await fetch(`${API_BASE_URL}/transactions`);
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch transactions (${response.status} ${response.statusText})`);
+                }
+                
+                allTransactions = await response.json();
+                loadTransactions();
+                
+            } catch (error) {
+                console.error('Error fetching transactions:', error);
+                showMessage(`Failed to load transactions: ${error.message}. Using mock data instead.`, 'error');
+                // 加载模拟数据作为备选
+                loadMockTransactions();
+            }
         }
         
         // 加载交易记录
         function loadTransactions() {
             const typeFilter = document.getElementById('type-filter').value;
-            const assetFilter = document.getElementById('asset-filter').value;
             
-            const allTransactions = JSON.parse(localStorage.getItem('transactions') || '[]');
-            
+            // 应用过滤（只保留交易类型过滤）
             const filteredTransactions = allTransactions.filter(transaction => {
                 if (typeFilter !== 'all' && transaction.type !== typeFilter) return false;
-                if (assetFilter !== 'all' && transaction.assetType !== assetFilter) return false;
                 return true;
             });
             
-            const limitedTransactions = filteredTransactions.slice(0, 5);
+            // 限制显示数量
+            const limitedTransactions = filteredTransactions.slice(0, 10);
             
             document.getElementById('transaction-count').textContent = 
                 `Showing ${limitedTransactions.length} of ${filteredTransactions.length} transactions`;
@@ -990,92 +944,487 @@
             });
         }
         
+        // 设置事件监听器
+        function setupEventListeners() {
+            document.getElementById('stock-symbol').addEventListener('input', handleSymbolInput);
+            document.getElementById('quantity').addEventListener('input', calculateTotalValue);
+            
+            document.querySelectorAll('input[name="action"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const action = this.value;
+                    const button = document.getElementById('submit-trade');
+                    
+                    if (action === 'buy') {
+                        button.className = 'btn-trade btn-buy';
+                        button.innerHTML = '<i class="fas fa-shopping-cart"></i> Buy Asset';
+                    } else {
+                        button.className = 'btn-trade btn-sell';
+                        button.innerHTML = '<i class="fas fa-arrow-circle-right"></i> Sell Asset';
+                    }
+                    
+                    updateHoldingInfo();
+                    calculateTotalValue();
+                });
+            });
+            
+            document.getElementById('trade-form').addEventListener('submit', handleTradeSubmit);
+            document.getElementById('type-filter').addEventListener('change', loadTransactions);
+            
+            // 股票图表事件监听
+            document.getElementById('fetchBtn').addEventListener('click', loadChart);
+        }
+        
+        // 处理代码输入
+        function handleSymbolInput() {
+            const symbol = document.getElementById('stock-symbol').value.trim().toUpperCase();
+            
+            if (!symbol) {
+                document.getElementById('stock-info').classList.remove('visible');
+                return;
+            }
+            
+            // 查找资产
+            const asset = allPositions.find(item => item.symbol === symbol);
+            
+            if (asset) {
+                document.getElementById('asset-name').textContent = asset.name;
+                document.getElementById('current-price').textContent = `$${parseFloat(asset.current_price).toFixed(2)}`;
+                document.getElementById('stock-info').classList.add('visible');
+            } else {
+                document.getElementById('asset-name').textContent = 'Not found in portfolio';
+                document.getElementById('current-price').textContent = '$0.00';
+                document.getElementById('stock-info').classList.add('visible');
+            }
+            
+            updateHoldingInfo();
+            calculateTotalValue();
+        }
+        
+        // 更新持有信息
+        function updateHoldingInfo() {
+            const symbol = document.getElementById('stock-symbol').value.trim().toUpperCase();
+            const isSellAction = document.getElementById('action-sell').checked;
+            
+            // 查找资产
+            const asset = allPositions.find(item => item.symbol === symbol);
+            
+            const yourHoldings = document.getElementById('your-holdings');
+            
+            if (asset && isSellAction) {
+                yourHoldings.textContent = `${asset.shares} units`;
+            } else if (isSellAction) {
+                yourHoldings.textContent = '0 units (Not in portfolio)';
+            } else {
+                yourHoldings.textContent = asset ? `${asset.shares} units (currently held)` : '0 units (Not held)';
+            }
+        }
+        
+        // 计算总价值
+        function calculateTotalValue() {
+            const symbol = document.getElementById('stock-symbol').value.trim().toUpperCase();
+            const quantity = parseFloat(document.getElementById('quantity').value) || 0;
+            
+            if (!symbol || quantity <= 0) return;
+            
+            // 查找资产
+            const asset = allPositions.find(item => item.symbol === symbol);
+            
+            const currentPrice = asset ? parseFloat(asset.current_price) : 0;
+            const totalValue = quantity * currentPrice;
+            
+            document.getElementById('total-value').textContent = `$${totalValue.toFixed(2)}`;
+        }
+        
+        // 处理交易提交
+        async function handleTradeSubmit(e) {
+            e.preventDefault();
+            
+            const symbol = document.getElementById('stock-symbol').value.trim().toUpperCase();
+            const quantity = parseFloat(document.getElementById('quantity').value) || 0;
+            const action = document.querySelector('input[name="action"]:checked').value;
+            
+            if (!symbol || quantity <= 0) {
+                showMessage('Please enter valid symbol and quantity', 'error');
+                return;
+            }
+            
+            if (action === 'sell') {
+                // 查找资产
+                const asset = allPositions.find(item => item.symbol === symbol);
+                if (!asset || parseFloat(asset.shares) < quantity) {
+                    showMessage(`Insufficient shares. You have ${asset ? asset.shares : 0} units.`, 'error');
+                    return;
+                }
+            }
+            
+            try {
+                // 如果使用模拟数据模式，直接模拟交易成功
+                if (USE_MOCK_DATA) {
+                    // 找到对应的资产并更新持仓
+                    const assetIndex = allPositions.findIndex(item => item.symbol === symbol);
+                    if (assetIndex !== -1) {
+                        if (action === 'buy') {
+                            allPositions[assetIndex].shares = (parseFloat(allPositions[assetIndex].shares) + quantity).toFixed(4);
+                        } else {
+                            allPositions[assetIndex].shares = (parseFloat(allPositions[assetIndex].shares) - quantity).toFixed(4);
+                        }
+                    } else if (action === 'buy') {
+                        // 添加新资产
+                        allPositions.push({
+                            symbol: symbol,
+                            name: `${symbol} Asset`,
+                            shares: quantity.toFixed(4),
+                            current_price: Math.random() * 100 + 10 // 随机价格
+                        });
+                    }
+                    
+                    // 添加新交易记录
+                    const currentPrice = document.getElementById('current-price').textContent.replace('$', '');
+                    const newTransaction = {
+                        id: Date.now(),
+                        date: new Date().toISOString(),
+                        symbol: symbol,
+                        name: document.getElementById('asset-name').textContent,
+                        type: action,
+                        quantity: quantity.toFixed(4),
+                        price: currentPrice,
+                        totalValue: (quantity * parseFloat(currentPrice)).toFixed(2),
+                        status: 'Completed'
+                    };
+                    
+                    allTransactions.unshift(newTransaction); // 添加到交易记录开头
+                    loadTransactions(); // 刷新交易记录
+                    
+                    showMessage(`${action.charAt(0).toUpperCase() + action.slice(1)} successful: ${quantity} ${symbol}`, 'success');
+                    document.getElementById('trade-form').reset();
+                    document.getElementById('stock-info').classList.remove('visible');
+                    return;
+                }
+                
+                // 调用API处理交易
+                const url = `${API_BASE_URL}/position/${action}`;
+                const requestData = {
+                    symbol: symbol,
+                    shares: quantity.toString()
+                };
+                
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData)
+                });
+                
+                const contentType = response.headers.get('content-type');
+                let result;
+                
+                if (contentType && contentType.includes('application/json')) {
+                    result = await response.json();
+                } else {
+                    const responseText = await response.text();
+                    console.error('Non-JSON response:', responseText);
+                    result = { message: responseText };
+                }
+                
+                if (!response.ok) {
+                    throw new Error(result.message || `Failed to ${action} asset (${response.status})`);
+                }
+                
+                showMessage(`${action.charAt(0).toUpperCase() + action.slice(1)} successful: ${quantity} ${symbol}`, 'success');
+                fetchPositions();
+                fetchTransactions();
+                document.getElementById('trade-form').reset();
+                document.getElementById('stock-info').classList.remove('visible');
+                
+            } catch (error) {
+                console.error(`Error ${action}ing asset:`, error);
+                showMessage(error.message || `Failed to process ${action}`, 'error');
+            }
+        }
+        
+        // 显示消息提示
+        function showMessage(text, type) {
+            const messageElement = document.getElementById('trade-message');
+            messageElement.textContent = text;
+            messageElement.className = 'message';
+            messageElement.classList.add(type);
+            
+            setTimeout(() => {
+                messageElement.className = 'message';
+            }, 5000);
+        }
+        
         // 格式化日期
         function formatDate(dateString) {
             const date = new Date(dateString);
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}/${month}/${day}`;
+            return new Intl.DateTimeFormat('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            }).format(date);
         }
         
-        // 获取股票名称
-        function getStockName(symbol) {
-            const stockNames = {
-                'AAPL': 'Apple Inc.',
-                'MSFT': 'Microsoft Corp',
-                'GOOGL': 'Alphabet Inc.',
-                'TSLA': 'Tesla Inc.',
-                'AMZN': 'Amazon.com Inc.'
-            };
-            
-            return stockNames[symbol] || `${symbol} Company`;
-        }
-        
-        // 模拟交易记录数据
+        // 生成模拟交易记录
         function getMockTransactions() {
-            return [
-                {
-                    id: 1,
-                    date: '2024-07-20',
-                    symbol: 'AAPL',
-                    name: 'Apple Inc.',
-                    type: 'buy',
-                    quantity: 10,
-                    price: 182.35,
-                    totalValue: 1823.50,
-                    assetType: 'stock',
-                    status: 'Completed'
-                },
-                {
-                    id: 2,
-                    date: '2024-07-15',
-                    symbol: 'MSFT',
-                    name: 'Microsoft Corp',
-                    type: 'sell',
-                    quantity: 5,
-                    price: 320.75,
-                    totalValue: 1603.75,
-                    assetType: 'stock',
-                    status: 'Completed'
-                },
-                {
-                    id: 3,
-                    date: '2024-07-10',
-                    symbol: 'GOOGL',
-                    name: 'Alphabet Inc.',
-                    type: 'buy',
-                    quantity: 8,
-                    price: 138.50,
-                    totalValue: 1108.00,
-                    assetType: 'stock',
-                    status: 'Completed'
-                },
-                {
-                    id: 4,
-                    date: '2024-07-05',
-                    symbol: 'TSLA',
-                    name: 'Tesla Inc.',
-                    type: 'buy',
-                    quantity: 3,
-                    price: 240.15,
-                    totalValue: 720.45,
-                    assetType: 'stock',
-                    status: 'Completed'
-                },
-                {
-                    id: 5,
-                    date: '2024-06-30',
-                    symbol: 'AMZN',
-                    name: 'Amazon.com Inc.',
-                    type: 'sell',
-                    quantity: 2,
-                    price: 175.80,
-                    totalValue: 351.60,
-                    assetType: 'stock',
-                    status: 'Completed'
+            const mockTransactions = [];
+            const types = ['buy', 'sell'];
+            const statuses = ['Completed', 'Pending'];
+            
+            if (allPositions.length > 0) {
+                allPositions.forEach(asset => {
+                    const count = Math.floor(Math.random() * 4) + 2;
+                    
+                    for (let i = 0; i < count; i++) {
+                        const type = types[Math.floor(Math.random() * types.length)];
+                        const shares = (Math.random() * parseFloat(asset.shares) * 0.5).toFixed(4);
+                        const price = (parseFloat(asset.current_price) * (0.9 + Math.random() * 0.2)).toFixed(2);
+                        const totalValue = (parseFloat(shares) * parseFloat(price)).toFixed(2);
+                        
+                        const date = new Date();
+                        date.setDate(date.getDate() - Math.floor(Math.random() * 30));
+                        
+                        mockTransactions.push({
+                            id: Date.now() + i,
+                            date: date.toISOString(),
+                            symbol: asset.symbol,
+                            name: asset.name,
+                            type: type,
+                            quantity: shares,
+                            price: price,
+                            totalValue: totalValue,
+                            status: statuses[Math.floor(Math.random() * statuses.length)]
+                        });
+                    }
+                });
+            }
+            
+            // 按日期排序（最新的在前）
+            return mockTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+        }
+        
+        // 股票图表相关函数 - 优化部分
+        function formatStockDate(dateStr) {
+            const parts = dateStr.split(' ')[0].split('-');
+            return `${parseInt(parts[1], 10)}/${parseInt(parts[2], 10)}`;
+        }
+        
+        async function fetchOpenPrices(symbol) {
+            const url = `https://api.twelvedata.com/time_series?symbol=${symbol}&interval=1day&apikey=${STOCK_API_KEY}&outputsize=15`;
+            const res = await fetch(url);
+            return res.json();
+        }
+        
+        async function loadChart() {
+            const symbol = document.getElementById('stockSelect').value;
+            const fetchBtn = document.getElementById('fetchBtn');
+            fetchBtn.disabled = true;
+            fetchBtn.textContent = 'Loading...';
+            
+            try {
+                const data = await fetchOpenPrices(symbol);
+                
+                if (data.status === 'error') {
+                    alert('API错误:' + data.message);
+                    // 使用模拟图表数据
+                    loadMockChart(symbol);
+                    fetchBtn.disabled = false;
+                    fetchBtn.textContent = 'Load the opening price';
+                    return;
                 }
-            ].sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                const dates = data.values.map(v => formatStockDate(v.datetime)).reverse();
+                const opens = data.values.map(v => parseFloat(v.open)).reverse();
+                
+                if (chartInstance) {
+                    chartInstance.destroy();
+                }
+                
+                // 图表配置 - 使用浅色主题，减小点大小
+                chartInstance = new Chart(document.getElementById('openPriceChart').getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            label: `${symbol} Open Price (USD)`,
+                            data: opens,
+                            borderColor: '#64748b', // 较浅的线条颜色
+                            backgroundColor: 'rgba(94, 124, 226, 0.15)', // 更浅的填充色
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 3, // 减小点大小
+                            pointHoverRadius: 5, // 减小悬停点大小
+                            pointBackgroundColor: '#475569', // 点的颜色
+                            borderWidth: 2,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: {
+                            mode: 'nearest',
+                            axis: 'x',
+                            intersect: false
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    color: '#475569',
+                                    font: { weight: '600' }
+                                }
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                backgroundColor: '#f8fafc',
+                                titleColor: '#1e293b',
+                                bodyColor: '#334155',
+                                borderColor: 'rgba(148, 163, 184, 0.2)',
+                                borderWidth: 1,
+                                padding: 12,
+                                boxPadding: 6,
+                                usePointStyle: true,
+                                callbacks: {
+                                    label: function(context) {
+                                        return `Price: $${context.raw.toFixed(2)}`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Date',
+                                    color: '#64748b',
+                                    font: { weight: '600' }
+                                },
+                                ticks: { color: '#64748b' },
+                                grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Open Price(USD)',
+                                    color: '#64748b',
+                                    font: { weight: '600' }
+                                },
+                                ticks: { color: '#64748b' },
+                                grid: { color: 'rgba(148, 163, 184, 0.1)' },
+                                beginAtZero: false,
+                            }
+                        }
+                    }
+                });
+                
+            } catch (err) {
+                console.error('Chart error:', err);
+                alert('请求失败：' + err.message + '，使用模拟数据');
+                loadMockChart(symbol);
+            } finally {
+                fetchBtn.disabled = false;
+                fetchBtn.textContent = 'Load the opening price';
+            }
+        }
+        
+        // 加载模拟图表数据 - 同样应用浅色主题和小点
+        function loadMockChart(symbol) {
+            // 生成过去15天的日期
+            const dates = [];
+            const today = new Date();
+            for (let i = 14; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(today.getDate() - i);
+                dates.push(`${date.getMonth() + 1}/${date.getDate()}`);
+            }
+            
+            // 生成随机价格数据，带有一定的趋势
+            const basePrice = Math.random() * 100 + (symbol === 'BTC' ? 30000 : 50);
+            const prices = [];
+            let price = basePrice;
+            
+            for (let i = 0; i < 15; i++) {
+                // 随机波动，范围为当前价格的-2%到+2%
+                const change = price * (Math.random() * 0.04 - 0.02);
+                price += change;
+                prices.push(price);
+            }
+            
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+            
+            chartInstance = new Chart(document.getElementById('openPriceChart').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: `${symbol} Open Price (USD)`,
+                        data: prices,
+                        borderColor: '#64748b', // 浅色线条
+                        backgroundColor: 'rgba(94, 124, 226, 0.15)', // 浅色填充
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 3, // 小点
+                        pointHoverRadius: 5, // 小悬停点
+                        pointBackgroundColor: '#475569',
+                        borderWidth: 2,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: '#475569',
+                                font: { weight: '600' }
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: '#f8fafc',
+                            titleColor: '#1e293b',
+                            bodyColor: '#334155',
+                            borderColor: 'rgba(148, 163, 184, 0.2)',
+                            borderWidth: 1,
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Date',
+                                color: '#64748b',
+                                font: { weight: '600' }
+                            },
+                            ticks: { color: '#64748b' },
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Open Price(USD)',
+                                color: '#64748b',
+                                font: { weight: '600' }
+                            },
+                            ticks: { color: '#64748b' },
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' },
+                            beginAtZero: false,
+                        }
+                    }
+                }
+            });
         }
     </script>
 </body>
