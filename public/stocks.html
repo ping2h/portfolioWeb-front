@@ -518,7 +518,7 @@
             <ul class="user-dropdown">
               
                
-                    <a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
                 </li>
             </ul>
         </div>
@@ -637,7 +637,26 @@
             // 加载股票数据
             loadStocks();
         });
+               // logout 
+        document.getElementById('logout-btn').addEventListener('click', async function (e) {
+    e.preventDefault(); // 阻止默认跳转行为
 
+    try {
+      const res = await fetch('/user/logout', {
+        method: 'POST', // 根据你后端写法决定是 GET 还是 POST
+        credentials: 'include' 
+      });
+
+      if (res.ok) {
+        window.location.href = '/login.html'; // 注销成功后跳转到登录页面
+      } else {
+        alert('Logout failed.');
+      }
+    } catch (err) {
+      console.error('Logout error:', err);
+      alert('Network error.');
+    }
+  });
         // 加载股票数据
         function loadStocks() {
             try {

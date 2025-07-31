@@ -698,7 +698,7 @@
             <i class="fas fa-chevron-down"></i>
             
             <ul class="user-dropdown">
-                    <a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
                 </li>
             </ul>
         </div>
@@ -874,7 +874,26 @@
         let allTransactions = [];
         // 使用模拟数据模式
         const USE_MOCK_DATA = true;
-        
+               // logout 
+        document.getElementById('logout-btn').addEventListener('click', async function (e) {
+    e.preventDefault(); // 阻止默认跳转行为
+
+    try {
+      const res = await fetch('/user/logout', {
+        method: 'POST', // 根据你后端写法决定是 GET 还是 POST
+        credentials: 'include' 
+      });
+
+      if (res.ok) {
+        window.location.href = '/login.html'; // 注销成功后跳转到登录页面
+      } else {
+        alert('Logout failed.');
+      }
+    } catch (err) {
+      console.error('Logout error:', err);
+      alert('Network error.');
+    }
+  });
         // 股票图表相关配置
         const STOCK_API_KEY = 'a197aab59f1f4a73b2c41b4b83298b61'; // 建议替换为自己的API密钥
         let chartInstance = null;

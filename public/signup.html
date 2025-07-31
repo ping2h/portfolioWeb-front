@@ -47,10 +47,10 @@
 
 
         <!-- Login Form and go to index page -->
-        <form class="space-y-5" action="index.html" method="get">
+        <form class="space-y-5" id="signup-form" method="post">
             <div>
-                <label for="email" class="text-gray-300 text-sm mb-2 block">Username</label>
-                <input id="email" type="email" placeholder="Username"
+                <label for="username" class="text-gray-300 text-sm mb-2 block">Username</label>
+                <input id="username" type="username" placeholder="Username"
                     class="w-full px-4 py-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
             </div>
             <div>
@@ -64,7 +64,7 @@
                     class="w-full px-4 py-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
             </div>
             <div class="flex items-center justify-between text-sm text-gray-400">
-                
+
                 <a href="#" class="text-purple-400 hover:text-purple-300">Forgot Password?</a>
             </div>
             <button type="submit"
@@ -88,6 +88,37 @@
             <a href="/login.html" class="text-purple-400 hover:text-purple-300">sign in</a>
         </p>
     </div>
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', async function (event) {
+            event.preventDefault(); // 阻止表单默认提交行为
+
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/user/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, email, password })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Registration successful! Redirecting to login...');
+                    window.location.href = '/login.html'; 
+                } else {
+                    alert(result.message || 'Registration failed.');
+                }
+            } catch (error) {
+                alert('Network error. Please try again.');
+                console.error('Registration error:', error);
+            }
+        });
+    </script>
 </body>
 
 </html>
