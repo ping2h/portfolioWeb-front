@@ -14,9 +14,9 @@
         :root {
             --primary-color: #4C6FFF;
             --primary-light: #6B8AFF;
-            --secondary-color: #1BC5BD;
+            --secondary-color: #74ebc4;
             --accent-color: #8950FC;
-            --success-color: #10B981;
+            --success-color: #74ebc4;
             --danger-color: #c46060e3;
             --warning-color: #F59E0B;
 
@@ -24,7 +24,7 @@
             --text-primary: rgba(255, 255, 255, 0.9);
             --text-secondary: rgba(255, 255, 255, 0.7);
             --text-tertiary: rgba(255, 255, 255, 0.6);
-            --bg-card: rgba(255, 255, 255, 0.15);
+            --bg-card: rgba(255, 255, 255, 0.349);
             --card-border: rgba(255, 255, 255, 0.1);
             --divider: rgba(255, 255, 255, 0.15);
             --top-nav-gray: rgba(26, 26, 39, 0.85);
@@ -260,7 +260,7 @@
             align-items: center;
             gap: 0.85rem;
             padding: 0.85rem 1.5rem;
-            color: white;
+            color: #1D2129;
             text-decoration: none;
             transition: all 0.2s;
             border-radius: 8px;
@@ -304,10 +304,17 @@
             position: relative;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.2);
-        }
+/* 轻微的悬停动画效果 */
+.card:hover {
+    transform: translateY(-1px) scale(1.005); /* 极其轻微的上移和缩放 */
+    box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.15); /* 略微减轻阴影 */
+    animation: bounce 0.3s ease; /* 更快的动画速度 */
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(-1px) scale(1.005); } /* 起始和结束位置 */
+    50% { transform: translateY(-2px) scale(1.005); } /* 中间最高位置，仅上移2px */
+}
 
         .card-header {
             padding: 1.25rem 1.75rem;
@@ -582,12 +589,9 @@
             font-size: 2.25rem;
             font-weight: 800;
             margin: 0.75rem 0 0.35rem;
-            color: var(--text-primary);
+            color: white; /* 改为白色提高可见度 */
             letter-spacing: -1px;
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .asset-distribution {
@@ -766,6 +770,13 @@
             box-shadow: 0 10px 30px rgba(76, 111, 255, 0.2);
             position: relative;
             overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        /* 欢迎横幅悬停动画 */
+        .welcome-banner:hover {
+            transform: translateY(-5px) scale(1.01);
+            animation: bounce 0.6s ease;
         }
 
         .welcome-banner::before {
@@ -794,24 +805,56 @@
             position: relative;
         }
 
-        /* 自定义选择框 */
-        .custom-select {
-            border-radius: 10px;
-            padding: 0.55rem 1rem;
-            border: 1px solid var(--card-border);
-            background: rgba(255, 255, 255, 0.15);
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: all 0.3s;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff80' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-            background-size: 16px;
-            padding-right: 2.5rem;
+        /* 优化欢迎横幅中的变化率显示 */
+        #welcome-change {
+            font-weight: 700;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            padding: 0 3px;
+            border-radius: 3px;
         }
+
+        .change-positive#welcome-change {
+            background-color: rgba(196, 96, 96, 0.2);
+        }
+
+        .change-negative#welcome-change {
+            background-color: rgba(16, 185, 129, 0.2);
+        }
+/* 统一风格的下拉选择框 */
+.custom-select {
+    border-radius: 10px;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--card-border);
+    background: rgba(255, 255, 255, 0.15); /* 与卡片背景一致 */
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary); /* 选中状态文字颜色 */
+    cursor: pointer;
+    transition: all 0.3s;
+    appearance: none;
+    /* 保持原有箭头图标，但确保颜色适配 */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff80' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px;
+    padding-right: 2.5rem;
+}
+
+/* 下拉选项样式（与整体玻璃态风格统一） */
+.custom-select option {
+    color: var(--text-primary); /* 选项文字颜色（与界面文字一致） */
+    background: var(--top-nav-gray); /* 与顶部导航栏背景一致 */
+    border-bottom: 1px solid var(--divider); /* 分隔线与卡片一致 */
+    padding: 10px 12px;
+    font-weight: 500;
+}
+
+/* 选项悬停效果 */
+.custom-select option:checked,
+.custom-select option:hover {
+    background: rgba(76, 111, 255, 0.2); /* 选中/悬停时使用主题色半透明 */
+    color: white;
+}
 
         /* 动画效果 */
         @keyframes fadeIn {
@@ -908,6 +951,24 @@
         .search-suggestions a:hover {
             background-color: rgba(76, 111, 255, 0.1) !important;
         }
+
+        /* 优化月度变化率的可见度 */
+        #monthly-change {
+            font-size: 1rem;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .change-positive#monthly-change {
+            background-color: rgba(196, 96, 96, 0.15);
+        }
+
+        .change-negative#monthly-change {
+            background-color: rgba(16, 185, 129, 0.15);
+        }
     </style>
 </head>
 
@@ -957,12 +1018,9 @@
 
                 <!-- 用户下拉菜单 -->
                 <ul class="user-dropdown">
-                    <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
-                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
-                    <li><a href="#"><i class="fas fa-info-circle"></i> Info</a></li>
-                    <li style="border-top: 1px solid var(--divider); margin-top: 0.25rem; padding-top: 0.5rem;">
-                        <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                    </li>
+
+                        <a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+
                 </ul>
             </div>
         </div>
@@ -1671,7 +1729,7 @@
                             ticks: {
                                 callback: value => `$${(value / 1000).toFixed(1)}k`,
                                 font: { size: 12, family: 'Manrope' },
-                                color: 'var(--text-secondary)'
+                                color: 'white' // 改为白色
                             }
                         },
                         x: {
@@ -1681,7 +1739,7 @@
                             },
                             ticks: {
                                 font: { family: 'Manrope' },
-                                color: 'var(--text-secondary)'
+                                color: 'white' // 改为白色
                             }
                         }
                     }
@@ -1816,7 +1874,7 @@
                             position: 'top',
                             labels: {
                                 font: { size: 13, family: 'Manrope' },
-                                color: 'var(--text-primary)',
+                                color: 'white', // 改为白色
                                 usePointStyle: true,
                                 padding: 20
                             }
@@ -1834,7 +1892,7 @@
                             ticks: {
                                 callback: value => `$${value >= 1000 ? (value / 1000).toFixed(1) + 'k' : value}`,
                                 font: { size: 12, family: 'Manrope' },
-                                color: 'var(--text-secondary)'
+                                color: 'white' // 改为白色
                             }
                         },
                         x: {
@@ -1844,7 +1902,7 @@
                             },
                             ticks: {
                                 font: { family: 'Manrope' },
-                                color: 'var(--text-secondary)'
+                                color: 'white' // 改为白色
                             }
                         }
                     }
@@ -1942,7 +2000,7 @@
                             position: 'bottom',
                             labels: {
                                 font: { size: 13, family: 'Manrope' },
-                                color: 'var(--text-primary)',
+                                color: 'white', // 改为白色
                                 padding: 20,
                                 usePointStyle: true,
                                 pointStyle: 'circle'
